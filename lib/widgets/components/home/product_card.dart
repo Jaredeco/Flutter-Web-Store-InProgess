@@ -23,17 +23,26 @@ class _ProductCardState extends State<ProductCard> {
           children: [
             Column(
               children: [
-                Container(
-                  width: 300,
-                  height: 325,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      image: DecorationImage(
-                          image: AssetImage("assets/images/product.jpg"),
-                          fit: BoxFit.cover)),
+                Stack(
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 325,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/product.jpg"),
+                              fit: BoxFit.cover)),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: GestureDetector(
+                            onTap: () {print("pressed");},
+                            child: const Icon(Icons.favorite_outline)))
+                  ],
                 ),
                 Container(
-                    padding: const EdgeInsets.only(top:10, bottom: 20),
+                    padding: const EdgeInsets.only(top: 10, bottom: 20),
                     child: Column(children: [
                       CustomText(
                         weight: FontWeight.bold,

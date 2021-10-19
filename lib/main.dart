@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webstore/screens/navigation_page.dart';
+import 'package:webstore/screens/navigation_pages/navigation_page_large.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:webstore/screens/navigation_pages/navigation_page_small.dart';
+import 'package:webstore/widgets/components/responsive_ui.dart';
 
 void main() async {
   setPathUrlStrategy();
@@ -19,7 +21,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: primaryBlack,
       ),
-      home: const NavigationPage(),
+      home: const ResponsiveUi(
+        largePage: NavigationPageLarge(),
+        smallPage: NavigationPageSmall(),
+      ),
     );
   }
 }
