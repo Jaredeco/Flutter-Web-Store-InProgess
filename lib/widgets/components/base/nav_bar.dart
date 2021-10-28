@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webstore/screens/main/home_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/screens/main/favorite_page.dart';
 import 'package:webstore/screens/main/shopping_bag.dart';
@@ -40,10 +41,13 @@ class NavBar extends StatelessWidget {
               const SizedBox(width: 20),
             ],
           ),
-          SizedBox(
-              height: 90,
-              width: 150,
-              child: Image.asset("assets/images/main_logo.png")),
+          InkWell(
+            onTap:() => Get.to(const HomePage()),
+            child: SizedBox(
+                height: 90,
+                width: 150,
+                child: Image.asset("assets/images/main_logo.png")),
+          ),
           Row(
             children: [
               IconButton(onPressed: () {}, icon: const Icon(Icons.search)),

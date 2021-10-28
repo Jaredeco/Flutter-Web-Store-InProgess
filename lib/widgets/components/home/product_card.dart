@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:webstore/screens/main/product_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ProductCard extends StatefulWidget {
@@ -18,7 +20,9 @@ class _ProductCardState extends State<ProductCard> {
       padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
-        onTap: () {},
+        onTap: () {
+          Get.to(const ProductPage());
+        },
         child: Stack(
           children: [
             Column(

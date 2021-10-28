@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webstore/screens/navigation_pages/navigation_page_large.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:webstore/screens/navigation_pages/navigation_page_small.dart';
-import 'package:webstore/widgets/components/responsive_ui.dart';
+import 'package:webstore/controllers/product_controller.dart';
+import 'package:webstore/screens/main/home_page.dart';
+import 'constants/firebase.dart';
 
 void main() async {
   setPathUrlStrategy();
+  WidgetsFlutterBinding.ensureInitialized();
+  await initialization.then((value) {
+    Get.put(ProductController());
+  });
   runApp(const MyApp());
 }
 
@@ -21,10 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: primaryBlack,
       ),
-      home: const ResponsiveUi(
-        largePage: NavigationPageLarge(),
-        smallPage: NavigationPageSmall(),
-      ),
+      home: const HomePage(),
     );
   }
 }
