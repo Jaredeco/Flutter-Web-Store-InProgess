@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: PhysicalModel(
-        color: Colors.grey.withOpacity(.4),
+        color: bgColor ?? Colors.black,
         elevation: 5,
         borderRadius: BorderRadius.circular(20),
         child: SizedBox(

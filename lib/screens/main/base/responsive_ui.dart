@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'base_large.dart';
+import 'base_small.dart';
 
 const int largePageSize = 700;
 
 class ResponsiveUi extends StatelessWidget {
-  final Widget largePage;
-  final Widget? smallPage;
+  final List<Widget>? smallWidgets;
+  final List<Widget> largeWidgets;
   const ResponsiveUi({
     Key? key,
-    required this.largePage,
-    this.smallPage,
+    required this.largeWidgets,
+    this.smallWidgets,
   }) : super(key: key);
 
   @override
@@ -16,9 +18,11 @@ class ResponsiveUi extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       double _width = constraints.maxWidth;
       if (_width >= largePageSize) {
-        return largePage;
+        return BaseLarge(widgets: largeWidgets);
       } else {
-        return smallPage ?? largePage;
+        return smallWidgets != null
+            ? BaseSmall(widgets: smallWidgets!)
+            : BaseLarge(widgets: largeWidgets);
       }
     });
   }
