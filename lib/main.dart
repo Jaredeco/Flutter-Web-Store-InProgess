@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:webstore/controllers/bag_controller.dart';
+import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/home_page.dart';
 import 'constants/firebase.dart';
@@ -10,6 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialization.then((value) {
     Get.put(ProductController());
+    Get.put(BagController());
+    Get.put(OrderController());
   });
   runApp(const MyApp());
 }

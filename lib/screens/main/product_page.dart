@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
+import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/widgets/components/product_page/image_gallery.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  final ProductModel product;
+  const ProductPage({Key? key, required this.product}) : super(key: key);
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -16,45 +20,62 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     return ResponsiveUi(largeWidgets: [
-      ImageSlideshow(
-        height: Get.height * 0.45,
-        children: [
-          Image.asset("assets/images/product.jpg"),
-          Image.asset("assets/images/product.jpg"),
-          Image.asset("assets/images/product.jpg"),
-        ],
-      ),
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const ImageGallery(),
           Expanded(
-            child: CustomText(
-              padding: EdgeInsets.all(20),
-              text: "Product Title",
-              weight: FontWeight.bold,
-              size: 40,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.left,
+                    text: widget.product.title,
+                    size: 30,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.left,
+                    text: widget.product.title,
+                    color: Colors.grey,
+                    size: 15,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  CustomText(
+                    textAlign: TextAlign.left,
+                    text: "${widget.product.price} \$",
+                    weight: FontWeight.bold,
+                    size: 20,
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  CustomButton(
+                    text: "Add to bag",
+                    onTap: () {
+                      if (!bagController.products.containsKey(widget.product)) {
+                        bagController.addToBag(widget.product);
+                      }
+                      ;
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-          // SizedBox(width: 50,),
-          Expanded(
-            child: CustomText(
-              color: Colors.grey,
-              padding: EdgeInsets.all(20),
-              text: "20 Eur",
-              size: 20,
-            ),
-          ),
+          )
         ],
-      ),
-      const CustomText(
-        text: "This is a description for this product",
-        color: Colors.grey,
-      ),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(500, 20, 500, 20),
-        child: CustomButton(text: "Add to Cart", onTap: () {}, bgColor: Colors.black),
-      ),
-
+      )
     ]);
   }
 }

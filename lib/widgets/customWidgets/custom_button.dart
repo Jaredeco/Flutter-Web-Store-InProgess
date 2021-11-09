@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 class CustomButton extends StatelessWidget {
   final String? text;
   final Color? txtColor;
+  final double? txtSize;
   final Color? bgColor;
   final Color? shadowColor;
   final VoidCallback? onTap;
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
       {Key? key,
       required this.text,
       this.txtColor,
+      this.txtSize,
       this.bgColor,
       this.shadowColor,
       required this.onTap})
@@ -21,21 +23,21 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onTap,
       child: PhysicalModel(
         color: bgColor ?? Colors.black,
         elevation: 5,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         child: SizedBox(
-            width: Get.width / 1.2,
+          width: 200,
             child: Container(
               margin: const EdgeInsets.all(14),
               alignment: Alignment.center,
               child: CustomText(
                 text: text!,
                 color: txtColor ?? Colors.white,
-                size: 22,
+                size: txtSize ?? 20,
                 weight: FontWeight.normal,
               ),
             )),

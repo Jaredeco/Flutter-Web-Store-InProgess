@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/screens/main/home_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/screens/main/favorite_page.dart';
 import 'package:webstore/screens/main/shopping_bag.dart';
+import 'package:badges/badges.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({Key? key}) : super(key: key);
@@ -42,7 +45,7 @@ class NavBar extends StatelessWidget {
             ],
           ),
           InkWell(
-            onTap:() => Get.to(const HomePage()),
+            onTap: () => Get.to(() => const HomePage()),
             child: SizedBox(
                 height: 90,
                 width: 150,
@@ -55,14 +58,21 @@ class NavBar extends StatelessWidget {
                 width: 20,
               ),
               IconButton(
-                  onPressed: () => Get.to(const FavoritePage()),
+                  onPressed: () => Get.to(() => const FavoritePage()),
                   icon: const Icon(Icons.favorite_outline)),
               const SizedBox(
                 width: 20,
               ),
               IconButton(
-                  onPressed: () => Get.to(const ShoppingBag()),
-                  icon: const Icon(Icons.shopping_bag_outlined)),
+                onPressed: () => Get.to(() => const ShoppingBag()),
+                icon: Badge(
+                  badgeContent: GetX<BagController>(
+                    builder: (_) =>
+                        Text(bagController.products.length.toString()),
+                  ),
+                  child: const Icon(Icons.shopping_bag_outlined),
+                ),
+              ),
               const SizedBox(width: 35),
             ],
           ),
