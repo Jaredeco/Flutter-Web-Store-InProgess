@@ -4,7 +4,7 @@ class ProductModel {
   final String? id;
   final String? title;
   final String? imageUrl;
-  final int? price;
+  final double? price;
   final String? description;
 
   ProductModel({this.id, this.title, this.imageUrl, this.price, this.description});
@@ -12,9 +12,10 @@ class ProductModel {
   factory ProductModel.fromDocSnapshot(DocumentSnapshot snapshot) {
     return ProductModel(
     id: snapshot.id,
-    imageUrl: snapshot["imageUrl"],
+    // imageUrl: snapshot["imageUrl"],
     title: snapshot["title"],
     price: snapshot["price"],
-    description: snapshot["description"]);
+    // description: snapshot["description"]
+    );
   }
 }

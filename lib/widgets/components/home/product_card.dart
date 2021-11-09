@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/product_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ProductCard extends StatefulWidget {
-  final String? title;
-  final int? price;
-  const ProductCard({Key? key, required this.title, required this.price})
-      : super(key: key);
+  final ProductModel product;
+  const ProductCard({Key? key, required this.product}) : super(key: key);
 
   @override
   _ProductCardState createState() => _ProductCardState();
@@ -21,47 +20,49 @@ class _ProductCardState extends State<ProductCard> {
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
         onTap: () {
-          Get.to(const ProductPage());
+          Get.to(() => ProductPage(product: widget.product));
         },
-        child: Stack(
+        child: Column(
           children: [
-            Column(
+            Stack(
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: 300,
-                      height: 325,
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/product.jpg"),
-                              fit: BoxFit.cover)),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: GestureDetector(
-                            onTap: () {print("pressed");},
-                            child: const Icon(Icons.favorite_outline)))
-                  ],
-                ),
                 Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 20),
-                    child: Column(children: [
-                      CustomText(
-                        weight: FontWeight.bold,
-                        size: 15,
-                        text: widget.title,
-                      ),
-                      const SizedBox(height: 5),
-                      CustomText(
-                        size: 13,
-                        color: Colors.grey,
-                        text: "${widget.price} \$",
-                      ),
-                    ]))
+                  width: 300,
+                  height: 325,
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      image: DecorationImage(
+                          image: AssetImage("assets/images/product.jpg"),
+                          fit: BoxFit.cover)),
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: GestureDetector(
+                        onTap: () {
+                          print("pressed");
+                        },
+                        child: const Icon(Icons.favorite_outline))),
               ],
-            )
+            ),
+            Container(
+                padding: const EdgeInsets.only(top: 10, bottom: 20),
+                child: Column(children: [
+                  CustomText(
+                    size: 20,
+                    text: widget.product.title,
+                  ),
+                  const CustomText(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    size: 13,
+                    color: Colors.grey,
+                    text: "This is a description of this product",
+                  ),
+                  CustomText(
+                    size: 15,
+                    weight: FontWeight.bold,
+                    text: "${widget.product.price} \$",
+                  ),
+                ])),
           ],
         ),
       ),

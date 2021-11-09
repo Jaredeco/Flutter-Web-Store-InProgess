@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
           width: Get.width * 0.4,
           margin: const EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
           child: Padding(
