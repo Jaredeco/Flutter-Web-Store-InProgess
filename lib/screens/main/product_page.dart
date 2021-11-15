@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
-import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
@@ -24,7 +22,7 @@ class _ProductPageState extends State<ProductPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const ImageGallery(),
+          ImageGallery(imgsUrl: widget.product.imgsUrl),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 30.0),
@@ -45,7 +43,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   CustomText(
                     textAlign: TextAlign.left,
-                    text: widget.product.title,
+                    text: widget.product.description,
                     color: Colors.grey,
                     size: 15,
                   ),
@@ -67,7 +65,6 @@ class _ProductPageState extends State<ProductPage> {
                       if (!bagController.products.containsKey(widget.product)) {
                         bagController.addToBag(widget.product);
                       }
-                      ;
                     },
                   ),
                 ],

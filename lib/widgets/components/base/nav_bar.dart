@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webstore/admin/create_product.dart';
+import 'package:webstore/admin/login.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/screens/main/home_page.dart';
@@ -49,11 +51,15 @@ class NavBar extends StatelessWidget {
             child: SizedBox(
                 height: 90,
                 width: 150,
-                child: Image.asset("assets/images/main_logo.png")),
+                child: Image.asset("assets/images/logo_vego.png")),
           ),
           Row(
             children: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+              IconButton(
+                  onPressed: () {
+                    Get.to(() => const AdminCreateProduct());
+                  },
+                  icon: const Icon(Icons.search)),
               const SizedBox(
                 width: 20,
               ),

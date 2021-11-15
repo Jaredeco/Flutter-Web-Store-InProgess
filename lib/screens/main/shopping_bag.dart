@@ -31,7 +31,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
                           product:
                               bagController.products.keys.elementAt(index))),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -53,7 +53,11 @@ class _ShoppingBagState extends State<ShoppingBag> {
                   child: CustomButton(
                     text: "Checkout",
                     txtSize: 15,
-                    onTap: () => Get.to(() => const OrderPage()),
+                    onTap: () {
+                      if (bagController.products.isNotEmpty) {
+                        Get.to(() => const OrderPage());
+                      }
+                    },
                     bgColor: Colors.red,
                   ),
                 ),

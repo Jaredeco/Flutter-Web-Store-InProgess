@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/product_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
@@ -19,9 +20,7 @@ class _ProductCardState extends State<ProductCard> {
       padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(20)),
-        onTap: () {
-          Get.to(() => ProductPage(product: widget.product));
-        },
+        onTap: () => Get.to(() => ProductPage(product: widget.product)),
         child: Column(
           children: [
             Stack(
@@ -29,10 +28,10 @@ class _ProductCardState extends State<ProductCard> {
                 Container(
                   width: 300,
                   height: 325,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/product.jpg"),
+                          image: NetworkImage(widget.product.imgsUrl![0]),
                           fit: BoxFit.cover)),
                 ),
                 Padding(
@@ -51,11 +50,11 @@ class _ProductCardState extends State<ProductCard> {
                     size: 20,
                     text: widget.product.title,
                   ),
-                  const CustomText(
-                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                  CustomText(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
                     size: 13,
                     color: Colors.grey,
-                    text: "This is a description of this product",
+                    text: widget.product.description,
                   ),
                   CustomText(
                     size: 15,

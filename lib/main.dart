@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:webstore/admin/login.dart';
+import 'package:webstore/controllers/admin_controller.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/controllers/product_controller.dart';
@@ -14,6 +16,7 @@ void main() async {
     Get.put(ProductController());
     Get.put(BagController());
     Get.put(OrderController());
+    Get.put(AdminController());
   });
   runApp(const MyApp());
 }

@@ -18,10 +18,17 @@ class _BagItemState extends State<BagItem> {
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       Expanded(
-          child: SizedBox(
-              height: 125,
-              width: 150,
-              child: Image.asset("assets/images/product.jpg"))),
+        child: Container(
+          height: 150,
+          width: 50,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage(widget.product.imgsUrl![0]),
+                fit: BoxFit.cover),
+            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          ),
+        ),
+      ),
       Expanded(
           child: CustomText(
         size: 20,
