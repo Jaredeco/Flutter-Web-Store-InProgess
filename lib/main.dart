@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:webstore/admin/login.dart';
+import 'package:webstore/admin/login_admin.dart';
+import 'package:webstore/constants/routes.dart';
 import 'package:webstore/controllers/admin_controller.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/home_page.dart';
+import 'package:webstore/screens/main/product_page.dart';
 import 'constants/firebase.dart';
 
 void main() async {
@@ -21,12 +23,25 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    FlouroRouter.setupRouter();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
+      initialRoute: '/',
+      onGenerateRoute: FlouroRouter.router.generator,
       debugShowCheckedModeBanner: false,
       title: 'WebStore',
       theme: ThemeData(

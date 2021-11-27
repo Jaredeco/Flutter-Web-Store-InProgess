@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/product_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
@@ -19,8 +17,8 @@ class _ProductCardState extends State<ProductCard> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
       child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(20)),
-        onTap: () => Get.to(() => ProductPage(product: widget.product)),
+        borderRadius: const BorderRadius.all(Radius.circular(15)),
+        onTap: () => Navigator.of(context).pushNamed("/product/${widget.product.id}"),
         child: Column(
           children: [
             Stack(
@@ -29,7 +27,7 @@ class _ProductCardState extends State<ProductCard> {
                   width: 300,
                   height: 325,
                   decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
                       image: DecorationImage(
                           image: NetworkImage(widget.product.imgsUrl![0]),
                           fit: BoxFit.cover)),
@@ -50,11 +48,19 @@ class _ProductCardState extends State<ProductCard> {
                     size: 20,
                     text: widget.product.title,
                   ),
-                  CustomText(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    size: 13,
-                    color: Colors.grey,
-                    text: widget.product.description,
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    width: 300,
+                    child: Text(
+                      widget.product.description!,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey,
+                      ),
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
                   ),
                   CustomText(
                     size: 15,

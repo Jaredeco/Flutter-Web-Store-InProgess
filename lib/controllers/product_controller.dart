@@ -5,11 +5,31 @@ import 'package:webstore/models/product_model.dart';
 
 class ProductController extends GetxController {
   static ProductController instance = Get.find();
-  final products = <ProductModel>[].obs;
+  var products = <ProductModel>[].obs;
+  var selectedImage = 0.obs;
+  var amount = 1.obs;
+
   @override
   void onInit() async {
     products.bindStream(loadProducts());
     super.onInit();
+  }
+
+  void changeImg(int idx) {
+    selectedImage.value = idx;
+    update();
+  }
+
+  void incAmount() {
+    ++amount;
+    update();
+  }
+
+  void decAmount() {
+    if (amount > 1) {
+      --amount;
+      update();
+    }
   }
 
   Stream<List<ProductModel>> loadProducts() {
@@ -18,5 +38,12 @@ class ProductController extends GetxController {
     return productsStream.map((qSnap) => qSnap.docs
         .map((docSnap) => ProductModel.fromDocSnapshot(docSnap))
         .toList());
+  }
+
+  Future<DocumentSnapshot> getProduct(String id) {
+    if (id.isEmpty){
+      id = "empty";
+    }
+    return firebaseFirestore.collection("Products").doc(id).get();
   }
 }

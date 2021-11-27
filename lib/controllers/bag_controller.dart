@@ -5,13 +5,13 @@ class BagController extends GetxController {
   static BagController instance = Get.find();
   final Map<ProductModel, int> products = <ProductModel, int>{}.obs;
   Rx<double> totalAmount = 0.0.obs;
-  void addToBag(ProductModel product) {
+  void addToBag(ProductModel product, int amount) {
     products.update(
       product,
       (value) => ++value,
-      ifAbsent: () => 1,
+      ifAbsent: () => amount,
     );
-    totalAmount.value += product.price!;
+    totalAmount.value += product.price! * amount;
     update();
   }
 
@@ -27,5 +27,19 @@ class BagController extends GetxController {
     totalAmount.value -= products[product]! * product.price!;
     products.remove(product);
     update();
+  }
+
+  void emptyBag(){
+    products.clear();
+    update();
+
+  }
+
+  Map<String, int> getProducts() {
+    Map<String, int> _orderProducts = {};
+    for (var k in products.keys) {
+      _orderProducts[k.id!] = products[k]!;
+    }
+    return _orderProducts;
   }
 }

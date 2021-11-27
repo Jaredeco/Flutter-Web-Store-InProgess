@@ -23,15 +23,21 @@ class _ShoppingBagState extends State<ShoppingBag> {
         Expanded(
           child: ResponsiveUi(
             largeWidgets: [
-              GetX<BagController>(
-                builder: (_) => Column(
-                  children: List<Widget>.generate(
-                      bagController.products.length,
-                      (index) => BagItem(
-                          product:
-                              bagController.products.keys.elementAt(index))),
-                ),
-              ),
+              bagController.products.isEmpty
+                  ? const Center(
+                      child: Icon(
+                      Icons.remove_shopping_cart,
+                      size: 100,
+                    ))
+                  : GetX<BagController>(
+                      builder: (_) => Column(
+                        children: List<Widget>.generate(
+                            bagController.products.length,
+                            (index) => BagItem(
+                                product: bagController.products.keys
+                                    .elementAt(index))),
+                      ),
+                    ),
             ],
           ),
         ),
@@ -55,7 +61,14 @@ class _ShoppingBagState extends State<ShoppingBag> {
                     txtSize: 15,
                     onTap: () {
                       if (bagController.products.isNotEmpty) {
-                        Get.to(() => const OrderPage());
+                        Navigator.of(context).pushNamed('/order');
+                      } else {
+                        Get.snackbar("Empty shopping bag!",
+                            "Please add items to your shopping bag to continue.",
+                            backgroundColor: Colors.white,
+                            margin: const EdgeInsets.all(20),
+                            duration: const Duration(seconds: 2),
+                            snackPosition: SnackPosition.BOTTOM);
                       }
                     },
                     bgColor: Colors.red,

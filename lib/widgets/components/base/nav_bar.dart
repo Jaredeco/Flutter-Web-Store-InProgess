@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webstore/admin/create_product.dart';
-import 'package:webstore/admin/login.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/screens/main/home_page.dart';
-import 'package:webstore/widgets/customWidgets/custom_text.dart';
-import 'package:webstore/screens/main/favorite_page.dart';
 import 'package:webstore/screens/main/shopping_bag.dart';
 import 'package:badges/badges.dart';
 
@@ -20,57 +16,24 @@ class NavBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const SizedBox(width: 35),
-              InkWell(
-                onTap: () {},
-                child: const CustomText(
-                  text: "Men",
-                ),
-              ),
-              const SizedBox(width: 20),
-              InkWell(
-                onTap: () {},
-                child: const CustomText(
-                  text: "Women",
-                ),
-              ),
-              const SizedBox(width: 20),
-              InkWell(
-                onTap: () {},
-                child: const CustomText(
-                  text: "Kids",
-                ),
-              ),
-              const SizedBox(width: 20),
-            ],
-          ),
-          InkWell(
-            onTap: () => Get.to(() => const HomePage()),
-            child: SizedBox(
-                height: 90,
-                width: 150,
-                child: Image.asset("assets/images/logo_vego.png")),
+          Padding(
+            padding: const EdgeInsets.only(left: 50.0),
+            child: InkWell(
+              onTap: () => Navigator.of(context).pushNamed("/"),
+              child: SizedBox(
+                  height: 90,
+                  width: 150,
+                  child: Image.asset("assets/images/logo_vego.png")),
+            ),
           ),
           Row(
             children: [
-              IconButton(
-                  onPressed: () {
-                    Get.to(() => const AdminCreateProduct());
-                  },
-                  icon: const Icon(Icons.search)),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
               const SizedBox(
                 width: 20,
               ),
               IconButton(
-                  onPressed: () => Get.to(() => const FavoritePage()),
-                  icon: const Icon(Icons.favorite_outline)),
-              const SizedBox(
-                width: 20,
-              ),
-              IconButton(
-                onPressed: () => Get.to(() => const ShoppingBag()),
+                onPressed: () => Navigator.of(context).pushNamed("/shopping-bag"),
                 icon: Badge(
                   badgeContent: GetX<BagController>(
                     builder: (_) =>
@@ -79,7 +42,9 @@ class NavBar extends StatelessWidget {
                   child: const Icon(Icons.shopping_bag_outlined),
                 ),
               ),
-              const SizedBox(width: 35),
+              const SizedBox(
+                width: 35,
+              ),
             ],
           ),
         ],

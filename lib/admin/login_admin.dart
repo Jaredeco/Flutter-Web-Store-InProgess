@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:webstore/admin/create_product.dart';
-import 'package:webstore/admin/products.dart';
+import 'package:webstore/admin/products/create_product.dart';
+import 'package:webstore/admin/products/products.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
@@ -32,9 +32,7 @@ class Admin extends StatelessWidget {
             child: CustomButton(
                 text: "Log In",
                 onTap: () {
-                  if (_admin.text == _ADMIN && _password.text == _PASSWORD) {
-                    Get.to(() => const AdminCreateProduct());
-                  }
+                  if (_admin.text == _ADMIN && _password.text == _PASSWORD) {}
                 })),
       ],
     );

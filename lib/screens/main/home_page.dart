@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
-import 'package:webstore/constants/controllers.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,8 +18,7 @@ class _HomePageState extends State<HomePage> {
       largeWidgets: [
         Padding(
             padding: const EdgeInsets.all(20.0),
-            child: GetX(
-                init: Get.put(ProductController()),
+            child: GetX<ProductController>(
                 builder: (ProductController controller) {
                   if (controller != null && controller.products != null) {
                     return Wrap(

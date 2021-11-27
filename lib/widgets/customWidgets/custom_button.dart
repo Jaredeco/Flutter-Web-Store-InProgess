@@ -32,7 +32,7 @@ class CustomButton extends StatelessWidget {
         child: SizedBox(
           width: 200,
             child: Container(
-              margin: const EdgeInsets.all(14),
+              margin: const EdgeInsets.all(10),
               alignment: Alignment.center,
               child: CustomText(
                 text: text!,

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController txtController;
   final IconData txtIcon;
   final String txtText;
   final bool? isObscure;
+  final String?Function(String?)? validate;
+  final TextInputType? kbdType;
+  final bool? maxLines;
 
   const CustomTextField(
       {Key? key,
       required this.txtController,
       required this.txtIcon,
       required this.txtText,
+      this.kbdType,
+      this.maxLines,
+      this.validate,
       this.isObscure})
       : super(key: key);
 
@@ -21,7 +26,7 @@ class CustomTextField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: Get.width * 0.4,
+          width: MediaQuery.of(context).size.width * 0.6,
           margin: const EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -29,9 +34,12 @@ class CustomTextField extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: TextField(
+            child: TextFormField(
+              maxLines: maxLines == true ? 1 : null,
+              keyboardType: kbdType,
               obscureText: isObscure ?? false,
               controller: txtController,
+              validator: validate,
               decoration: InputDecoration(
                   icon: Icon(txtIcon, color: Colors.black),
                   fillColor: Colors.white,

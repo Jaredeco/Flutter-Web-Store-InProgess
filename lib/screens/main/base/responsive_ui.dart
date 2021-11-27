@@ -7,10 +7,12 @@ const int largePageSize = 700;
 class ResponsiveUi extends StatelessWidget {
   final List<Widget>? smallWidgets;
   final List<Widget> largeWidgets;
+  final bool? admin;
   const ResponsiveUi({
     Key? key,
     required this.largeWidgets,
     this.smallWidgets,
+    this.admin
   }) : super(key: key);
 
   @override
@@ -18,11 +20,11 @@ class ResponsiveUi extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       double _width = constraints.maxWidth;
       if (_width >= largePageSize) {
-        return BaseLarge(widgets: largeWidgets);
+        return BaseLarge(widgets: largeWidgets, admin: admin,);
       } else {
         return smallWidgets != null
-            ? BaseSmall(widgets: smallWidgets!)
-            : BaseLarge(widgets: largeWidgets);
+            ? BaseSmall(widgets: smallWidgets!, admin: admin)
+            : BaseLarge(widgets: largeWidgets, admin: admin);
       }
     });
   }

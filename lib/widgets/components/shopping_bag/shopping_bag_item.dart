@@ -25,7 +25,7 @@ class _BagItemState extends State<BagItem> {
             image: DecorationImage(
                 image: NetworkImage(widget.product.imgsUrl![0]),
                 fit: BoxFit.cover),
-            borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
           ),
         ),
       ),
@@ -53,7 +53,7 @@ class _BagItemState extends State<BagItem> {
                 builder: (_) =>
                     Text(bagController.products[widget.product].toString())),
             IconButton(
-                onPressed: () => bagController.addToBag(widget.product),
+                onPressed: () => bagController.addToBag(widget.product, 1),
                 icon: const Icon(Icons.add)),
           ],
         ),
