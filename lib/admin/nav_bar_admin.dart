@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:webstore/admin/orders/orders.dart';
-import 'package:webstore/admin/products/create_product.dart';
-import 'package:webstore/admin/products/products.dart';
-import 'package:webstore/screens/main/home_page.dart';
+import 'package:webstore/constants/controllers.dart';
 
 class AdminNavBar extends StatelessWidget {
   const AdminNavBar({Key? key}) : super(key: key);
@@ -45,7 +41,11 @@ class AdminNavBar extends StatelessWidget {
               ),
               const SizedBox(width: 20),
               IconButton(
-                onPressed: () => Navigator.of(context).pushNamed('/'),
+                onPressed: () {
+                  adminController.changelogIn(false);
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil('/shop', (route) => false);
+                },
                 icon: const Icon(
                   Icons.exit_to_app,
                   color: Colors.red,

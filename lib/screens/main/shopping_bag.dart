@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/screens/main/order_page.dart';
@@ -50,7 +52,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
                 GetX<BagController>(
                   builder: (_) => CustomText(
                     padding: const EdgeInsets.only(left: 40),
-                    text: "Total: ${bagController.totalAmount} \$",
+                    text: "Total: ${bagController.totalAmount} €",
                     color: Colors.black,
                   ),
                 ),
@@ -63,12 +65,13 @@ class _ShoppingBagState extends State<ShoppingBag> {
                       if (bagController.products.isNotEmpty) {
                         Navigator.of(context).pushNamed('/order');
                       } else {
-                        Get.snackbar("Empty shopping bag!",
-                            "Please add items to your shopping bag to continue.",
-                            backgroundColor: Colors.white,
-                            margin: const EdgeInsets.all(20),
-                            duration: const Duration(seconds: 2),
-                            snackPosition: SnackPosition.BOTTOM);
+                        showTopSnackBar(
+                          context,
+                          const CustomSnackBar.error(
+                            message:
+                                "Empty shopping bag... Please add items.",
+                          ),
+                        );
                       }
                     },
                     bgColor: Colors.red,

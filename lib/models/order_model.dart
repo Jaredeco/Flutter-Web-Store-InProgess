@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:webstore/models/product_model.dart';
 
 class OrderModel {
   final String? id;
@@ -13,11 +12,13 @@ class OrderModel {
   final String? city;
   final String? email;
   final String? phone;
+  final double? total;
+  final bool? resolved;
 
   OrderModel(
       {this.id,
-      this.bagProducts,
       this.createdAt,
+      this.bagProducts,
       this.firstName,
       this.surname,
       this.country,
@@ -25,26 +26,29 @@ class OrderModel {
       this.psc,
       this.city,
       this.email,
-      this.phone});
+      this.phone,
+      this.total,
+      this.resolved});
 
   factory OrderModel.fromDocSnapshot(DocumentSnapshot snapshot) {
     return OrderModel(
-      id: snapshot.id,
-      bagProducts: snapshot["bagProducts"].cast<String, int>(),
-      createdAt: snapshot["createdAt"],
-      firstName: snapshot["firstName"],
-      surname: snapshot["surname"],
-      country: snapshot["country"],
-      street: snapshot["street"],
-      psc: snapshot["psc"],
-      city: snapshot["city"],
-      email: snapshot["email"],
-      phone: snapshot["phone"],
-    );
+        id: snapshot.id,
+        createdAt: snapshot["createdAt"],
+        bagProducts: snapshot["bagProducts"].cast<String, int>(),
+        firstName: snapshot["firstName"],
+        surname: snapshot["surname"],
+        country: snapshot["country"],
+        street: snapshot["street"],
+        psc: snapshot["psc"],
+        city: snapshot["city"],
+        email: snapshot["email"],
+        phone: snapshot["phone"],
+        total: snapshot["total"],
+        resolved: snapshot["resolved"]);
   }
   Map<String, dynamic> toJson() => {
-        "bagProducts": bagProducts,
         "createdAt": createdAt,
+        "bagProducts": bagProducts,
         "firstName": firstName,
         "surname": surname,
         "country": country,
@@ -53,5 +57,7 @@ class OrderModel {
         "city": city,
         "email": email,
         "phone": phone,
+        "total": total,
+        "resolved": resolved,
       };
 }

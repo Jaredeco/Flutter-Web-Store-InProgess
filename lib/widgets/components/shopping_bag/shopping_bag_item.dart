@@ -39,7 +39,7 @@ class _BagItemState extends State<BagItem> {
         child: CustomText(
           size: 20,
           padding: const EdgeInsets.only(left: 20, right: 20),
-          text: "${widget.product.price} \$",
+          text: "${widget.product.price} €",
         ),
       ),
       Expanded(

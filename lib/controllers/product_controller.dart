@@ -11,8 +11,8 @@ class ProductController extends GetxController {
 
   @override
   void onInit() async {
-    products.bindStream(loadProducts());
     super.onInit();
+    products.bindStream(loadProducts());
   }
 
   void changeImg(int idx) {
@@ -34,7 +34,7 @@ class ProductController extends GetxController {
 
   Stream<List<ProductModel>> loadProducts() {
     Stream<QuerySnapshot> productsStream =
-        firebaseFirestore.collection("Products").snapshots();
+        firebaseFirestore.collection("Products").orderBy("createdAt", descending: true).snapshots();
     return productsStream.map((qSnap) => qSnap.docs
         .map((docSnap) => ProductModel.fromDocSnapshot(docSnap))
         .toList());

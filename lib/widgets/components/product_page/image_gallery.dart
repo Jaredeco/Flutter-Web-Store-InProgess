@@ -11,6 +11,8 @@ class ImageGallery extends StatefulWidget {
 }
 
 class _ImageGalleryState extends State<ImageGallery> {
+  final ScrollController sc = ScrollController();
+  double anm = 0;
   @override
   Widget build(BuildContext context) {
     List<Widget> _gallery = List<Widget>.generate(
@@ -23,7 +25,7 @@ class _ImageGalleryState extends State<ImageGallery> {
           height: 125,
           width: 175,
           decoration: BoxDecoration(
-              border: const Border(right: BorderSide(color: Colors.black)),
+              border: const Border(right: BorderSide(color: Colors.white)),
               image: DecorationImage(
                   image: NetworkImage(
                     widget.imgsUrl![index].toString(),
@@ -49,12 +51,47 @@ class _ImageGalleryState extends State<ImageGallery> {
                         fit: BoxFit.cover),
                   ))),
           SizedBox(
-            width: 700,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: _gallery,
-              ),
+            width: 725,
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  controller: sc,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: _gallery,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            double w = 175.0 * widget.imgsUrl!.length;
+                            if (anm >= w * 0.2) {
+                              anm -= w * 0.2;
+                            }
+                            sc.animateTo(anm,
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease);
+                          },
+                          icon: Icon(Icons.arrow_back_ios_new_rounded)),
+                      IconButton(
+                          onPressed: () {
+                            double w = 175.0 * widget.imgsUrl!.length;
+                            if (anm <= w - (w * 0.2)) {
+                              anm += w * 0.2;
+                            }
+                            sc.animateTo(anm,
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.ease);
+                          },
+                          icon: Icon(Icons.arrow_forward_ios_rounded)),
+                    ],
+                  ),
+                )
+              ],
             ),
           )
         ],

@@ -5,17 +5,19 @@ class CustomTextField extends StatelessWidget {
   final IconData txtIcon;
   final String txtText;
   final bool? isObscure;
-  final String?Function(String?)? validate;
+  final String? Function(String?)? validate;
   final TextInputType? kbdType;
-  final bool? maxLines;
+  final bool maxLines;
+  final double? width;
 
   const CustomTextField(
       {Key? key,
       required this.txtController,
       required this.txtIcon,
       required this.txtText,
+      required this.maxLines,
+      this.width,
       this.kbdType,
-      this.maxLines,
       this.validate,
       this.isObscure})
       : super(key: key);
@@ -26,7 +28,7 @@ class CustomTextField extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          width: MediaQuery.of(context).size.width * 0.6,
+          width: width ?? MediaQuery.of(context).size.width * 0.6,
           margin: const EdgeInsets.only(top: 30),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -44,7 +46,8 @@ class CustomTextField extends StatelessWidget {
                   icon: Icon(txtIcon, color: Colors.black),
                   fillColor: Colors.white,
                   border: InputBorder.none,
-                  hintText: txtText, hintStyle: const TextStyle(color: Colors.black)),
+                  hintText: txtText,
+                  hintStyle: const TextStyle(color: Colors.black)),
             ),
           ),
         ),

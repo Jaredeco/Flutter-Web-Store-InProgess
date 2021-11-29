@@ -19,19 +19,18 @@ class _AdminOrdersState extends State<AdminOrders> {
       largeWidgets: [
         Padding(
             padding: const EdgeInsets.all(20.0),
-            child: GetX<AdminController>(
-                builder: (AdminController controller) {
-                  if (controller != null && controller.orders != null) {
-                    return Column(
-                      children: controller.orders
-                          .map((item) => OrderCard(order: item))
-                          .toList()
-                          .cast<Widget>(),
-                    );
-                  } else {
-                    return Container();
-                  }
-                })),
+            child: GetX<AdminController>(builder: (AdminController controller) {
+              if (controller != null && controller.orders != null) {
+                return Column(
+                  children: controller.orders
+                      .map((item) => OrderCard(order: item))
+                      .toList()
+                      .cast<Widget>(),
+                );
+              } else {
+                return Container();
+              }
+            })),
       ],
     );
   }

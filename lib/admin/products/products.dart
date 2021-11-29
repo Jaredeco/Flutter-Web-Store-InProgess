@@ -26,6 +26,7 @@ class _AdminProductsState extends State<AdminProducts> {
                   alignment: WrapAlignment.center,
                   children: controller.products
                       .map((item) => ProductCard(
+                            admin: true,
                             product: item,
                           ))
                       .toList()

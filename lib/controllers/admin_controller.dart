@@ -11,11 +11,12 @@ class AdminController extends GetxController {
   var country = "Select your country".obs;
   var orders = <OrderModel>[].obs;
   var isCreating = false.obs;
+  var loggedIn = false.obs;
 
   @override
   void onInit() async {
-    orders.bindStream(loadOrders());
     super.onInit();
+    orders.bindStream(loadOrders());
   }
 
   void loading(bool isl){
@@ -23,9 +24,14 @@ class AdminController extends GetxController {
     update();
   }
 
+  void changelogIn(bool state){
+    loggedIn.value = state;
+    update();
+  }
+
   Stream<List<OrderModel>> loadOrders() {
     Stream<QuerySnapshot> ordersStream =
-        firebaseFirestore.collection("Orders").snapshots();
+        firebaseFirestore.collection("Orders").orderBy("createdAt", descending: true).snapshots();
     return ordersStream.map((qSnap) => qSnap.docs
         .map((docSnap) => OrderModel.fromDocSnapshot(docSnap))
         .toList());

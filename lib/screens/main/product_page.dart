@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/product_controller.dart';
@@ -78,7 +80,7 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                               CustomText(
                                 textAlign: TextAlign.left,
-                                text: "${product.price} \$",
+                                text: "${product.price} €",
                                 weight: FontWeight.bold,
                                 size: 20,
                               ),
@@ -104,7 +106,7 @@ class _ProductPageState extends State<ProductPage> {
                         GetX<BagController>(
                           builder: (_) => CustomText(
                             padding: const EdgeInsets.only(left: 40),
-                            text: "Total: ${bagController.totalAmount} \$",
+                            text: "Total: ${bagController.totalAmount} €",
                             color: Colors.black,
                           ),
                         ),
@@ -140,19 +142,21 @@ class _ProductPageState extends State<ProductPage> {
                                       .containsKey(product)) {
                                     bagController.addToBag(product,
                                         productController.amount.value);
-                                    Get.snackbar("Product added!",
-                                        "Selected product has been added to your shopping bag!",
-                                        backgroundColor: Colors.white,
-                                        margin: const EdgeInsets.all(20),
-                                        duration: const Duration(seconds: 2),
-                                        snackPosition: SnackPosition.BOTTOM);
+                                    showTopSnackBar(
+                                      context,
+                                      const CustomSnackBar.success(
+                                        message:
+                                            "Product added to the shopping bag!",
+                                      ),
+                                    );
                                   } else {
-                                    Get.snackbar("Product added!",
-                                        "Selected product has been added to your shopping bag!",
-                                        backgroundColor: Colors.white,
-                                        margin: const EdgeInsets.all(20),
-                                        duration: const Duration(seconds: 2),
-                                        snackPosition: SnackPosition.BOTTOM);
+                                    showTopSnackBar(
+                                      context,
+                                      const CustomSnackBar.error(
+                                        message:
+                                            "Product already added to your shopping bag!",
+                                      ),
+                                    );
                                   }
                                 },
                               ),

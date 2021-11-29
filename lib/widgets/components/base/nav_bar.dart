@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/bag_controller.dart';
-import 'package:webstore/screens/main/home_page.dart';
-import 'package:webstore/screens/main/shopping_bag.dart';
 import 'package:badges/badges.dart';
 
 class NavBar extends StatelessWidget {
@@ -19,7 +17,7 @@ class NavBar extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 50.0),
             child: InkWell(
-              onTap: () => Navigator.of(context).pushNamed("/"),
+              onTap: () => Navigator.of(context).pushNamed("/shop"),
               child: SizedBox(
                   height: 90,
                   width: 150,
@@ -30,10 +28,11 @@ class NavBar extends StatelessWidget {
             children: [
               IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
               const SizedBox(
-                width: 20,
+                width: 25,
               ),
               IconButton(
-                onPressed: () => Navigator.of(context).pushNamed("/shopping-bag"),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed("/shopping-bag"),
                 icon: Badge(
                   badgeContent: GetX<BagController>(
                     builder: (_) =>
@@ -42,6 +41,11 @@ class NavBar extends StatelessWidget {
                   child: const Icon(Icons.shopping_bag_outlined),
                 ),
               ),
+              const SizedBox(
+                width: 25,
+              ),
+              IconButton(
+                  onPressed: () {}, icon: const Icon(Icons.info_outline)),
               const SizedBox(
                 width: 35,
               ),

@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:webstore/controllers/admin_controller.dart';
@@ -37,6 +38,7 @@ class OrderPage extends StatelessWidget {
                 Center(
                   child: Column(children: [
                     CustomTextField(
+                      maxLines: true,
                       txtController: _firstNameTextController,
                       txtIcon: Icons.person,
                       txtText: "First Name",
@@ -48,6 +50,7 @@ class OrderPage extends StatelessWidget {
                       },
                     ),
                     CustomTextField(
+                      maxLines: true,
                       txtController: _surnameTextController,
                       txtIcon: Icons.person,
                       txtText: "Last Name",
@@ -60,6 +63,7 @@ class OrderPage extends StatelessWidget {
                     ),
                     Center(
                       child: CustomTextField(
+                        maxLines: true,
                         txtController: _cityTextController,
                         txtIcon: Icons.location_city,
                         txtText: "City",
@@ -72,6 +76,7 @@ class OrderPage extends StatelessWidget {
                       ),
                     ),
                     CustomTextField(
+                      maxLines: true,
                       txtController: _pscTextController,
                       txtIcon: Icons.location_city,
                       txtText: "PSC",
@@ -83,6 +88,7 @@ class OrderPage extends StatelessWidget {
                       },
                     ),
                     CustomTextField(
+                      maxLines: true,
                       txtController: _streetTextController,
                       txtIcon: Icons.streetview,
                       txtText: "Street",
@@ -101,6 +107,7 @@ class OrderPage extends StatelessWidget {
                       ),
                     )),
                     CustomTextField(
+                      maxLines: true,
                       txtController: _emailTextController,
                       txtIcon: Icons.email,
                       txtText: "E-Mail",
@@ -116,6 +123,7 @@ class OrderPage extends StatelessWidget {
                       },
                     ),
                     CustomTextField(
+                      maxLines: true,
                       txtController: _phoneTextController,
                       txtIcon: Icons.phone,
                       txtText: "Phone Number",
@@ -140,7 +148,7 @@ class OrderPage extends StatelessWidget {
                   GetX<BagController>(
                     builder: (_) => CustomText(
                       padding: const EdgeInsets.only(left: 40),
-                      text: "Total: ${bagController.totalAmount} \$",
+                      text: "Total: ${bagController.totalAmount} €",
                       color: Colors.black,
                     ),
                   ),
@@ -154,39 +162,45 @@ class OrderPage extends StatelessWidget {
                               txtSize: 15,
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  Get.defaultDialog(
-                                      title: "Place an order?",
-                                      textConfirm: "Order",
-                                      textCancel: "Cancel",
-                                      content: const Text(
-                                          "Order this products with obligation to pay."),
-                                      confirmTextColor: Colors.white,
-                                      onConfirm: () {
-                                        orderController.loading(true);
-                                        OrderModel _order = OrderModel(
-                                            createdAt: Timestamp.now(),
-                                            bagProducts:
-                                                bagController.getProducts(),
-                                            firstName: _firstNameTextController
-                                                .text
-                                                .trim(),
-                                            surname: _surnameTextController.text
-                                                .trim(),
-                                            city:
-                                                _cityTextController.text.trim(),
-                                            street: _streetTextController.text
-                                                .trim(),
-                                            psc: _pscTextController.text.trim(),
-                                            phone: _phoneTextController.text
-                                                .trim(),
-                                            email: _emailTextController.text
-                                                .trim(),
-                                            country:
-                                                adminController.country.value);
-                                        orderController.createOrder(_order);
-                                        bagController.emptyBag();
-                                        orderController.loading(false);
-                                      });
+                                  AwesomeDialog(
+                                    context: context,
+                                    dialogType: DialogType.INFO,
+                                    animType: AnimType.BOTTOMSLIDE,
+                                    title: 'Order?',
+                                    desc: 'Order with obligation to pay.',
+                                    btnOkText: "Order",
+                                    btnCancelOnPress: () {},
+                                    btnOkOnPress: () {
+                                      orderController.loading(true);
+                                      OrderModel _order = OrderModel(
+                                          createdAt: Timestamp.now(),
+                                          bagProducts:
+                                              bagController.getProducts(),
+                                          firstName: _firstNameTextController
+                                              .text
+                                              .trim(),
+                                          surname: _surnameTextController.text
+                                              .trim(),
+                                          city: _cityTextController.text.trim(),
+                                          street:
+                                              _streetTextController.text.trim(),
+                                          psc: _pscTextController.text.trim(),
+                                          phone:
+                                              _phoneTextController.text.trim(),
+                                          email:
+                                              _emailTextController.text.trim(),
+                                          country:
+                                              adminController.country.value,
+                                          total:
+                                              bagController.totalAmount.value,
+                                          resolved: false);
+                                      orderController.createOrder(_order);
+                                      bagController.emptyBag();
+                                      Navigator.of(context)
+                                          .pushNamed("/thankyou");
+                                      orderController.loading(false);
+                                    },
+                                  ).show();
                                 }
                               },
                               bgColor: Colors.red,
