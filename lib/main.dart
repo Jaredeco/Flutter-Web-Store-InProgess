@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/constants/routes.dart';
 import 'package:webstore/controllers/admin_controller.dart';
 import 'package:webstore/controllers/bag_controller.dart';
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     FlouroRouter.setupRouter();
+    bagController.getStoredProducts();
   }
 
   @override
@@ -42,9 +44,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: FlouroRouter.router.generator,
       debugShowCheckedModeBanner: false,
       title: 'WebStore',
-      theme: ThemeData(
-        primarySwatch: primaryBlack,
-      ),
+      theme: ThemeData(primarySwatch: primaryBlack, fontFamily: 'Sora'),
       home: const HomePage(),
     );
   }

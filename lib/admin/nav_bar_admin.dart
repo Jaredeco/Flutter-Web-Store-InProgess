@@ -23,10 +23,6 @@ class AdminNavBar extends StatelessWidget {
           ),
           Row(
             children: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-              const SizedBox(
-                width: 20,
-              ),
               IconButton(
                   onPressed: () =>
                       Navigator.of(context).pushNamed('/admin/create-product'),

@@ -12,7 +12,7 @@ import 'package:webstore/screens/main/shop_page.dart';
 import 'package:webstore/screens/main/order_page.dart';
 import 'package:webstore/screens/main/product_page.dart';
 import 'package:webstore/screens/main/shopping_bag.dart';
-import 'package:webstore/screens/main/thank_you.dart';
+import 'package:webstore/screens/helper/thank_you.dart';
 
 class FlouroRouter {
   static final FluroRouter router = FluroRouter();

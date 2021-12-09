@@ -8,10 +8,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AdminController extends GetxController {
   static AdminController instance = Get.find();
   var pickedImages = <XFile>[].obs;
-  var country = "Select your country".obs;
+
   var orders = <OrderModel>[].obs;
   var isCreating = false.obs;
-  var loggedIn = false.obs;
+  var loggedIn = true.obs;
 
   @override
   void onInit() async {
@@ -19,19 +19,21 @@ class AdminController extends GetxController {
     orders.bindStream(loadOrders());
   }
 
-  void loading(bool isl){
+  void loading(bool isl) {
     isCreating.value = isl;
     update();
   }
 
-  void changelogIn(bool state){
+  void changelogIn(bool state) {
     loggedIn.value = state;
     update();
   }
 
   Stream<List<OrderModel>> loadOrders() {
-    Stream<QuerySnapshot> ordersStream =
-        firebaseFirestore.collection("Orders").orderBy("createdAt", descending: true).snapshots();
+    Stream<QuerySnapshot> ordersStream = firebaseFirestore
+        .collection("Orders")
+        .orderBy("createdAt", descending: true)
+        .snapshots();
     return ordersStream.map((qSnap) => qSnap.docs
         .map((docSnap) => OrderModel.fromDocSnapshot(docSnap))
         .toList());
@@ -39,11 +41,6 @@ class AdminController extends GetxController {
 
   void addImages(List<XFile> imgs) {
     pickedImages += imgs;
-    update();
-  }
-
-  void setCountry(String val){
-    country.value = val;
     update();
   }
 

@@ -31,7 +31,7 @@ class _OrderCardState extends State<OrderCard> {
               text: "${widget.order.firstName} ${widget.order.surname}",
               color: Colors.white),
           trailing: CustomText(
-              text: widget.order.total.toString(), color: Colors.white),
+              text: "${widget.order.total} €", color: Colors.white),
         ),
       ),
     );

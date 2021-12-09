@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -8,7 +9,6 @@ import 'package:webstore/constants/firebase.dart';
 import 'package:webstore/controllers/admin_controller.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
-import 'package:webstore/screens/main/shop_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +21,14 @@ class AdminCreateProduct extends StatefulWidget {
 }
 
 class _AdminCreateProductState extends State<AdminCreateProduct> {
+  @override
+  void initState() {
+    super.initState();
+    if (!adminController.loggedIn.value) {
+      SystemNavigator.pop();
+    }
+  }
+
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _priceTextController = TextEditingController();
   final TextEditingController _descriptionTextController =
@@ -117,69 +125,132 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                     const SizedBox(height: 40),
                   ]),
                 ),
+                if (MediaQuery.of(context).size.width <= largePageSize)
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
+                        child: CustomButton(
+                            text: "Pick Image",
+                            onTap: () async {
+                              final List<XFile>? _images =
+                                  await _picker.pickMultiImage();
+                              adminController.addImages(_images!);
+                            }),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
+                        child: GetX<AdminController>(
+                          builder: (_) => adminController.isCreating.value
+                              ? const CircularProgressIndicator()
+                              : CustomButton(
+                                  text: "Create",
+                                  onTap: () async {
+                                    if (adminController
+                                        .pickedImages.isNotEmpty) {
+                                      if (_formKey.currentState!.validate()) {
+                                        adminController.loading(true);
+                                        List<String> _imgUrls =
+                                            await adminController.uploadImages(
+                                                adminController.pickedImages);
+                                        ProductModel _product = ProductModel(
+                                            createAt: Timestamp.now(),
+                                            imgsUrl: _imgUrls,
+                                            title: _titleTextController.text
+                                                .trim(),
+                                            description:
+                                                _descriptionTextController.text
+                                                    .trim(),
+                                            price: double.parse(
+                                                _priceTextController.text
+                                                    .trim()));
+                                        await firebaseFirestore
+                                            .collection("Products")
+                                            .add(_product.toJson());
+                                        Navigator.of(context)
+                                            .pushNamed("/shop");
+                                        adminController.loading(false);
+                                      }
+                                    } else {
+                                      showTopSnackBar(
+                                        context,
+                                        const CustomSnackBar.error(
+                                          message: "No images attached!",
+                                        ),
+                                      );
+                                    }
+                                  }),
+                        ),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
-          Material(
-            child: SizedBox(
-              height: 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
-                    child: CustomButton(
-                        text: "Pick Image",
-                        onTap: () async {
-                          final List<XFile>? _images =
-                              await _picker.pickMultiImage();
-                          adminController.addImages(_images!);
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
-                    child: GetX<AdminController>(
-                      builder: (_) => adminController.isCreating.value
-                          ? const CircularProgressIndicator()
-                          : CustomButton(
-                              text: "Create",
-                              onTap: () async {
-                                if (adminController.pickedImages.isNotEmpty) {
-                                  if (_formKey.currentState!.validate()) {
-                                    adminController.loading(true);
-                                    List<String> _imgUrls =
-                                        await adminController.uploadImages(
-                                            adminController.pickedImages);
-                                    ProductModel _product = ProductModel(
-                                        createAt: Timestamp.now(),
-                                        imgsUrl: _imgUrls,
-                                        title: _titleTextController.text.trim(),
-                                        description: _descriptionTextController
-                                            .text
-                                            .trim(),
-                                        price: double.parse(
-                                            _priceTextController.text.trim()));
-                                    await firebaseFirestore
-                                        .collection("Products")
-                                        .add(_product.toJson());
-                                    Navigator.of(context).pushNamed("/shop");
-                                    adminController.loading(false);
-                                  }
-                                } else {
-                                  showTopSnackBar(
-                                    context,
-                                    const CustomSnackBar.error(
-                                      message: "No images attached!",
-                                    ),
-                                  );
-                                }
-                              }),
+          if (MediaQuery.of(context).size.width >= largePageSize)
+            Material(
+              child: SizedBox(
+                height: 100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
+                      child: CustomButton(
+                          text: "Pick Image",
+                          onTap: () async {
+                            final List<XFile>? _images =
+                                await _picker.pickMultiImage();
+                            adminController.addImages(_images!);
+                          }),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
+                      child: GetX<AdminController>(
+                        builder: (_) => adminController.isCreating.value
+                            ? const CircularProgressIndicator()
+                            : CustomButton(
+                                text: "Create",
+                                onTap: () async {
+                                  if (adminController.pickedImages.isNotEmpty) {
+                                    if (_formKey.currentState!.validate()) {
+                                      adminController.loading(true);
+                                      List<String> _imgUrls =
+                                          await adminController.uploadImages(
+                                              adminController.pickedImages);
+                                      ProductModel _product = ProductModel(
+                                          createAt: Timestamp.now(),
+                                          imgsUrl: _imgUrls,
+                                          title:
+                                              _titleTextController.text.trim(),
+                                          description:
+                                              _descriptionTextController.text
+                                                  .trim(),
+                                          price: double.parse(
+                                              _priceTextController.text
+                                                  .trim()));
+                                      await firebaseFirestore
+                                          .collection("Products")
+                                          .add(_product.toJson());
+                                      Navigator.of(context).pushNamed("/shop");
+                                      adminController.loading(false);
+                                    }
+                                  } else {
+                                    showTopSnackBar(
+                                      context,
+                                      const CustomSnackBar.error(
+                                        message: "No images attached!",
+                                      ),
+                                    );
+                                  }
+                                }),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

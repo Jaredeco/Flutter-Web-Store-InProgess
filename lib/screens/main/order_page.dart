@@ -100,10 +100,13 @@ class OrderPage extends StatelessWidget {
                       },
                     ),
                     Center(
-                        child: GetX<AdminController>(
+                        child: GetX<OrderController>(
                       builder: (_) => CustomDropDown(
-                        cValue: adminController.country.value,
-                        ddItems: const ["Select your country", "Slovakia"],
+                        cValue: orderController.country.value,
+                        ddItems: OrderController.selectCountries,
+                        onChanged: (newValue) {
+                          orderController.setCountry(newValue.toString());
+                        },
                       ),
                     )),
                     CustomTextField(
@@ -190,7 +193,7 @@ class OrderPage extends StatelessWidget {
                                           email:
                                               _emailTextController.text.trim(),
                                           country:
-                                              adminController.country.value,
+                                              orderController.country.value,
                                           total:
                                               bagController.totalAmount.value,
                                           resolved: false);

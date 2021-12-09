@@ -9,18 +9,20 @@ class CustomTextField extends StatelessWidget {
   final TextInputType? kbdType;
   final bool maxLines;
   final double? width;
+  final Function(String)? onChanged;
 
-  const CustomTextField(
-      {Key? key,
-      required this.txtController,
-      required this.txtIcon,
-      required this.txtText,
-      required this.maxLines,
-      this.width,
-      this.kbdType,
-      this.validate,
-      this.isObscure})
-      : super(key: key);
+  const CustomTextField({
+    Key? key,
+    required this.txtController,
+    required this.txtIcon,
+    required this.txtText,
+    required this.maxLines,
+    this.width,
+    this.kbdType,
+    this.validate,
+    this.isObscure,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +44,7 @@ class CustomTextField extends StatelessWidget {
               obscureText: isObscure ?? false,
               controller: txtController,
               validator: validate,
+              onChanged: onChanged,
               decoration: InputDecoration(
                   icon: Icon(txtIcon, color: Colors.black),
                   fillColor: Colors.white,

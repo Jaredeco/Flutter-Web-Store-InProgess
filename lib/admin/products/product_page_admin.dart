@@ -1,21 +1,15 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/constants/firebase.dart';
 import 'package:webstore/controllers/admin_controller.dart';
-import 'package:webstore/controllers/bag_controller.dart';
-import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/product_page/image_gallery.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
-import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
 
 class AdminProductPage extends StatefulWidget {
@@ -27,6 +21,14 @@ class AdminProductPage extends StatefulWidget {
 }
 
 class _AdminProductPageState extends State<AdminProductPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (!adminController.loggedIn.value) {
+      SystemNavigator.pop();
+    }
+  }
+
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _priceTextController = TextEditingController();
   final TextEditingController _descriptionTextController =
@@ -53,82 +55,138 @@ class _AdminProductPageState extends State<AdminProductPage> {
               child: Column(
                 children: [
                   Expanded(
-                    child: ResponsiveUi(admin: true, largeWidgets: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ImageGallery(imgsUrl: product.imgsUrl),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                CustomTextField(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  maxLines: true,
-                                  txtController: _titleTextController,
-                                  txtIcon: Icons.title,
-                                  txtText: "Product Title",
-                                  validate: (text) {
-                                    if (text == null || text.isEmpty) {
-                                      return 'Text is empty!';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                Center(
-                                    child: CustomTextField(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  txtController: _descriptionTextController,
-                                  txtIcon: Icons.description,
-                                  kbdType: TextInputType.multiline,
-                                  maxLines: false,
-                                  txtText: "Product Description",
-                                  validate: (text) {
-                                    if (text == null || text.isEmpty) {
-                                      return 'Text is empty!';
-                                    }
-                                    return null;
-                                  },
-                                )),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                CustomTextField(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.3,
-                                  maxLines: true,
-                                  txtController: _priceTextController,
-                                  txtIcon: Icons.money,
-                                  txtText: "Product Price",
-                                  validate: (text) {
-                                    if (text == null || text.isEmpty) {
-                                      return 'Text is empty!';
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                                const SizedBox(
-                                  height: 50,
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )
-                    ]),
+                    child: ResponsiveUi(
+                      admin: true,
+                      largeWidgets: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            ImageGallery(imgsUrl: product.imgsUrl),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  CustomTextField(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    maxLines: true,
+                                    txtController: _titleTextController,
+                                    txtIcon: Icons.title,
+                                    txtText: "Product Title",
+                                    validate: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Text is empty!';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  Center(
+                                      child: CustomTextField(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    txtController: _descriptionTextController,
+                                    txtIcon: Icons.description,
+                                    kbdType: TextInputType.multiline,
+                                    maxLines: false,
+                                    txtText: "Product Description",
+                                    validate: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Text is empty!';
+                                      }
+                                      return null;
+                                    },
+                                  )),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  CustomTextField(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    maxLines: true,
+                                    txtController: _priceTextController,
+                                    txtIcon: Icons.money,
+                                    txtText: "Product Price",
+                                    validate: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Text is empty!';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                      smallWidgets: [
+                        ImageGallery(imgsUrl: product.imgsUrl),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          maxLines: true,
+                          txtController: _titleTextController,
+                          txtIcon: Icons.title,
+                          txtText: "Product Title",
+                          validate: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Text is empty!';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                            child: CustomTextField(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          txtController: _descriptionTextController,
+                          txtIcon: Icons.description,
+                          kbdType: TextInputType.multiline,
+                          maxLines: false,
+                          txtText: "Product Description",
+                          validate: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Text is empty!';
+                            }
+                            return null;
+                          },
+                        )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          maxLines: true,
+                          txtController: _priceTextController,
+                          txtIcon: Icons.money,
+                          txtText: "Product Price",
+                          validate: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Text is empty!';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   Material(
                     child: SizedBox(

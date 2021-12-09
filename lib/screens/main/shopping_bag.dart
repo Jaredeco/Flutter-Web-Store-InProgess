@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -7,6 +9,7 @@ import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/screens/main/order_page.dart';
 import 'package:webstore/widgets/components/shopping_bag/shopping_bag_item.dart';
 import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/widgets/components/shopping_bag/shopping_bag_item_small.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
@@ -25,21 +28,26 @@ class _ShoppingBagState extends State<ShoppingBag> {
         Expanded(
           child: ResponsiveUi(
             largeWidgets: [
-              bagController.products.isEmpty
-                  ? const Center(
-                      child: Icon(
-                      Icons.remove_shopping_cart,
-                      size: 100,
-                    ))
-                  : GetX<BagController>(
-                      builder: (_) => Column(
+              GetX<BagController>(
+                builder: (_) => bagController.products.isEmpty
+                    ? const Center(
+                        child: Icon(
+                        Icons.remove_shopping_cart,
+                        size: 100,
+                      ))
+                    : Column(
                         children: List<Widget>.generate(
                             bagController.products.length,
-                            (index) => BagItem(
-                                product: bagController.products.keys
-                                    .elementAt(index))),
+                            (index) => MediaQuery.of(context).size.width >=
+                                    largePageSize
+                                ? BagItem(
+                                    product: bagController.products.keys
+                                        .elementAt(index))
+                                : BagItemSmall(
+                                    product: bagController.products.keys
+                                        .elementAt(index))),
                       ),
-                    ),
+              ),
             ],
           ),
         ),
@@ -68,8 +76,7 @@ class _ShoppingBagState extends State<ShoppingBag> {
                         showTopSnackBar(
                           context,
                           const CustomSnackBar.error(
-                            message:
-                                "Empty shopping bag... Please add items.",
+                            message: "Empty shopping bag... Please add items.",
                           ),
                         );
                       }

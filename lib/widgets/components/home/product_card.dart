@@ -58,7 +58,7 @@ class _ProductCardState extends State<ProductCard> {
                               fontSize: 13,
                               color: Colors.grey,
                             ),
-                            overflow: TextOverflow.fade,
+                            overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             softWrap: false,
                           ),

@@ -12,9 +12,12 @@ class ImageGallery extends StatefulWidget {
 
 class _ImageGalleryState extends State<ImageGallery> {
   final ScrollController sc = ScrollController();
-  double anm = 0;
   @override
   Widget build(BuildContext context) {
+    double anm = 0;
+    double width = 770;
+    double point = 0;
+    double w = width / 3 * widget.imgsUrl!.length - 40;
     List<Widget> _gallery = List<Widget>.generate(
       widget.imgsUrl!.length,
       (index) => GestureDetector(
@@ -22,8 +25,8 @@ class _ImageGalleryState extends State<ImageGallery> {
           productController.changeImg(index);
         },
         child: Container(
-          height: 125,
-          width: 175,
+          height: 150,
+          width: width / 3,
           decoration: BoxDecoration(
               border: const Border(right: BorderSide(color: Colors.white)),
               image: DecorationImage(
@@ -34,68 +37,66 @@ class _ImageGalleryState extends State<ImageGallery> {
         ),
       ),
     );
-    return Expanded(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          GetX<ProductController>(
-              builder: (_) => Container(
-                  height: 400,
-                  width: 725,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(widget
-                            .imgsUrl![productController.selectedImage.value]
-                            .toString()),
-                        fit: BoxFit.cover),
-                  ))),
-          SizedBox(
-            width: 725,
-            child: Stack(
-              children: [
-                SingleChildScrollView(
-                  controller: sc,
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: _gallery,
-                  ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GetX<ProductController>(
+            builder: (_) => Container(
+                height: 400,
+                width: width,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(widget
+                          .imgsUrl![productController.selectedImage.value]
+                          .toString()),
+                      fit: BoxFit.cover),
+                ))),
+        SizedBox(
+          width: width,
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                controller: sc,
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: _gallery,
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 50),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            double w = 175.0 * widget.imgsUrl!.length;
-                            if (anm >= w * 0.2) {
-                              anm -= w * 0.2;
-                            }
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 50),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          if (point - 0.2 >= 0) {
+                            point -= 0.2;
+                            anm = w * point;
                             sc.animateTo(anm,
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.ease);
-                          },
-                          icon: Icon(Icons.arrow_back_ios_new_rounded)),
-                      IconButton(
-                          onPressed: () {
-                            double w = 175.0 * widget.imgsUrl!.length;
-                            if (anm <= w - (w * 0.2)) {
-                              anm += w * 0.2;
-                            }
+                          }
+                        },
+                        icon: const Icon(Icons.arrow_back_ios_new_rounded)),
+                    IconButton(
+                        onPressed: () {
+                          if (point + 0.2 <= 1) {
+                            point += 0.2;
+                            anm = w * point;
                             sc.animateTo(anm,
-                                duration: Duration(milliseconds: 500),
+                                duration: const Duration(milliseconds: 500),
                                 curve: Curves.ease);
-                          },
-                          icon: Icon(Icons.arrow_forward_ios_rounded)),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+                          }
+                        },
+                        icon: const Icon(Icons.arrow_forward_ios_rounded)),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 }

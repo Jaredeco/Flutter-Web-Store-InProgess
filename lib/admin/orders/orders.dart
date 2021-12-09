@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:webstore/admin/orders/order_card.dart';
+import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/admin_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 
@@ -12,6 +14,14 @@ class AdminOrders extends StatefulWidget {
 }
 
 class _AdminOrdersState extends State<AdminOrders> {
+  @override
+  void initState() {
+    super.initState();
+    if (!adminController.loggedIn.value) {
+      SystemNavigator.pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveUi(

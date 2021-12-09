@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
@@ -12,6 +14,14 @@ class AdminProducts extends StatefulWidget {
 }
 
 class _AdminProductsState extends State<AdminProducts> {
+  @override
+  void initState() {
+    super.initState();
+    if (!adminController.loggedIn.value) {
+      SystemNavigator.pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ResponsiveUi(

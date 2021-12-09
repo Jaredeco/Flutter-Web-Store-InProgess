@@ -8,11 +8,13 @@ class ResponsiveUi extends StatelessWidget {
   final List<Widget>? smallWidgets;
   final List<Widget> largeWidgets;
   final bool? admin;
+  final bool? mainPage;
   const ResponsiveUi({
     Key? key,
     required this.largeWidgets,
     this.smallWidgets,
-    this.admin
+    this.admin,
+    this.mainPage
   }) : super(key: key);
 
   @override
@@ -20,11 +22,11 @@ class ResponsiveUi extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       double _width = constraints.maxWidth;
       if (_width >= largePageSize) {
-        return BaseLarge(widgets: largeWidgets, admin: admin,);
+        return BaseLarge(widgets: largeWidgets, admin: admin, mainPage: mainPage);
       } else {
         return smallWidgets != null
-            ? BaseSmall(widgets: smallWidgets!, admin: admin)
-            : BaseLarge(widgets: largeWidgets, admin: admin);
+            ? BaseSmall(widgets: smallWidgets!, admin: admin, mainPage: mainPage)
+            : BaseLarge(widgets: largeWidgets, admin: admin, mainPage: mainPage);
       }
     });
   }

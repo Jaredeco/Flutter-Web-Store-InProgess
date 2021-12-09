@@ -16,56 +16,60 @@ class BagItem extends StatefulWidget {
 class _BagItemState extends State<BagItem> {
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      Expanded(
-        child: Container(
-          height: 150,
-          width: 50,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: NetworkImage(widget.product.imgsUrl![0]),
-                fit: BoxFit.cover),
-            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+    return InkWell(
+      onTap: () =>
+          Navigator.of(context).pushNamed("/product/${widget.product.id}"),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Expanded(
+          child: Container(
+            height: 150,
+            width: 50,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: NetworkImage(widget.product.imgsUrl![0]),
+                  fit: BoxFit.cover),
+              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+            ),
           ),
         ),
-      ),
-      Expanded(
-          child: CustomText(
-        size: 20,
-        padding: const EdgeInsets.only(left: 20, right: 20),
-        text: widget.product.title,
-      )),
-      Expanded(
-        child: CustomText(
+        Expanded(
+            child: CustomText(
           size: 20,
           padding: const EdgeInsets.only(left: 20, right: 20),
-          text: "${widget.product.price} €",
+          text: widget.product.title,
+        )),
+        Expanded(
+          child: CustomText(
+            size: 20,
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            text: "${widget.product.price} €",
+          ),
         ),
-      ),
-      Expanded(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            IconButton(
-                onPressed: () => bagController.removeFromBag(widget.product),
-                icon: const Icon(Icons.remove)),
-            GetX<BagController>(
-                builder: (_) =>
-                    Text(bagController.products[widget.product].toString())),
-            IconButton(
-                onPressed: () => bagController.addToBag(widget.product, 1),
-                icon: const Icon(Icons.add)),
-          ],
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              IconButton(
+                  onPressed: () => bagController.removeFromBag(widget.product),
+                  icon: const Icon(Icons.remove)),
+              GetX<BagController>(
+                  builder: (_) =>
+                      Text(bagController.products[widget.product].toString())),
+              IconButton(
+                  onPressed: () => bagController.addToBag(widget.product, 1),
+                  icon: const Icon(Icons.add)),
+            ],
+          ),
         ),
-      ),
-      Expanded(
-        child: IconButton(
-            onPressed: () => bagController.deleteFromBag(widget.product),
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
-            )),
-      )
-    ]);
+        Expanded(
+          child: IconButton(
+              onPressed: () => bagController.deleteFromBag(widget.product),
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              )),
+        )
+      ]),
+    );
   }
 }

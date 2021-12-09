@@ -1,13 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/constants/firebase.dart';
 import 'package:webstore/controllers/order_controller.dart';
-import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/models/order_model.dart';
-import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
@@ -22,6 +21,14 @@ class AdminOrderPage extends StatefulWidget {
 }
 
 class _AdminOrderPageState extends State<AdminOrderPage> {
+  @override
+  void initState() {
+    super.initState();
+    if (!adminController.loggedIn.value) {
+      SystemNavigator.pop();
+    }
+  }
+
   Widget infoItem(String leading, String title) {
     return ListTile(
       leading: CustomText(
@@ -104,54 +111,97 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                             return Container();
                           }
                         })),
+                    if (MediaQuery.of(context).size.width <= largePageSize)
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                            child: CustomButton(
+                              bgColor: Colors.red,
+                              txtColor: Colors.white,
+                              text: "Delete",
+                              onTap: () {},
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                            child: CustomButton(
+                              bgColor: Colors.green,
+                              txtColor: Colors.white,
+                              text: "Resolve",
+                              onTap: () {
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.INFO,
+                                  animType: AnimType.BOTTOMSLIDE,
+                                  title: 'Resolve?',
+                                  desc: 'Mark this order as resolved?',
+                                  btnOkText: "Resolve",
+                                  btnCancelOnPress: () {},
+                                  btnOkOnPress: () async {
+                                    await firebaseFirestore
+                                        .collection("Orders")
+                                        .doc(widget.orderId)
+                                        .update({"resolved": true});
+                                    Navigator.of(context)
+                                        .pushNamed("/admin/orders");
+                                  },
+                                ).show();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                   ]),
                 ),
-                Material(
-                  child: SizedBox(
-                    height: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
-                          child: CustomButton(
-                            bgColor: Colors.red,
-                            txtColor: Colors.white,
-                            text: "Delete",
-                            onTap: () {},
+                if (MediaQuery.of(context).size.width >= largePageSize)
+                  Material(
+                    child: SizedBox(
+                      height: 100,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                            child: CustomButton(
+                              bgColor: Colors.red,
+                              txtColor: Colors.white,
+                              text: "Delete",
+                              onTap: () {},
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
-                          child: CustomButton(
-                            bgColor: Colors.green,
-                            txtColor: Colors.white,
-                            text: "Resolve",
-                            onTap: () {
-                              AwesomeDialog(
-                                context: context,
-                                dialogType: DialogType.INFO,
-                                animType: AnimType.BOTTOMSLIDE,
-                                title: 'Resolve?',
-                                desc: 'Mark this order as resolved?',
-                                btnOkText: "Resolve",
-                                btnCancelOnPress: () {},
-                                btnOkOnPress: () async {
-                                  await firebaseFirestore
-                                      .collection("Orders")
-                                      .doc(widget.orderId)
-                                      .update({"resolved": true});
-                                  Navigator.of(context)
-                                      .pushNamed("/admin/orders");
-                                },
-                              ).show();
-                            },
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                            child: CustomButton(
+                              bgColor: Colors.green,
+                              txtColor: Colors.white,
+                              text: "Resolve",
+                              onTap: () {
+                                AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.INFO,
+                                  animType: AnimType.BOTTOMSLIDE,
+                                  title: 'Resolve?',
+                                  desc: 'Mark this order as resolved?',
+                                  btnOkText: "Resolve",
+                                  btnCancelOnPress: () {},
+                                  btnOkOnPress: () async {
+                                    await firebaseFirestore
+                                        .collection("Orders")
+                                        .doc(widget.orderId)
+                                        .update({"resolved": true});
+                                    Navigator.of(context)
+                                        .pushNamed("/admin/orders");
+                                  },
+                                ).show();
+                              },
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
               ],
             );
           }

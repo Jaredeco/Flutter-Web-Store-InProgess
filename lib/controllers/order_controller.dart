@@ -6,8 +6,10 @@ import 'package:webstore/models/product_model.dart';
 
 class OrderController extends GetxController {
   static OrderController instance = Get.find();
+  static List<String> selectCountries = ["Slovakia"];
   var isLoading = false.obs;
   var orderedProducts = [].obs;
+  var country = selectCountries[0].obs;
 
   void createOrder(OrderModel _order) {
     firebaseFirestore.collection("Orders").add(_order.toJson());
@@ -33,6 +35,11 @@ class OrderController extends GetxController {
     return productsStream.map((qSnap) => qSnap.docs
         .map((docSnap) => ProductModel.fromDocSnapshot(docSnap))
         .toList());
+  }
+
+  void setCountry(String val) {
+    country.value = val;
+    update();
   }
 
   // double getTotalOrdered(Map<String, int> bagProducts) {
