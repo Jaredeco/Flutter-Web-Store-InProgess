@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:webstore/admin/menu_page_admin.dart';
 import 'package:webstore/admin/nav_bar_admin.dart';
 import 'package:webstore/screens/helper/menu_page.dart';
 import 'package:webstore/widgets/components/base/nav_bar.dart';
@@ -24,15 +25,17 @@ class _BaseLargeState extends State<BaseLarge> {
         isRtl: true,
         controller: _drawerController,
         style: DrawerStyle.Style1,
-        menuScreen: MenuPage(
-          drawerController: _drawerController,
-        ),
+        menuScreen: widget.admin != null
+            ? AdminMenuPage(drawerController: _drawerController)
+            : MenuPage(
+                drawerController: _drawerController,
+              ),
         mainScreen: Scaffold(
           backgroundColor: Colors.white,
           body: ListView(
             children: [
               widget.admin != null
-                  ? const AdminNavBar()
+                  ? AdminNavBar(drawerController: _drawerController)
                   : NavBar(
                       mainPage: widget.mainPage,
                       drawerController: _drawerController,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:webstore/constants/controllers.dart';
 
-class MenuPage extends StatelessWidget {
+class AdminMenuPage extends StatelessWidget {
   final ZoomDrawerController drawerController;
-  const MenuPage({Key? key, required this.drawerController}) : super(key: key);
+  const AdminMenuPage({Key? key, required this.drawerController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +20,27 @@ class MenuPage extends StatelessWidget {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    menuItem(context, Icons.home, "Home", "/"),
-                    menuItem(context, Icons.shop, "Shop", "/shop"),
-                    menuItem(context, Icons.shopping_bag, "Shopping Bag",
-                        "/shopping-bag"),
-                    menuItem(context, Icons.info, "About Us", "/"),
+                    menuItem(context, Icons.local_shipping, "Orders",
+                        "/admin/orders"),
+                    menuItem(context, Icons.add, "Create Product",
+                        "/admin/create-product"),
+                    menuItem(context, Icons.shop, "Shop", "/admin/products"),
+                    ListTile(
+                      minLeadingWidth: 20,
+                      leading: const Icon(
+                        Icons.exit_to_app,
+                        color: Colors.red,
+                      ),
+                      title: const Text("Log Out"),
+                      onTap: () async {
+                        adminController.changelogIn(false);
+                        await Future(drawerController.toggle! as dynamic)
+                            .then((value) {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/shop', (route) => false);
+                        });
+                      },
+                    ),
                   ]),
             ),
           )),

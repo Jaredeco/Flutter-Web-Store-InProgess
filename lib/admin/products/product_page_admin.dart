@@ -189,6 +189,7 @@ class _AdminProductPageState extends State<AdminProductPage> {
                     ),
                   ),
                   Material(
+                    color: Colors.white,
                     child: SizedBox(
                       height: 100,
                       child: Row(

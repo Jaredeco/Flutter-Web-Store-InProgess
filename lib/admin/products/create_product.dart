@@ -190,6 +190,7 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
           ),
           if (MediaQuery.of(context).size.width >= largePageSize)
             Material(
+              color: Colors.white,
               child: SizedBox(
                 height: 100,
                 child: Row(

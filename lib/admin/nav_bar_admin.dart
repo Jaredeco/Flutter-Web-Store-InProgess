@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/screens/main/base/responsive_ui.dart';
 
 class AdminNavBar extends StatelessWidget {
-  const AdminNavBar({Key? key}) : super(key: key);
+  final ZoomDrawerController drawerController;
+  const AdminNavBar({Key? key, required this.drawerController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,35 +25,44 @@ class AdminNavBar extends StatelessWidget {
                   child: Image.asset("assets/images/admin.png")),
             ),
           ),
-          Row(
-            children: [
-              IconButton(
-                  onPressed: () =>
-                      Navigator.of(context).pushNamed('/admin/create-product'),
-                  icon: const Icon(Icons.add)),
-              const SizedBox(
-                width: 20,
-              ),
-              IconButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/admin/products'),
-                icon: const Icon(Icons.shopping_bag),
-              ),
-              const SizedBox(width: 20),
-              IconButton(
-                onPressed: () {
-                  adminController.changelogIn(false);
-                  Navigator.of(context)
-                      .pushNamedAndRemoveUntil('/shop', (route) => false);
-                },
-                icon: const Icon(
-                  Icons.exit_to_app,
-                  color: Colors.red,
+          MediaQuery.of(context).size.width >= largePageSize
+              ? Row(
+                  children: [
+                    IconButton(
+                        onPressed: () => Navigator.of(context)
+                            .pushNamed('/admin/create-product'),
+                        icon: const Icon(Icons.add)),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    IconButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed('/admin/products'),
+                      icon: const Icon(Icons.shop),
+                    ),
+                    const SizedBox(width: 20),
+                    IconButton(
+                      onPressed: () {
+                        adminController.changelogIn(false);
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/shop', (route) => false);
+                      },
+                      icon: const Icon(
+                        Icons.exit_to_app,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(width: 35),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(right: 35.0),
+                  child: IconButton(
+                      onPressed: () {
+                        drawerController.toggle!();
+                      },
+                      icon: const Icon(Icons.menu)),
                 ),
-              ),
-              const SizedBox(width: 35),
-            ],
-          ),
         ],
       ),
     );

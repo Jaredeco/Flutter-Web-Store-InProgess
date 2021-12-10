@@ -38,6 +38,7 @@ class Admin extends StatelessWidget {
         ],
       )),
       Material(
+        color: Colors.white,
         child: SizedBox(
           height: 100,
           child: Row(

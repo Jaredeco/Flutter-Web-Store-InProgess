@@ -157,6 +157,7 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                 ),
                 if (MediaQuery.of(context).size.width >= largePageSize)
                   Material(
+                    color: Colors.white,
                     child: SizedBox(
                       height: 100,
                       child: Row(

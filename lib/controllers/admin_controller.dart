@@ -11,7 +11,7 @@ class AdminController extends GetxController {
 
   var orders = <OrderModel>[].obs;
   var isCreating = false.obs;
-  var loggedIn = true.obs;
+  var loggedIn = false.obs;
 
   @override
   void onInit() async {

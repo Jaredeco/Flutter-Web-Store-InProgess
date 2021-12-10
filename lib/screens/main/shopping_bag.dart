@@ -52,16 +52,19 @@ class _ShoppingBagState extends State<ShoppingBag> {
           ),
         ),
         Material(
+          color: Colors.white,
           child: SizedBox(
             height: 100,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GetX<BagController>(
-                  builder: (_) => CustomText(
-                    padding: const EdgeInsets.only(left: 40),
-                    text: "Total: ${bagController.totalAmount} €",
-                    color: Colors.black,
+                  builder: (_) => Expanded(
+                    child: CustomText(
+                      padding: const EdgeInsets.only(left: 40),
+                      text: "Total: ${bagController.totalAmount} €",
+                      color: Colors.black,
+                    ),
                   ),
                 ),
                 Padding(
