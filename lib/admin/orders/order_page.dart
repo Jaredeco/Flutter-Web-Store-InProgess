@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:webstore/admin/products/product_card_admin.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/constants/firebase.dart';
 import 'package:webstore/controllers/order_controller.dart';
@@ -23,10 +24,10 @@ class AdminOrderPage extends StatefulWidget {
 class _AdminOrderPageState extends State<AdminOrderPage> {
   @override
   void initState() {
-    super.initState();
     if (!adminController.loggedIn.value) {
       SystemNavigator.pop();
     }
+    super.initState();
   }
 
   Widget infoItem(String leading, String title) {
@@ -98,8 +99,7 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                             return Wrap(
                               alignment: WrapAlignment.center,
                               children: controller.orderedProducts
-                                  .map((item) => ProductCard(
-                                        admin: true,
+                                  .map((item) => AdminProductCard(
                                         amountOrdered:
                                             order.bagProducts![item.id],
                                         product: item,

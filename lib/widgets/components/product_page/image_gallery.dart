@@ -10,48 +10,60 @@ class ImageGallery extends StatefulWidget {
   _ImageGalleryState createState() => _ImageGalleryState();
 }
 
-class _ImageGalleryState extends State<ImageGallery> {
+class _ImageGalleryState extends State<ImageGallery>
+    with TickerProviderStateMixin {
   final ScrollController sc = ScrollController();
+
+  AnimationController? animationController;
+  @override
+  void initState() {
+    animationController =
+        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController!.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double anm = 0;
     double width = 770;
     double point = 0;
     double w = width / 3 * widget.imgsUrl!.length - 40;
-    List<Widget> _gallery = List<Widget>.generate(
-      widget.imgsUrl!.length,
-      (index) => GestureDetector(
-        onTap: () {
-          productController.changeImg(index);
-        },
-        child: Container(
-          height: 150,
-          width: width / 3,
-          decoration: BoxDecoration(
-              border: const Border(right: BorderSide(color: Colors.white)),
-              image: DecorationImage(
-                  image: NetworkImage(
-                    widget.imgsUrl![index].toString(),
-                  ),
-                  fit: BoxFit.cover)),
-        ),
-      ),
-    );
+
+    final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
+        .animate(CurvedAnimation(
+            parent: animationController!,
+            curve:
+                const Interval((1 / 1) * 0, 1.0, curve: Curves.fastOutSlowIn)));
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GetX<ProductController>(
-            builder: (_) => Container(
-                height: 400,
-                width: width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(widget
-                          .imgsUrl![productController.selectedImage.value]
-                          .toString()),
-                      fit: BoxFit.cover),
-                ))),
+            builder: (_) {
+              animationController!.forward();
+              return FadeTransition(
+                opacity: animation,
+                child: Transform(
+                    transform: Matrix4.translationValues(
+                        0.0, 30 * (1.0 - animation.value), 0.0),
+                    child: Container(
+                        height: 400,
+                        width: width,
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          image: DecorationImage(
+                              image: NetworkImage(widget.imgsUrl![
+                                      productController.selectedImage.value]
+                                  .toString()),
+                              fit: BoxFit.cover),
+                        ))));}),
         SizedBox(
           width: width,
           child: Stack(
@@ -60,7 +72,19 @@ class _ImageGalleryState extends State<ImageGallery> {
                 controller: sc,
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: _gallery,
+                  children:
+                      List<Widget>.generate(widget.imgsUrl!.length, (index) {
+                    animationController!.forward();
+                    return imgCell(
+                        index,
+                        width,
+                        Tween<double>(begin: 0.0, end: 1.0).animate(
+                            CurvedAnimation(
+                                parent: animationController!,
+                                curve: Interval(
+                                    (1 / widget.imgsUrl!.length) * index, 1.0,
+                                    curve: Curves.fastOutSlowIn))));
+                  }),
                 ),
               ),
               Padding(
@@ -98,5 +122,31 @@ class _ImageGalleryState extends State<ImageGallery> {
         )
       ],
     );
+  }
+
+  Widget imgCell(int idx, double width, Animation<double> animation) {
+    return GestureDetector(
+        onTap: () {
+          productController.changeImg(idx);
+        },
+        child: FadeTransition(
+          opacity: animation,
+          child: Transform(
+            transform: Matrix4.translationValues(
+                0.0, 30 * (1.0 - animation.value), 0.0),
+            child: Container(
+              height: 150,
+              width: width / 3,
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                  border: const Border(right: BorderSide(color: Colors.white)),
+                  image: DecorationImage(
+                      image: NetworkImage(
+                        widget.imgsUrl![idx].toString(),
+                      ),
+                      fit: BoxFit.cover)),
+            ),
+          ),
+        ));
   }
 }

@@ -4,10 +4,13 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductModel product;
-  final int? amountOrdered;
-  final bool admin;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
   const ProductCard(
-      {Key? key, required this.product, this.amountOrdered, this.admin = false})
+      {Key? key,
+      required this.product,
+      this.animationController,
+      this.animation})
       : super(key: key);
 
   @override
@@ -17,61 +20,68 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
-      child: InkWell(
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        onTap: () {
-          if (widget.admin) {
-            Navigator.of(context)
-                .pushNamed("/admin/products/${widget.product.id}");
-          } else {
-            Navigator.of(context).pushNamed("/product/${widget.product.id}");
-          }
-        },
-        child: Column(
-          children: [
-            Container(
-              width: 300,
-              height: 325,
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.product.imgsUrl![0]),
-                      fit: BoxFit.cover)),
-            ),
-            Container(
-                padding: const EdgeInsets.only(top: 10, bottom: 20),
-                child: Column(children: [
-                  CustomText(
-                    size: 20,
-                    text: widget.product.title,
-                  ),
-                  widget.amountOrdered != null
-                      ? CustomText(text: "Amount: ${widget.amountOrdered}")
-                      : Container(
-                          padding: const EdgeInsets.all(20),
-                          width: 300,
-                          child: Text(
-                            widget.product.description!,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: false,
+    return AnimatedBuilder(
+        animation: widget.animationController!,
+        builder: (BuildContext context, Widget? child) {
+          return FadeTransition(
+              opacity: widget.animation!,
+              child: Transform(
+                  transform: Matrix4.translationValues(
+                      0.0, 30 * (1.0 - widget.animation!.value), 0.0),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      onTap: () {
+                        Navigator.of(context)
+                            .pushNamed("/product/${widget.product.id}");
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 300,
+                            height: 325,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[50],
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(15)),
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        widget.product.imgsUrl![0]),
+                                    fit: BoxFit.cover)),
                           ),
-                        ),
-                  CustomText(
-                    size: 16,
-                    weight: FontWeight.bold,
-                    text: "${widget.product.price} €",
-                  ),
-                ])),
-          ],
-        ),
-      ),
-    );
+                          Container(
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 20),
+                              child: Column(children: [
+                                CustomText(
+                                  size: 20,
+                                  text: widget.product.title,
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(20),
+                                  width: 300,
+                                  child: Text(
+                                    widget.product.description!,
+                                    style: const TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    softWrap: false,
+                                  ),
+                                ),
+                                CustomText(
+                                  size: 16,
+                                  weight: FontWeight.bold,
+                                  text: "${widget.product.price} €",
+                                ),
+                              ])),
+                        ],
+                      ),
+                    ),
+                  )));
+        });
   }
 }

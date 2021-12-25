@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:webstore/admin/products/product_card_admin.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
@@ -16,10 +17,10 @@ class AdminProducts extends StatefulWidget {
 class _AdminProductsState extends State<AdminProducts> {
   @override
   void initState() {
-    super.initState();
     if (!adminController.loggedIn.value) {
       SystemNavigator.pop();
     }
+    super.initState();
   }
 
   @override
@@ -35,8 +36,7 @@ class _AdminProductsState extends State<AdminProducts> {
                 return Wrap(
                   alignment: WrapAlignment.center,
                   children: controller.products
-                      .map((item) => ProductCard(
-                            admin: true,
+                      .map((item) => AdminProductCard(
                             product: item,
                           ))
                       .toList()

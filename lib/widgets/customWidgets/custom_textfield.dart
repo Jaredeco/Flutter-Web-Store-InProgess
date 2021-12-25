@@ -36,21 +36,26 @@ class CustomTextField extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            child: TextFormField(
-              maxLines: maxLines == true ? 1 : null,
-              keyboardType: kbdType,
-              obscureText: isObscure ?? false,
-              controller: txtController,
-              validator: validate,
-              onChanged: onChanged,
-              decoration: InputDecoration(
-                  icon: Icon(txtIcon, color: Colors.black),
-                  fillColor: Colors.white,
-                  border: InputBorder.none,
-                  hintText: txtText,
-                  hintStyle: const TextStyle(color: Colors.black)),
+          child: Material(
+            color: Colors.white,
+            elevation: 1,
+            borderRadius: BorderRadius.circular(10),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+              child: TextFormField(
+                maxLines: maxLines == true ? 1 : null,
+                keyboardType: kbdType,
+                obscureText: isObscure ?? false,
+                controller: txtController,
+                validator: validate,
+                onChanged: onChanged,
+                decoration: InputDecoration(
+                    icon: Icon(txtIcon, color: Colors.black),
+                    fillColor: Colors.white,
+                    border: InputBorder.none,
+                    hintText: txtText,
+                    hintStyle: const TextStyle(color: Colors.black)),
+              ),
             ),
           ),
         ),

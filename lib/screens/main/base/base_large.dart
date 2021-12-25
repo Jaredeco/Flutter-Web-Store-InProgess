@@ -22,6 +22,7 @@ class _BaseLargeState extends State<BaseLarge> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ZoomDrawer(
+        
         isRtl: true,
         controller: _drawerController,
         style: DrawerStyle.Style1,

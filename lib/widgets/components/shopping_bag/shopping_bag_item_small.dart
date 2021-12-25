@@ -7,7 +7,14 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class BagItemSmall extends StatefulWidget {
   final ProductModel product;
-  const BagItemSmall({Key? key, required this.product}) : super(key: key);
+  final AnimationController? animationController;
+  final Animation<double>? animation;
+  const BagItemSmall(
+      {Key? key,
+      required this.product,
+      this.animationController,
+      this.animation})
+      : super(key: key);
 
   @override
   _BagItemSmallState createState() => _BagItemSmallState();

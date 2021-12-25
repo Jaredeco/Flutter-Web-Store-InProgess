@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -27,11 +25,11 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
-    super.initState();
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       productController.changeImg(0);
       productController.amount.value = 1;
     });
+    super.initState();
   }
 
   @override

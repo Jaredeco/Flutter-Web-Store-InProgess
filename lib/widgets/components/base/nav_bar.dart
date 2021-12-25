@@ -17,7 +17,7 @@ class NavBar extends StatelessWidget {
       children: [
         if (mainPage != null)
           Container(
-            height: 400,
+            height: 200,
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(60.0),
@@ -79,10 +79,17 @@ class NavBar extends StatelessWidget {
                 : Padding(
                     padding: const EdgeInsets.only(right: 35.0),
                     child: IconButton(
-                        onPressed: () {
-                          drawerController.toggle!();
-                        },
-                        icon: const Icon(Icons.menu)),
+                      onPressed: () {
+                        drawerController.toggle!();
+                      },
+                      icon: Badge(
+                        badgeContent: GetX<BagController>(
+                          builder: (_) =>
+                              Text(bagController.products.length.toString()),
+                        ),
+                        child: const Icon(Icons.menu),
+                      ),
+                    ),
                   ),
           ],
         ),

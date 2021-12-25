@@ -1,5 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:get/get.dart';
+import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/controllers/bag_controller.dart';
 
 class MenuPage extends StatelessWidget {
   final ZoomDrawerController drawerController;
@@ -10,7 +14,7 @@ class MenuPage extends StatelessWidget {
     return Theme(
       data: ThemeData.dark(),
       child: Scaffold(
-          backgroundColor: const Color(0xff78909c),
+          backgroundColor: Color(0xFFF67C0B9),
           body: Container(
             alignment: Alignment.centerRight,
             child: SizedBox(
@@ -34,13 +38,18 @@ class MenuPage extends StatelessWidget {
     return ListTile(
       selected: ModalRoute.of(context)!.settings.name == route,
       minLeadingWidth: 20,
-      leading: Icon(icon),
-      title: Text(title),
+      leading: icon == Icons.shopping_bag
+          ? Badge(
+              badgeContent: GetX<BagController>(
+                builder: (_) => Text(bagController.products.length.toString()),
+              ),
+              child: const Icon(Icons.shopping_bag_outlined),
+            )
+          : Icon(icon),
+      title: Text(
+        title,
+      ),
       onTap: () async {
-        // final _receivePort = ReceivePort();
-        // await Isolate.spawn(drawerController.toggle!(), _receivePort.sendPort);
-        // await Future.doWhile(() => drawerController.isOpen!());
-        // drawerController.toggle!();
         await Future(drawerController.toggle! as dynamic).then((value) {
           Navigator.of(context).pushNamed(route);
         });

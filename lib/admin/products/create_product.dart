@@ -23,10 +23,10 @@ class AdminCreateProduct extends StatefulWidget {
 class _AdminCreateProductState extends State<AdminCreateProduct> {
   @override
   void initState() {
-    super.initState();
     if (!adminController.loggedIn.value) {
       SystemNavigator.pop();
     }
+    super.initState();
   }
 
   final TextEditingController _titleTextController = TextEditingController();

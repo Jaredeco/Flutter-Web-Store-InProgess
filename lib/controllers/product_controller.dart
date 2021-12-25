@@ -65,7 +65,7 @@ class ProductController extends GetxController {
     update();
   }
 
-  List<Widget> searchProducts() {
+  List<Widget> searchProducts(AnimationController animationController) {
     List<ProductModel> _searchedProducts = [];
     for (ProductModel element in products) {
       if (element.title!.toLowerCase().contains(query.toLowerCase())) {
@@ -73,12 +73,25 @@ class ProductController extends GetxController {
       }
     }
     if (_searchedProducts.isEmpty) {
-      return [Text("No results")];
+      return [const Text("No results...")];
     }
+    animationController.reset();
     return _searchedProducts
-        .map((item) => ProductCard(
-              product: item,
-            ))
+        .map((item) {
+          animationController.forward();
+          return ProductCard(
+            product: item,
+            animationController: animationController,
+            animation: Tween<double>(begin: 0.0, end: 1.0).animate(
+                CurvedAnimation(
+                    parent: animationController,
+                    curve: Interval(
+                        (1 / _searchedProducts.length) *
+                            _searchedProducts.indexOf(item),
+                        1.0,
+                        curve: Curves.fastOutSlowIn))),
+          );
+        })
         .toList()
         .cast<Widget>();
   }
