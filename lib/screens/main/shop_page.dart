@@ -34,18 +34,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-        // onNotification: (scrollNotification) {
-        //   if (scrollNotification is ScrollStartNotification) {
-        //     _onStartScroll(scrollNotification.metrics);
-        //   } else if (scrollNotification is ScrollUpdateNotification) {
-        //     _onUpdateScroll(scrollNotification.metrics);
-        //   } else if (scrollNotification is ScrollEndNotification) {
-        //     _onEndScroll(scrollNotification.metrics);
-        //   }
-        //   return true;
-        // },
-        child: ResponsiveUi(
+    return ResponsiveUi(
       mainPage: true,
       largeWidgets: [
         Row(
@@ -76,10 +65,10 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             SimpleAccountMenu(
               icons: const [
                 Icon(Icons.date_range),
-                Icon(Icons.arrow_upward_rounded),
-                Icon(Icons.arrow_downward_rounded),
+                Icon(Icons.sort_rounded),
+                Icon(Icons.sort),
               ],
-              iconColor: Colors.white,
+              iconColor: Colors.black,
               onChange: (index) {
                 print(index);
               },
@@ -119,7 +108,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
               }
             }))
       ],
-    ));
+    );
   }
 }
 

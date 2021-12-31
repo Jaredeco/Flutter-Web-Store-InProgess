@@ -18,7 +18,7 @@ class _ImageGalleryState extends State<ImageGallery>
   @override
   void initState() {
     animationController =
-        AnimationController(duration: const Duration(seconds: 2), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
     super.initState();
   }
 
@@ -30,40 +30,43 @@ class _ImageGalleryState extends State<ImageGallery>
 
   @override
   Widget build(BuildContext context) {
-    double anm = 0;
     double width = 770;
     double point = 0;
-    double w = width / 3 * widget.imgsUrl!.length - 40;
+    double mv = 0.4;
 
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
             parent: animationController!,
-            curve:
-                const Interval((1 / 1) * 0, 1.0, curve: Curves.fastOutSlowIn)));
+            curve: Interval((1 / widget.imgsUrl!.length + 1) * 0, 1.0,
+                curve: Curves.fastOutSlowIn)));
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        GetX<ProductController>(
-            builder: (_) {
-              animationController!.forward();
+        AnimatedBuilder(
+            animation: animationController!,
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
-                opacity: animation,
-                child: Transform(
-                    transform: Matrix4.translationValues(
-                        0.0, 30 * (1.0 - animation.value), 0.0),
-                    child: Container(
-                        height: 400,
-                        width: width,
-                        decoration: BoxDecoration(
-                          color: Colors.grey,
-                          image: DecorationImage(
-                              image: NetworkImage(widget.imgsUrl![
-                                      productController.selectedImage.value]
-                                  .toString()),
-                              fit: BoxFit.cover),
-                        ))));}),
+                  opacity: animation,
+                  child: Transform(
+                      transform: Matrix4.translationValues(
+                          0.0, 30 * (1.0 - animation.value), 0.0),
+                      child: GetX<ProductController>(builder: (_) {
+                        animationController!.forward();
+                        return Container(
+                            height: 400,
+                            width: width,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[50],
+                              image: DecorationImage(
+                                  image: NetworkImage(widget.imgsUrl![
+                                          productController.selectedImage.value]
+                                      .toString()),
+                                  fit: BoxFit.cover),
+                            ));
+                      })));
+            }),
         SizedBox(
           width: width,
           child: Stack(
@@ -94,23 +97,21 @@ class _ImageGalleryState extends State<ImageGallery>
                   children: [
                     IconButton(
                         onPressed: () {
-                          if (point - 0.2 >= 0) {
-                            point -= 0.2;
-                            anm = w * point;
-                            sc.animateTo(anm,
+                          if (point - mv >= 0) {
+                            point -= mv;
+                            sc.animateTo(sc.position.maxScrollExtent * point,
                                 duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease);
+                                curve: Curves.fastOutSlowIn);
                           }
                         },
                         icon: const Icon(Icons.arrow_back_ios_new_rounded)),
                     IconButton(
                         onPressed: () {
-                          if (point + 0.2 <= 1) {
-                            point += 0.2;
-                            anm = w * point;
-                            sc.animateTo(anm,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease);
+                          if (point + mv <= 1) {
+                            point += mv;
+                            sc.animateTo(sc.position.maxScrollExtent * point,
+                                duration: const Duration(milliseconds: 400),
+                                curve: Curves.fastOutSlowIn);
                           }
                         },
                         icon: const Icon(Icons.arrow_forward_ios_rounded)),
@@ -125,28 +126,31 @@ class _ImageGalleryState extends State<ImageGallery>
   }
 
   Widget imgCell(int idx, double width, Animation<double> animation) {
-    return GestureDetector(
-        onTap: () {
-          productController.changeImg(idx);
-        },
-        child: FadeTransition(
-          opacity: animation,
-          child: Transform(
-            transform: Matrix4.translationValues(
-                0.0, 30 * (1.0 - animation.value), 0.0),
-            child: Container(
-              height: 150,
-              width: width / 3,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                  border: const Border(right: BorderSide(color: Colors.white)),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                        widget.imgsUrl![idx].toString(),
-                      ),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-        ));
+    return AnimatedBuilder(
+        animation: animationController!,
+        builder: (BuildContext context, Widget? child) {
+          return FadeTransition(
+              opacity: animation,
+              child: Transform(
+                  transform: Matrix4.translationValues(
+                      0.0, 30 * (1.0 - animation.value), 0.0),
+                  child: GestureDetector(
+                      onTap: () {
+                        productController.changeImg(idx);
+                      },
+                      child: Container(
+                        height: 150,
+                        width: width / 3,
+                        decoration: BoxDecoration(
+                            color: Colors.grey[50],
+                            border: const Border(
+                                right: BorderSide(color: Colors.white)),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                  widget.imgsUrl![idx].toString(),
+                                ),
+                                fit: BoxFit.cover)),
+                      ))));
+        });
   }
 }

@@ -14,7 +14,7 @@ class SimpleAccountMenu extends StatefulWidget {
     this.icons,
     this.titles,
     this.borderRadius,
-    this.backgroundColor = const Color(0xFFF67C0B9),
+    this.backgroundColor = Colors.white,
     this.iconColor = Colors.black,
     this.onChange,
   })  : assert(icons != null),
@@ -78,7 +78,7 @@ class _SimpleAccountMenuState extends State<SimpleAccountMenu>
       elevation: 1,
       child: Container(
         key: _key,
-        decoration: BoxDecoration(  
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: _borderRadius,
         ),

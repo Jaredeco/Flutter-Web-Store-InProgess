@@ -7,7 +7,7 @@ import 'package:webstore/admin/products/create_product.dart';
 import 'package:webstore/admin/products/product_page_admin.dart';
 import 'package:webstore/admin/products/products.dart';
 import 'package:webstore/screens/helper/notfound_page.dart';
-import 'package:webstore/screens/home_page.dart';
+import 'package:webstore/screens/landing/home_page.dart';
 import 'package:webstore/screens/main/shop_page.dart';
 import 'package:webstore/screens/main/order_page.dart';
 import 'package:webstore/screens/main/product_page.dart';

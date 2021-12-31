@@ -9,7 +9,13 @@ class BaseSmall extends StatefulWidget {
   final List<Widget> widgets;
   final bool? admin;
   final bool? mainPage;
-  const BaseSmall({Key? key, required this.widgets, this.admin, this.mainPage})
+  final bool? landing;
+  const BaseSmall(
+      {Key? key,
+      required this.widgets,
+      this.admin,
+      this.mainPage,
+      this.landing})
       : super(key: key);
 
   @override
@@ -20,39 +26,41 @@ class _BaseSmallState extends State<BaseSmall> {
   final _drawerController = ZoomDrawerController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: ZoomDrawer(
-        isRtl: true,
-        controller: _drawerController,
-        style: DrawerStyle.Style1,
-        menuScreen: widget.admin != null
-            ? AdminMenuPage(drawerController: _drawerController)
-            : MenuPage(
-                drawerController: _drawerController,
-              ),
-        mainScreen: Scaffold(
-          body: ListView(
-            children: [
-              widget.admin != null
-                  ? AdminNavBar(
-                      drawerController: _drawerController,
-                    )
-                  : NavBar(
-                      mainPage: widget.mainPage,
+    return widget.landing != null
+        ? widget.widgets[0]
+        : Scaffold(
+            body: ZoomDrawer(
+              isRtl: true,
+              controller: _drawerController,
+              style: DrawerStyle.Style1,
+              menuScreen: widget.admin != null
+                  ? AdminMenuPage(drawerController: _drawerController)
+                  : MenuPage(
                       drawerController: _drawerController,
                     ),
-              ...widget.widgets,
-            ],
-          ),
-        ),
-        borderRadius: 24.0,
-        showShadow: true,
-        angle: -12.0,
-        backgroundColor: Colors.grey,
-        slideWidth: MediaQuery.of(context).size.width * 0.3,
-        openCurve: Curves.fastOutSlowIn,
-        closeCurve: Curves.bounceIn,
-      ),
-    );
+              mainScreen: Scaffold(
+                body: ListView(
+                  children: [
+                    widget.admin != null
+                        ? AdminNavBar(
+                            drawerController: _drawerController,
+                          )
+                        : NavBar(
+                            mainPage: widget.mainPage,
+                            drawerController: _drawerController,
+                          ),
+                    ...widget.widgets,
+                  ],
+                ),
+              ),
+              borderRadius: 24.0,
+              showShadow: true,
+              angle: -12.0,
+              backgroundColor: Colors.grey,
+              slideWidth: MediaQuery.of(context).size.width * 0.3,
+              openCurve: Curves.fastOutSlowIn,
+              closeCurve: Curves.bounceIn,
+            ),
+          );
   }
 }
