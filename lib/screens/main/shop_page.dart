@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
+import 'package:webstore/widgets/components/home/search_bar.dart';
 import 'package:webstore/widgets/components/home/sort_drop_down.dart';
+import 'package:webstore/widgets/components/landing/gradient_text.dart';
+import 'package:webstore/widgets/components/landing/main_button.dart';
+import 'package:webstore/widgets/components/landing/social_icon.dart';
 import 'package:webstore/widgets/customWidgets/custom_drop_down.dart';
+import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
 
 class ShopPage extends StatefulWidget {
@@ -35,46 +41,141 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return ResponsiveUi(
-      mainPage: true,
       largeWidgets: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CustomTextField(
-              onChanged: (text) {
-                productController.search(text);
-              },
-              txtController: _searchTextController,
-              txtIcon: Icons.search,
-              txtText: "Search...",
-              maxLines: true,
-              width: MediaQuery.of(context).size.width * 0.5,
-            ),
-            // GetX<ProductController>(
-            //   builder: (_) => SortDropDown(
-            //     width: MediaQuery.of(context).size.width * 0.25,
-            //     cValue: productController.orderBy.value,
-            //     ddItems: ProductController.orderBys,
-            //     onChanged: (newValue) {
-            //       animationController!.reset();
-            //       productController.setOrderBy(newValue.toString());
-            //       productController.onInit();
-            //     },
-            //   ),
-            // )
-            SimpleAccountMenu(
-              icons: const [
-                Icon(Icons.date_range),
-                Icon(Icons.sort_rounded),
-                Icon(Icons.sort),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                const GradientText(
+                  'Objavte naše produkty...',
+                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 550),
+                  child: const CustomText(
+                    text:
+                        "Oskdoskdsodkskddsd dsokdosdk okds ksokdksodk okdosf  eifjeijf.",
+                    size: 16,
+                    color: Color(0xFF7C8FB5),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SearchBar(
+                      onChanged: (text) {
+                        productController.search(text);
+                      },
+                      txtController: _searchTextController,
+                    ),
+                    const SizedBox(width: 10),
+                    GetX<ProductController>(
+                      builder: (_) => SortDropDown(
+                        width: 250,
+                        cValue: productController.orderBy.value,
+                        ddItems: ProductController.orderBys,
+                        onChanged: (newValue) {
+                          animationController!.reset();
+                          productController.setOrderBy(newValue.toString());
+                          productController.onInit();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ],
-              iconColor: Colors.black,
-              onChange: (index) {
-                print(index);
-              },
             ),
-          ],
+          ),
         ),
+        const SizedBox(height:30),
+        Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: GetX<ProductController>(
+                builder: (ProductController controller) {
+              if (controller != null && controller.products != null) {
+                return Wrap(
+                  alignment: WrapAlignment.center,
+                  children: controller.query.isEmpty
+                      ? controller.products
+                          .map((item) {
+                            animationController!.forward();
+                            return ProductCard(
+                              product: item,
+                              animationController: animationController,
+                              animation: Tween<double>(begin: 0.0, end: 1.0)
+                                  .animate(CurvedAnimation(
+                                      parent: animationController!,
+                                      curve: Interval(
+                                          (1 / controller.products.length) *
+                                              controller.products.indexOf(item),
+                                          1.0,
+                                          curve: Curves.fastOutSlowIn))),
+                            );
+                          })
+                          .toList()
+                          .cast<Widget>()
+                      : controller.searchProducts(animationController!),
+                );
+              } else {
+                return Container();
+              }
+            }))
+      ], smallWidgets: [
+         Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                const GradientText(
+                  'Objavte naše produkty...',
+                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Container(
+                  width: 500,
+                  child: const CustomText(
+                    text:
+                        "Oskdoskdsodkskddsd dsokdosdk okds ksokdksodk okdosf  eifjeijf.",
+                    size: 16,
+                    color: Color(0xFF7C8FB5),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SearchBar(
+                  onChanged: (text) {
+                    productController.search(text);
+                  },
+                  txtController: _searchTextController,
+                ),
+                const SizedBox(height: 10),
+                GetX<ProductController>(
+                  builder: (_) => SortDropDown(
+                    width: 250,
+                    cValue: productController.orderBy.value,
+                    ddItems: ProductController.orderBys,
+                    onChanged: (newValue) {
+                      animationController!.reset();
+                      productController.setOrderBy(newValue.toString());
+                      productController.onInit();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height:30),
         Padding(
             padding: const EdgeInsets.all(20.0),
             child: GetX<ProductController>(
@@ -111,6 +212,31 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
     );
   }
 }
+
+
+
+
+
+
+
+        // CustomTextField(
+            //   onChanged: (text) {
+            //     productController.search(text);
+            //   },
+            //   txtController: _searchTextController,
+            //   txtIcon: Icons.search,
+            //   txtText: "Search...",
+            //   maxLines: true,
+            //   width: MediaQuery.of(context).size.width * 0.5,
+            // ),
+
+
+
+
+
+
+
+
 
 
 

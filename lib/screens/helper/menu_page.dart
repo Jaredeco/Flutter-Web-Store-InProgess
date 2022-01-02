@@ -4,6 +4,8 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/bag_controller.dart';
+import 'package:webstore/widgets/components/landing/gradient_text.dart';
+import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class MenuPage extends StatelessWidget {
   final ZoomDrawerController drawerController;
@@ -12,23 +14,27 @@ class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.dark(),
+      data: ThemeData.light(),
       child: Scaffold(
-          backgroundColor: Color(0xFFF67C0B9),
-          body: Container(
-            alignment: Alignment.centerRight,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.4,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    menuItem(context, Icons.home, "Home", "/"),
-                    menuItem(context, Icons.shop, "Shop", "/shop"),
-                    menuItem(context, Icons.shopping_bag, "Shopping Bag",
-                        "/shopping-bag"),
-                    menuItem(context, Icons.info, "About Us", "/"),
-                  ]),
-            ),
+          backgroundColor: Colors.white,
+          body: Stack(
+            children: [
+              Container(
+                alignment: Alignment.centerRight,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        menuItem(context, Icons.home, "Home", "/"),
+                        menuItem(context, Icons.shop, "Shop", "/shop"),
+                        menuItem(context, Icons.shopping_bag, "Shopping Bag",
+                            "/shopping-bag"),
+                        menuItem(context, Icons.info, "About Us", "/"),
+                      ]),
+                ),
+              ),
+            ],
           )),
     );
   }
@@ -43,12 +49,15 @@ class MenuPage extends StatelessWidget {
               badgeContent: GetX<BagController>(
                 builder: (_) => Text(bagController.products.length.toString()),
               ),
-              child: const Icon(Icons.shopping_bag_outlined),
+              child: const Icon(
+                Icons.shopping_bag_outlined, color: Colors.black,
+              ),
             )
-          : Icon(icon),
-      title: Text(
-        title,
-      ),
+          : Icon(
+              icon,
+              color: Colors.black,
+            ),
+      title: CustomText(text: title, color: Colors.black,),
       onTap: () async {
         await Future(drawerController.toggle! as dynamic).then((value) {
           Navigator.of(context).pushNamed(route);
