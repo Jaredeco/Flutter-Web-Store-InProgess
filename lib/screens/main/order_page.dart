@@ -203,7 +203,7 @@ class OrderPage extends StatelessWidget {
                                       orderController.createOrder(_order);
                                       bagController.emptyBag();
                                       Navigator.of(context)
-                                          .pushNamed("/thankyou");
+                                          .pushNamed("/");
                                       orderController.loading(false);
                                     },
                                   ).show();
