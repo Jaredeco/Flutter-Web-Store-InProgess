@@ -146,7 +146,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                     text:
                         "Oskdoskdsodkskddsd dsokdosdk okds ksokdksodk okdosf  eifjeijf.",
                     size: 16,
-                    color: Color(0xFF7C8FB5),
+                    color: Colors.black,
                   ),
                 ),
                 const SizedBox(

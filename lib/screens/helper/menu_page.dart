@@ -41,28 +41,43 @@ class MenuPage extends StatelessWidget {
 
   Widget menuItem(
       BuildContext context, IconData icon, String title, String route) {
-    return ListTile(
-      selected: ModalRoute.of(context)!.settings.name == route,
-      minLeadingWidth: 20,
-      leading: icon == Icons.shopping_bag
-          ? Badge(
-              badgeContent: GetX<BagController>(
-                builder: (_) => Text(bagController.products.length.toString()),
-              ),
-              child: const Icon(
-                Icons.shopping_bag_outlined, color: Colors.black,
-              ),
-            )
-          : Icon(
-              icon,
-              color: Colors.black,
-            ),
-      title: CustomText(text: title, color: Colors.black,),
-      onTap: () async {
-        await Future(drawerController.toggle! as dynamic).then((value) {
-          Navigator.of(context).pushNamed(route);
-        });
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 300,
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          selected: ModalRoute.of(context)!.settings.name == route,
+          minLeadingWidth: 20,
+          selectedTileColor: Colors.grey[100],
+          leading: icon == Icons.shopping_bag
+              ? Badge(
+                  badgeContent: GetX<BagController>(
+                    builder: (_) =>
+                        Text(bagController.products.length.toString()),
+                  ),
+                  child: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Colors.black,
+                  ),
+                )
+              : Icon(
+                  icon,
+                  color: Colors.black,
+                ),
+          title: CustomText(
+            text: title,
+            color: Colors.black,
+          ),
+          onTap: () async {
+            await Future(drawerController.toggle! as dynamic).then((value) {
+              Navigator.of(context).pushNamed(route);
+            });
+          },
+        ),
+      ),
     );
   }
 }
