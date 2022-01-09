@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:opscroll_web/opscroll_web.dart';
+import 'package:parallax_animation/parallax_animation.dart';
 import 'package:webstore/screens/landing/landing_pages/info_page.dart';
 import 'package:webstore/screens/landing/landing_pages/landing_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return OpscrollWeb(
-      onePageChildren: const [
-        LandingPage(),
-        LandingInfoPage(),
-      ],
-      pageController: PageController(),
-      scrollCurve: Curves.easeIn,
-      scrollSpeed: const Duration(milliseconds: 900),
-      floatingButtonBackgroundColor: Colors.white,
-      floatingButtonSplashColor: Colors.white,
-      isFloatingButtonActive: false,
-      isTouchScrollingActive: false,
-      scrollingAnimationOptions: ScrollingAnimationOptions.Default,
-      scrollDirection: Axis.vertical,
+    final List<Widget> _pages = [const LandingPage(), const LandingInfoPage()];
+    return ParallaxArea(
+      child: PageView.builder(
+        scrollDirection: Axis.vertical,
+        itemCount: _pages.length,
+        itemBuilder: (context, index) {
+          return ParallaxWidget(child: _pages[index]);
+        },
+      ),
     );
   }
 }

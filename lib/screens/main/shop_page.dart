@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/product_controller.dart';
@@ -8,11 +7,7 @@ import 'package:webstore/widgets/components/home/product_card.dart';
 import 'package:webstore/widgets/components/home/search_bar.dart';
 import 'package:webstore/widgets/components/home/sort_drop_down.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
-import 'package:webstore/widgets/components/landing/main_button.dart';
-import 'package:webstore/widgets/components/landing/social_icon.dart';
-import 'package:webstore/widgets/customWidgets/custom_drop_down.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
-import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -57,8 +52,9 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                 ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 550),
                   child: const CustomText(
+                    textAlign: TextAlign.center,
                     text:
-                        "Oskdoskdsodkskddsd dsokdosdk okds ksokdksodk okdosf  eifjeijf.",
+                        "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
                     size: 16,
                     color: Color(0xFF7C8FB5),
                   ),
@@ -94,7 +90,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             ),
           ),
         ),
-        const SizedBox(height:30),
+        const SizedBox(height: 30),
         Padding(
             padding: const EdgeInsets.all(20.0),
             child: GetX<ProductController>(
@@ -127,8 +123,9 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                 return Container();
               }
             }))
-      ], smallWidgets: [
-         Center(
+      ],
+      smallWidgets: [
+        Center(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -140,13 +137,14 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                 const SizedBox(
                   height: 30,
                 ),
-                Container(
+                const SizedBox(
                   width: 500,
-                  child: const CustomText(
+                  child: CustomText(
+                    textAlign: TextAlign.center,
                     text:
-                        "Oskdoskdsodkskddsd dsokdosdk okds ksokdksodk okdosf  eifjeijf.",
+                        "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
                     size: 16,
-                    color: Colors.black,
+                    color: Color(0xFF7C8FB5),
                   ),
                 ),
                 const SizedBox(
@@ -175,7 +173,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             ),
           ),
         ),
-        const SizedBox(height:30),
+        const SizedBox(height: 30),
         Padding(
             padding: const EdgeInsets.all(20.0),
             child: GetX<ProductController>(
