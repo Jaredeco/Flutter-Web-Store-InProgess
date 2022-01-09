@@ -10,8 +10,8 @@ class Admin extends StatelessWidget {
   const Admin({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    String _ADMIN = "admin";
-    String _PASSWORD = "admin";
+    String _ADMIN = "vegoEGMT";
+    String _PASSWORD = "vegoEGMT2021";
     TextEditingController _admin = TextEditingController();
     TextEditingController _password = TextEditingController();
     return Column(children: [
