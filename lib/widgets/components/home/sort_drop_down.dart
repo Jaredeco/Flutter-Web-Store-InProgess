@@ -34,10 +34,15 @@ class _SortDropDownState extends State<SortDropDown> {
             child: DropdownButton(
               isExpanded: true,
               value: widget.cValue,
-              icon: const Icon(Icons.keyboard_arrow_down, color: Colors.black),
+              icon: const Icon(Icons.keyboard_arrow_down,
+                  color: Color(0xFF7C8FB5)),
               items: widget.ddItems!
-                  .map((String _item) =>
-                      DropdownMenuItem(value: _item, child: Text(_item)))
+                  .map((String _item) => DropdownMenuItem(
+                      value: _item,
+                      child: Text(
+                        _item,
+                        style: const TextStyle(color: Color(0xFF7C8FB5)),
+                      )))
                   .toList(),
               onChanged: widget.onChanged,
             ),

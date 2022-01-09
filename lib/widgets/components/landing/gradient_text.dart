@@ -33,6 +33,12 @@ class _GradientTextState extends State<GradientText>
   }
 
   @override
+  void dispose() {
+    _animationController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
@@ -47,7 +53,11 @@ class _GradientTextState extends State<GradientText>
       ).createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(widget.text, style: widget.style),
+      child: Text(
+        widget.text,
+        style: widget.style,
+        textAlign: TextAlign.center,
+      ),
     );
   }
 }

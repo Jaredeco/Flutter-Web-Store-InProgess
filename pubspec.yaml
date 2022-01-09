@@ -41,8 +41,9 @@ dependencies:
   url_strategy: ^0.2.0
   shared_preferences: ^2.0.9
   flutter_zoom_drawer: ^2.1.1
-  opscroll_web: ^0.2.1
   font_awesome_flutter: ^9.2.0
+  parallax_animation: ^0.0.3
+  animated_background: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^1.0.0
