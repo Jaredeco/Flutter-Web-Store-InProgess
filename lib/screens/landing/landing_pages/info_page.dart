@@ -110,19 +110,20 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                         spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const GradientTextNoAnm(
-                      text: 'Kto Sme?',
-                      style:
-                          TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                    const CustomText(
+                        text: 'Kto Sme?',
+                        size: 60,
+                        color: Color(0xFF45E994),
+                        weight: FontWeight.bold),
                     const CustomText(
                       textAlign: TextAlign.center,
                       text: "Školská Firma",
                       color: Color(0xFF7C8FB5),
-                      size: 45,
+                      size: 30,
                     ),
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 550),
@@ -131,7 +132,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                         textAlign: TextAlign.center,
                         text:
                             "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360 vision, plus a narrow cam to spot objects far off in the distance.",
-                        size: 16,
+                        size: 14,
                         color: Color(0xFF7C8FB5),
                       ),
                     ),

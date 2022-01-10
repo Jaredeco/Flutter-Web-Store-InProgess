@@ -131,10 +131,11 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                const GradientTextNoAnm(
-                  text: 'Objavte naše produkty...',
-                  style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
-                ),
+                const CustomText(
+                    text: 'Objavte naše produkty...',
+                    size: 40,
+                    color: Color(0xFF45E994),
+                    weight: FontWeight.bold),
                 const SizedBox(
                   height: 30,
                 ),

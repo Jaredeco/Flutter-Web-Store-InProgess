@@ -135,20 +135,20 @@ class _LandingPageState extends State<LandingPage>
                         spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 20),
-                    const GradientTextNoAnm(
-                      text: 'VEGO',
-                      style:
-                          TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
-                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                    const CustomText(
+                        text: 'VEGO',
+                        size: 60,
+                        color: Color(0xFF45E994),
+                        weight: FontWeight.bold),
                     const CustomText(
                       textAlign: TextAlign.center,
                       text: "Školská Firma",
                       color: Color(0xFF7C8FB5),
-                      size: 60,
+                      size: 30,
                     ),
                     ConstrainedBox(
                       constraints: const BoxConstraints(maxWidth: 550),
@@ -157,7 +157,7 @@ class _LandingPageState extends State<LandingPage>
                         textAlign: TextAlign.center,
                         text:
                             "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
-                        size: 16,
+                        size: 12,
                         color: Color(0xFF7C8FB5),
                       ),
                     ),
@@ -196,7 +196,7 @@ class _LandingPageState extends State<LandingPage>
                         ),
                       ],
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 20),
                     const Center(
                         child: Icon(
                       Icons.keyboard_arrow_down,
