@@ -7,6 +7,7 @@ import 'package:webstore/widgets/components/home/product_card.dart';
 import 'package:webstore/widgets/components/home/search_bar.dart';
 import 'package:webstore/widgets/components/home/sort_drop_down.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
+import 'package:webstore/widgets/components/landing/gradient_text_noanm.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ShopPage extends StatefulWidget {
@@ -43,7 +44,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             child: Column(
               children: [
                 const GradientText(
-                  'Objavte naše produkty...',
+                  text: 'Objavte naše produkty...',
                   style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
@@ -130,8 +131,8 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                const GradientText(
-                  'Objavte naše produkty...',
+                const GradientTextNoAnm(
+                  text: 'Objavte naše produkty...',
                   style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(

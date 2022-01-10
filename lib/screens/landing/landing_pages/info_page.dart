@@ -1,7 +1,9 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
+import 'package:webstore/constants/global.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
+import 'package:webstore/widgets/components/landing/gradient_text_noanm.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class LandingInfoPage extends StatefulWidget {
@@ -30,8 +32,8 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                 behaviour: RandomParticleBehaviour(
                     options: const ParticleOptions(
                         baseColor: Color(0xFF45E994),
-                        spawnMinSpeed: 100,
-                        spawnMaxSpeed: 150)),
+                        spawnMinSpeed: minParSpeed,
+                        spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,7 +43,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const GradientText(
-                          'Kto Sme?',
+                          text: 'Kto Sme?',
                           style: TextStyle(
                               fontSize: 80, fontWeight: FontWeight.bold),
                         ),
@@ -103,16 +105,16 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                 behaviour: RandomParticleBehaviour(
                     options: const ParticleOptions(
                         baseColor: Color(0xFF45E994),
-                        particleCount: 50,
-                        spawnMinSpeed: 100,
-                        spawnMaxSpeed: 150)),
+                        particleCount: smallParCount,
+                        spawnMinSpeed: minParSpeed,
+                        spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const GradientText(
-                      'Kto Sme?',
+                    const GradientTextNoAnm(
+                      text: 'Kto Sme?',
                       style:
                           TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
                     ),
@@ -138,7 +140,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                     ),
                     Container(
                         height: MediaQuery.of(context).size.height * 0.4,
-                        width: MediaQuery.of(context).size.width * 0.7,
+                        width: MediaQuery.of(context).size.width * 0.9,
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(

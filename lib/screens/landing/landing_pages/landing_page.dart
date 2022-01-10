@@ -1,12 +1,13 @@
 import 'package:animated_background/animated_background.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/widgets/components/landing/gradient_text_noanm.dart';
 import 'package:webstore/widgets/components/landing/main_button.dart';
 import 'package:webstore/widgets/components/landing/social_icon.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
+import 'package:webstore/constants/global.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({Key? key}) : super(key: key);
@@ -34,15 +35,15 @@ class _LandingPageState extends State<LandingPage>
                 behaviour: RandomParticleBehaviour(
                     options: const ParticleOptions(
                         baseColor: Color(0xFF45E994),
-                        spawnMinSpeed: 100,
-                        spawnMaxSpeed: 150)),
+                        spawnMinSpeed: minParSpeed,
+                        spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const GradientText(
-                      'VEGO',
+                      text: 'VEGO',
                       style:
                           TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
                     ),
@@ -129,17 +130,17 @@ class _LandingPageState extends State<LandingPage>
                 behaviour: RandomParticleBehaviour(
                     options: const ParticleOptions(
                         baseColor: Color(0xFF45E994),
-                        particleCount: 50,
-                        spawnMinSpeed: 100,
-                        spawnMaxSpeed: 150)),
+                        particleCount: smallParCount,
+                        spawnMinSpeed: minParSpeed,
+                        spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const SizedBox(height: 20),
-                    const GradientText(
-                      'VEGO',
+                    const GradientTextNoAnm(
+                      text: 'VEGO',
                       style:
                           TextStyle(fontSize: 80, fontWeight: FontWeight.bold),
                     ),
@@ -195,7 +196,7 @@ class _LandingPageState extends State<LandingPage>
                         ),
                       ],
                     ),
-                    // const SizedBox(height: 100),
+                    const SizedBox(height: 40),
                     const Center(
                         child: Icon(
                       Icons.keyboard_arrow_down,

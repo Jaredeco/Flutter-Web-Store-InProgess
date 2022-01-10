@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class GradientText extends StatefulWidget {
-  const GradientText(
-    this.text, {
+  const GradientText({
+    Key? key,
+    this.text,
     this.style,
-  });
+  }) : super(key: key);
 
-  final String text;
+  final String? text;
   final TextStyle? style;
 
   @override
@@ -54,7 +55,7 @@ class _GradientTextState extends State<GradientText>
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
       child: Text(
-        widget.text,
+        widget.text!,
         style: widget.style,
         textAlign: TextAlign.center,
       ),
