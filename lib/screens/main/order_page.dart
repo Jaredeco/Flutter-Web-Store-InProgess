@@ -1,7 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:webstore/controllers/admin_controller.dart';
+import 'package:flutter/services.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/models/order_model.dart';
@@ -13,8 +13,21 @@ import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:get/get.dart';
 
-class OrderPage extends StatelessWidget {
-  OrderPage({Key? key}) : super(key: key);
+class OrderPage extends StatefulWidget {
+  const OrderPage({Key? key}) : super(key: key);
+
+  @override
+  State<OrderPage> createState() => _OrderPageState();
+}
+
+class _OrderPageState extends State<OrderPage> {
+  @override
+  void initState() {
+    if (bagController.products.isEmpty) {
+      SystemNavigator.pop();
+    }
+    super.initState();
+  }
 
   final TextEditingController _firstNameTextController =
       TextEditingController();
@@ -202,8 +215,7 @@ class OrderPage extends StatelessWidget {
                                           resolved: false);
                                       orderController.createOrder(_order);
                                       bagController.emptyBag();
-                                      Navigator.of(context)
-                                          .pushNamed("/");
+                                      Navigator.of(context).pushNamed("/");
                                       orderController.loading(false);
                                     },
                                   ).show();

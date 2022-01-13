@@ -42,6 +42,13 @@ class _ProductCardState extends State<ProductCard> {
                             width: 300,
                             height: 325,
                             decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    offset: const Offset(0, 8),
+                                    blurRadius: 8,
+                                  ),
+                                ],
                                 color: Colors.grey[50],
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(15)),
@@ -52,7 +59,7 @@ class _ProductCardState extends State<ProductCard> {
                           ),
                           Container(
                               padding:
-                                  const EdgeInsets.only(top: 10, bottom: 20),
+                                  const EdgeInsets.only(top: 15, bottom: 20),
                               child: Column(children: [
                                 CustomText(
                                   size: 20,

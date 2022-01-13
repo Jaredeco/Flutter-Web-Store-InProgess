@@ -157,7 +157,7 @@ class _LandingPageState extends State<LandingPage>
                         textAlign: TextAlign.center,
                         text:
                             "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
-                        size: 12,
+                        size: 14,
                         color: Color(0xFF7C8FB5),
                       ),
                     ),
