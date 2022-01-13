@@ -5,15 +5,12 @@ jobs:
       name: Deploy Website
       runs-on: ubuntu-latest
       steps:
-        # Checkout Repository
         - uses: actions/checkout@v1
 
-        # Install Flutter command
         - uses: subosito/flutter-action@v1
           with:
-            channel: 'dev'
+            channel: 'stable'
 
-        # Build Website
         - name: Build Website
           run: |
             flutter config --enable-web
@@ -21,7 +18,6 @@ jobs:
             flutter build web --release
           working-directory: ./
 
-        # Deploy Firebase Hosting
         - name: Deploy Firebase Hosting
           uses: w9jds/firebase-action@master
           with:
