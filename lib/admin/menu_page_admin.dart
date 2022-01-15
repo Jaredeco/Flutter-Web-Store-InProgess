@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class AdminMenuPage extends StatelessWidget {
   final ZoomDrawerController drawerController;
@@ -10,9 +11,9 @@ class AdminMenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Theme(
-      data: ThemeData.dark(),
+      data: ThemeData.light(),
       child: Scaffold(
-          backgroundColor: const Color(0xff78909c),
+          backgroundColor: Colors.white,
           body: Container(
             alignment: Alignment.centerRight,
             child: SizedBox(
@@ -25,22 +26,31 @@ class AdminMenuPage extends StatelessWidget {
                     menuItem(context, Icons.add, "Create Product",
                         "/admin/create-product"),
                     menuItem(context, Icons.shop, "Shop", "/admin/products"),
-                    ListTile(
-                      minLeadingWidth: 20,
-                      leading: const Icon(
-                        Icons.exit_to_app,
-                        color: Colors.red,
-                      ),
-                      title: const Text("Log Out"),
-                      onTap: () async {
-                        adminController.changelogIn(false);
-                        await Future(drawerController.toggle! as dynamic)
-                            .then((value) {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/shop', (route) => false);
-                        });
-                      },
-                    ),
+                    Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 300,
+                          child: ListTile(
+                            selectedTileColor: Colors.grey[100],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            minLeadingWidth: 20,
+                            leading: const Icon(
+                              Icons.exit_to_app,
+                              color: Colors.red,
+                            ),
+                            title: const Text("Log Out"),
+                            onTap: () async {
+                              adminController.changelogIn(false);
+                              await Future(drawerController.toggle! as dynamic)
+                                  .then((value) {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    '/shop', (route) => false);
+                              });
+                            },
+                          ),
+                        )),
                   ]),
             ),
           )),
@@ -49,20 +59,32 @@ class AdminMenuPage extends StatelessWidget {
 
   Widget menuItem(
       BuildContext context, IconData icon, String title, String route) {
-    return ListTile(
-      selected: ModalRoute.of(context)!.settings.name == route,
-      minLeadingWidth: 20,
-      leading: Icon(icon),
-      title: Text(title),
-      onTap: () async {
-        // final _receivePort = ReceivePort();
-        // await Isolate.spawn(drawerController.toggle!(), _receivePort.sendPort);
-        // await Future.doWhile(() => drawerController.isOpen!());
-        // drawerController.toggle!();
-        await Future(drawerController.toggle! as dynamic).then((value) {
-          Navigator.of(context).pushNamed(route);
-        });
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: 300,
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          selected: ModalRoute.of(context)!.settings.name == route,
+          minLeadingWidth: 20,
+          selectedTileColor: Colors.grey[100],
+          leading: Icon(
+            icon,
+            color: Colors.black,
+          ),
+          title: CustomText(
+            text: title,
+            color: Colors.black,
+          ),
+          onTap: () async {
+            await Future(drawerController.toggle! as dynamic).then((value) {
+              Navigator.of(context).pushNamed(route);
+            });
+          },
+        ),
+      ),
     );
   }
 }

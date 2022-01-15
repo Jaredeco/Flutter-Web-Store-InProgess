@@ -116,7 +116,10 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                                     onPressed: () {
                                       adminController.pickedImages.removeAt(i);
                                     },
-                                    icon: const Icon(Icons.close)),
+                                    icon: const Icon(
+                                      Icons.close,
+                                      color: Colors.red,
+                                    )),
                               )
                             ],
                           ),

@@ -41,21 +41,27 @@ class _ProductCardState extends State<ProductCard> {
                           Container(
                             width: 300,
                             height: 325,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(15),
+                              child: Image.network(widget.product.imgsUrl![0],
+                                  fit: BoxFit.cover),
+                            ),
                             decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.3),
-                                    offset: const Offset(0, 8),
-                                    blurRadius: 8,
-                                  ),
-                                ],
-                                color: Colors.grey[50],
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)),
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        widget.product.imgsUrl![0]),
-                                    fit: BoxFit.cover)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.3),
+                                  offset: const Offset(0, 8),
+                                  blurRadius: 8,
+                                ),
+                              ],
+                              color: Colors.grey[50],
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(15)),
+                              // image: DecorationImage(
+                              //     image: NetworkImage(
+                              //         widget.product.imgsUrl![0]),
+                              //     fit: BoxFit.cover)
+                            ),
                           ),
                           Container(
                               padding:

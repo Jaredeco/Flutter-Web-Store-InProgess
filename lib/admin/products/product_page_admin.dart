@@ -65,7 +65,7 @@ class _AdminProductPageState extends State<AdminProductPage> {
                             ImageGallery(imgsUrl: product.imgsUrl),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   const SizedBox(
@@ -88,8 +88,7 @@ class _AdminProductPageState extends State<AdminProductPage> {
                                   const SizedBox(
                                     height: 50,
                                   ),
-                                  Center(
-                                      child: CustomTextField(
+                                  CustomTextField(
                                     width:
                                         MediaQuery.of(context).size.width * 0.3,
                                     txtController: _descriptionTextController,
@@ -103,7 +102,7 @@ class _AdminProductPageState extends State<AdminProductPage> {
                                       }
                                       return null;
                                     },
-                                  )),
+                                  ),
                                   const SizedBox(
                                     height: 50,
                                   ),
@@ -138,18 +137,20 @@ class _AdminProductPageState extends State<AdminProductPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        CustomTextField(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          maxLines: true,
-                          txtController: _titleTextController,
-                          txtIcon: Icons.title,
-                          txtText: "Product Title",
-                          validate: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Text is empty!';
-                            }
-                            return null;
-                          },
+                        Center(
+                          child: CustomTextField(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            maxLines: true,
+                            txtController: _titleTextController,
+                            txtIcon: Icons.title,
+                            txtText: "Product Title",
+                            validate: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Text is empty!';
+                              }
+                              return null;
+                            },
+                          ),
                         ),
                         const SizedBox(
                           height: 20,
@@ -172,78 +173,185 @@ class _AdminProductPageState extends State<AdminProductPage> {
                         const SizedBox(
                           height: 20,
                         ),
-                        CustomTextField(
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          maxLines: true,
-                          txtController: _priceTextController,
-                          txtIcon: Icons.money,
-                          txtText: "Product Price",
-                          validate: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Text is empty!';
-                            }
-                            return null;
-                          },
+                        Center(
+                          child: CustomTextField(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            maxLines: true,
+                            txtController: _priceTextController,
+                            txtIcon: Icons.money,
+                            txtText: "Product Price",
+                            validate: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Text is empty!';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        if (MediaQuery.of(context).size.width <= largePageSize)
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                                child: CustomButton(
+                                  bgColor: Colors.red,
+                                  txtColor: Colors.white,
+                                  text: "Delete",
+                                  onTap: () => AwesomeDialog(
+                                    context: context,
+                                    dialogType: DialogType.INFO,
+                                    animType: AnimType.BOTTOMSLIDE,
+                                    title: 'Delete?',
+                                    desc: 'Delete this product?',
+                                    btnOkText: "Delete",
+                                    btnCancelOnPress: () {},
+                                    btnOkOnPress: () async {
+                                      await firebaseFirestore
+                                          .collection("Products")
+                                          .doc(widget.productId)
+                                          .delete();
+                                      Navigator.of(context)
+                                          .pushNamed("/admin/products");
+                                    },
+                                  ).show(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                          child: GetX<AdminController>(
+                            builder: (_) => adminController.isCreating.value
+                                ? const CircularProgressIndicator()
+                                : CustomButton(
+                                    text: "Update",
+                                    onTap: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.INFO,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          title: 'Update?',
+                                          desc:
+                                              'Update modified product fields?',
+                                          btnOkText: "Update",
+                                          btnCancelOnPress: () {},
+                                          btnOkOnPress: () async {
+                                            adminController.loading(true);
+                                            Map<String, dynamic> _update = {
+                                              "title": _titleTextController.text
+                                                  .trim(),
+                                              "description":
+                                                  _descriptionTextController
+                                                      .text
+                                                      .trim(),
+                                              "price": double.parse(
+                                                  _priceTextController.text
+                                                      .trim())
+                                            };
+                                            await firebaseFirestore
+                                                .collection("Products")
+                                                .doc(widget.productId)
+                                                .update(_update);
+                                            Navigator.of(context)
+                                                .pushNamed("/admin/products");
+                                            adminController.loading(false);
+                                          },
+                                        ).show();
+                                      }
+                                    }),
+                          ),
                         ),
                       ],
                     ),
                   ),
-                  Material(
-                    color: Colors.white,
-                    child: SizedBox(
-                      height: 100,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
-                            child: GetX<AdminController>(
-                              builder: (_) => adminController.isCreating.value
-                                  ? const CircularProgressIndicator()
-                                  : CustomButton(
-                                      text: "Update",
-                                      onTap: () async {
-                                        if (_formKey.currentState!.validate()) {
-                                          AwesomeDialog(
-                                            context: context,
-                                            dialogType: DialogType.INFO,
-                                            animType: AnimType.BOTTOMSLIDE,
-                                            title: 'Update?',
-                                            desc:
-                                                'Update modified product fields?',
-                                            btnOkText: "Order",
-                                            btnCancelOnPress: () {},
-                                            btnOkOnPress: () async {
-                                              adminController.loading(true);
-                                              Map<String, dynamic> _update = {
-                                                "title": _titleTextController
-                                                    .text
-                                                    .trim(),
-                                                "description":
-                                                    _descriptionTextController
-                                                        .text
-                                                        .trim(),
-                                                "price": double.parse(
-                                                    _priceTextController.text
-                                                        .trim())
-                                              };
-                                              await firebaseFirestore
-                                                  .collection("Products")
-                                                  .doc(widget.productId)
-                                                  .update(_update);
-                                              Navigator.of(context)
-                                                  .pushNamed("/shop");
-                                              adminController.loading(false);
-                                            },
-                                          ).show();
-                                        }
-                                      }),
+                  if (MediaQuery.of(context).size.width >= largePageSize)
+                    Material(
+                      color: Colors.white,
+                      child: SizedBox(
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(40, 25, 40, 25),
+                              child: CustomButton(
+                                bgColor: Colors.red,
+                                txtColor: Colors.white,
+                                text: "Delete",
+                                onTap: () => AwesomeDialog(
+                                  context: context,
+                                  dialogType: DialogType.INFO,
+                                  animType: AnimType.BOTTOMSLIDE,
+                                  title: 'Delete?',
+                                  desc: 'Delete this product?',
+                                  btnOkText: "Delete",
+                                  btnCancelOnPress: () {},
+                                  btnOkOnPress: () async {
+                                    await firebaseFirestore
+                                        .collection("Products")
+                                        .doc(widget.productId)
+                                        .delete();
+                                    Navigator.of(context)
+                                        .pushNamed("/admin/products");
+                                  },
+                                ).show(),
+                              ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(25, 25, 40, 25),
+                              child: GetX<AdminController>(
+                                builder: (_) => adminController.isCreating.value
+                                    ? const CircularProgressIndicator()
+                                    : CustomButton(
+                                        text: "Update",
+                                        onTap: () async {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            AwesomeDialog(
+                                              context: context,
+                                              dialogType: DialogType.INFO,
+                                              animType: AnimType.BOTTOMSLIDE,
+                                              title: 'Update?',
+                                              desc:
+                                                  'Update modified product fields?',
+                                              btnOkText: "Update",
+                                              btnCancelOnPress: () {},
+                                              btnOkOnPress: () async {
+                                                adminController.loading(true);
+                                                Map<String, dynamic> _update = {
+                                                  "title": _titleTextController
+                                                      .text
+                                                      .trim(),
+                                                  "description":
+                                                      _descriptionTextController
+                                                          .text
+                                                          .trim(),
+                                                  "price": double.parse(
+                                                      _priceTextController.text
+                                                          .trim())
+                                                };
+                                                await firebaseFirestore
+                                                    .collection("Products")
+                                                    .doc(widget.productId)
+                                                    .update(_update);
+                                                Navigator.of(context).pushNamed(
+                                                    "/admin/products");
+                                                adminController.loading(false);
+                                              },
+                                            ).show();
+                                          }
+                                        }),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
                 ],
               ),
             );

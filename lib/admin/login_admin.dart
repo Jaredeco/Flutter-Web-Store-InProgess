@@ -6,14 +6,24 @@ import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_textfield.dart';
 
-class Admin extends StatelessWidget {
+class Admin extends StatefulWidget {
   const Admin({Key? key}) : super(key: key);
+
+  @override
+  State<Admin> createState() => _AdminState();
+}
+
+class _AdminState extends State<Admin> {
+  @override
+  void initState() {
+    adminController.getLoginCredentials();
+    super.initState();
+  }
+
+  final TextEditingController _admin = TextEditingController();
+  final TextEditingController _password = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    String _ADMIN = "vegoEGMT";
-    String _PASSWORD = "vegoEGMT2021";
-    TextEditingController _admin = TextEditingController();
-    TextEditingController _password = TextEditingController();
     return Column(children: [
       Expanded(
           child: ResponsiveUi(
@@ -49,8 +59,8 @@ class Admin extends StatelessWidget {
                 child: CustomButton(
                     text: "Log In",
                     onTap: () {
-                      if (_admin.text == _ADMIN &&
-                          _password.text == _PASSWORD) {
+                      if (_admin.text == adminController.adminLogin &&
+                          _password.text == adminController.adminPassword) {
                         adminController.changelogIn(true);
                         Navigator.of(context).pushNamed("/admin/orders");
                       } else {

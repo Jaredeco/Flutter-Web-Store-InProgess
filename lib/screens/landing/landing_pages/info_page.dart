@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:webstore/constants/global.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
-import 'package:webstore/widgets/components/landing/gradient_text_noanm.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class LandingInfoPage extends StatefulWidget {

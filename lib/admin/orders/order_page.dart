@@ -121,35 +121,74 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                               bgColor: Colors.red,
                               txtColor: Colors.white,
                               text: "Delete",
-                              onTap: () {},
+                              onTap: () => AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.INFO,
+                                animType: AnimType.BOTTOMSLIDE,
+                                title: 'Delete?',
+                                desc: 'Delete this order??',
+                                btnOkText: "Delete",
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () async {
+                                  await firebaseFirestore
+                                      .collection("Orders")
+                                      .doc(widget.orderId)
+                                      .delete();
+                                  Navigator.of(context)
+                                      .pushNamed("/admin/orders");
+                                },
+                              ).show(),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
-                            child: CustomButton(
-                              bgColor: Colors.green,
-                              txtColor: Colors.white,
-                              text: "Resolve",
-                              onTap: () {
-                                AwesomeDialog(
-                                  context: context,
-                                  dialogType: DialogType.INFO,
-                                  animType: AnimType.BOTTOMSLIDE,
-                                  title: 'Resolve?',
-                                  desc: 'Mark this order as resolved?',
-                                  btnOkText: "Resolve",
-                                  btnCancelOnPress: () {},
-                                  btnOkOnPress: () async {
-                                    await firebaseFirestore
-                                        .collection("Orders")
-                                        .doc(widget.orderId)
-                                        .update({"resolved": true});
-                                    Navigator.of(context)
-                                        .pushNamed("/admin/orders");
-                                  },
-                                ).show();
-                              },
-                            ),
+                            child: order.resolved == true
+                                ? CustomButton(
+                                    bgColor: Colors.red,
+                                    txtColor: Colors.white,
+                                    text: "Unresolve",
+                                    onTap: () => AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.INFO,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          title: 'Unresolve?',
+                                          desc:
+                                              'Mark this order as not resolved?',
+                                          btnOkText: "Unresolve",
+                                          btnCancelOnPress: () {},
+                                          btnOkOnPress: () async {
+                                            await firebaseFirestore
+                                                .collection("Orders")
+                                                .doc(widget.orderId)
+                                                .update({"resolved": false});
+                                            Navigator.of(context)
+                                                .pushNamed("/admin/orders");
+                                          },
+                                        ).show())
+                                : CustomButton(
+                                    bgColor: Colors.green,
+                                    txtColor: Colors.white,
+                                    text: "Resolve",
+                                    onTap: () {
+                                      AwesomeDialog(
+                                        context: context,
+                                        dialogType: DialogType.INFO,
+                                        animType: AnimType.BOTTOMSLIDE,
+                                        title: 'Resolve?',
+                                        desc: 'Mark this order as resolved?',
+                                        btnOkText: "Resolve",
+                                        btnCancelOnPress: () {},
+                                        btnOkOnPress: () async {
+                                          await firebaseFirestore
+                                              .collection("Orders")
+                                              .doc(widget.orderId)
+                                              .update({"resolved": true});
+                                          Navigator.of(context)
+                                              .pushNamed("/admin/orders");
+                                        },
+                                      ).show();
+                                    },
+                                  ),
                           ),
                         ],
                       ),
@@ -169,35 +208,71 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                               bgColor: Colors.red,
                               txtColor: Colors.white,
                               text: "Delete",
-                              onTap: () {},
+                              onTap: () => AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.INFO,
+                                animType: AnimType.BOTTOMSLIDE,
+                                title: 'Delete?',
+                                desc: 'Delete this order??',
+                                btnOkText: "Delete",
+                                btnCancelOnPress: () {},
+                                btnOkOnPress: () async {
+                                  await firebaseFirestore
+                                      .collection("Orders")
+                                      .doc(widget.orderId)
+                                      .delete();
+                                  Navigator.of(context)
+                                      .pushNamed("/admin/orders");
+                                },
+                              ).show(),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(40, 25, 40, 25),
-                            child: CustomButton(
-                              bgColor: Colors.green,
-                              txtColor: Colors.white,
-                              text: "Resolve",
-                              onTap: () {
-                                AwesomeDialog(
-                                  context: context,
-                                  dialogType: DialogType.INFO,
-                                  animType: AnimType.BOTTOMSLIDE,
-                                  title: 'Resolve?',
-                                  desc: 'Mark this order as resolved?',
-                                  btnOkText: "Resolve",
-                                  btnCancelOnPress: () {},
-                                  btnOkOnPress: () async {
-                                    await firebaseFirestore
-                                        .collection("Orders")
-                                        .doc(widget.orderId)
-                                        .update({"resolved": true});
-                                    Navigator.of(context)
-                                        .pushNamed("/admin/orders");
-                                  },
-                                ).show();
-                              },
-                            ),
+                            child: order.resolved == true
+                                ? CustomButton(
+                                    bgColor: Colors.red,
+                                    txtColor: Colors.white,
+                                    text: "Unresolve",
+                                    onTap: () => AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.INFO,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          title: 'Unresolve?',
+                                          desc:
+                                              'Mark this order as not resolved?',
+                                          btnOkText: "Unresolve",
+                                          btnCancelOnPress: () {},
+                                          btnOkOnPress: () async {
+                                            await firebaseFirestore
+                                                .collection("Orders")
+                                                .doc(widget.orderId)
+                                                .update({"resolved": false});
+                                            Navigator.of(context)
+                                                .pushNamed("/admin/orders");
+                                          },
+                                        ).show())
+                                : CustomButton(
+                                    bgColor: Colors.green,
+                                    txtColor: Colors.white,
+                                    text: "Resolve",
+                                    onTap: () => AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.INFO,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          title: 'Resolve?',
+                                          desc: 'Mark this order as resolved?',
+                                          btnOkText: "Resolve",
+                                          btnCancelOnPress: () {},
+                                          btnOkOnPress: () async {
+                                            await firebaseFirestore
+                                                .collection("Orders")
+                                                .doc(widget.orderId)
+                                                .update({"resolved": true});
+                                            Navigator.of(context)
+                                                .pushNamed("/admin/orders");
+                                          },
+                                        ).show()),
                           ),
                         ],
                       ),

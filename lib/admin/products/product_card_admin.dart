@@ -45,7 +45,22 @@ class _AdminProductCardState extends State<AdminProductCard> {
                     size: 20,
                     text: widget.product.title,
                   ),
-                  CustomText(text: "Amount: ${widget.amountOrdered}"),
+                  widget.amountOrdered != null
+                      ? CustomText(text: "Amount: ${widget.amountOrdered}")
+                      : Container(
+                          padding: const EdgeInsets.all(20),
+                          width: 300,
+                          child: Text(
+                            widget.product.description!,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            softWrap: false,
+                          ),
+                        ),
                   CustomText(
                     size: 16,
                     weight: FontWeight.bold,

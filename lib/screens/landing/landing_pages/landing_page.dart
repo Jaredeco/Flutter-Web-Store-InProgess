@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
-import 'package:webstore/widgets/components/landing/gradient_text_noanm.dart';
 import 'package:webstore/widgets/components/landing/main_button.dart';
 import 'package:webstore/widgets/components/landing/social_icon.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';

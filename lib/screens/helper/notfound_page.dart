@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:webstore/widgets/components/landing/gradient_text_noanm.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class NotFoundPage extends StatelessWidget {
@@ -12,15 +11,16 @@ class NotFoundPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            GradientTextNoAnm(
-              text: "Error 404",
-              style: TextStyle(fontSize: 80),
-            ),
+            CustomText(
+                text: "Error 404",
+                size: 70,
+                color: Color(0xFF45E994),
+                weight: FontWeight.bold),
             CustomText(
               textAlign: TextAlign.center,
               text: "Page Not Found!",
               color: Color(0xFF7C8FB5),
-              size: 60,
+              size: 50,
             ),
           ],
         ),

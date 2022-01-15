@@ -11,7 +11,9 @@ class AdminController extends GetxController {
 
   var orders = <OrderModel>[].obs;
   var isCreating = false.obs;
-  var loggedIn = false.obs;
+  var loggedIn = true.obs;
+  var adminLogin;
+  var adminPassword;
 
   @override
   void onInit() async {
@@ -47,7 +49,7 @@ class AdminController extends GetxController {
   Future uploadImages(List<XFile> images) async {
     List<String> imagesUrls = [];
     await Future.forEach(images, (XFile _image) async {
-      Reference storageReference = FirebaseStorage.instance
+      Reference storageReference = firebaseStorage
           .refFromURL("gs://webstore-70cda.appspot.com")
           .child('products/${_image.name}');
       UploadTask uploadTask =
@@ -59,5 +61,18 @@ class AdminController extends GetxController {
       });
     });
     return imagesUrls;
+  }
+
+  void getLoginCredentials() async {
+    adminLogin = await firebaseFirestore
+        .collection("AdminCredentials")
+        .doc("Login")
+        .get()
+        .then((value) => value["Login"]);
+    adminPassword = await firebaseFirestore
+        .collection("AdminCredentials")
+        .doc("Password")
+        .get()
+        .then((value) => value["Password"]);
   }
 }

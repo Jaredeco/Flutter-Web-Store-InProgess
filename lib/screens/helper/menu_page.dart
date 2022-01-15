@@ -17,24 +17,20 @@ class MenuPage extends StatelessWidget {
       data: ThemeData.light(),
       child: Scaffold(
           backgroundColor: Colors.white,
-          body: Stack(
-            children: [
-              Container(
-                alignment: Alignment.centerRight,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.4,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        menuItem(context, Icons.home, "Home", "/"),
-                        menuItem(context, Icons.shop, "Shop", "/shop"),
-                        menuItem(context, Icons.shopping_bag, "Shopping Bag",
-                            "/shopping-bag"),
-                        menuItem(context, Icons.info, "About Us", "/"),
-                      ]),
-                ),
-              ),
-            ],
+          body: Container(
+            alignment: Alignment.centerRight,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    menuItem(context, Icons.home, "Home", "/"),
+                    menuItem(context, Icons.shop, "Shop", "/shop"),
+                    menuItem(context, Icons.shopping_bag, "Shopping Bag",
+                        "/shopping-bag"),
+                    menuItem(context, Icons.info, "About Us", "/"),
+                  ]),
+            ),
           )),
     );
   }
