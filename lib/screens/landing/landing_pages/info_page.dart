@@ -56,8 +56,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                           constraints: const BoxConstraints(maxWidth: 550),
                           child: const CustomText(
                             textAlign: TextAlign.center,
-                            text:
-                                "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
+                            text: landingInfoText,
                             size: 16,
                             color: Color(0xFF7C8FB5),
                           ),
@@ -130,8 +129,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                       child: const CustomText(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         textAlign: TextAlign.center,
-                        text:
-                            "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360 vision, plus a narrow cam to spot objects far off in the distance.",
+                        text: landingInfoText,
                         size: 14,
                         color: Color(0xFF7C8FB5),
                       ),
@@ -144,7 +142,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                         width: MediaQuery.of(context).size.width * 0.9,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(30),
-                          child: Image.network("assets/images/firma_sirka.jpg",
+                          child: Image.asset("assets/images/firma_sirka.jpg",
                               fit: BoxFit.cover),
                         ),
                         decoration: BoxDecoration(

@@ -151,7 +151,7 @@ class _ProductPageState extends State<ProductPage> {
                           builder: (_) => Expanded(
                             child: CustomText(
                               padding: const EdgeInsets.only(left: 40),
-                              text: "Total: ${bagController.totalAmount} €",
+                              text: "Suma: ${bagController.totalAmount} €",
                               color: Colors.black,
                             ),
                           ),
@@ -184,7 +184,7 @@ class _ProductPageState extends State<ProductPage> {
                               padding:
                                   const EdgeInsets.fromLTRB(40, 25, 40, 25),
                               child: CustomButton(
-                                text: "Add to bag",
+                                text: "Kúpiť",
                                 onTap: () {
                                   if (!bagController.products.keys
                                       .map((e) => e.id)

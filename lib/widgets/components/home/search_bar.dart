@@ -35,7 +35,7 @@ class SearchBar extends StatelessWidget {
               icon: Icon(Icons.search, color: Colors.white),
               fillColor: Colors.white,
               border: InputBorder.none,
-              hintText: "Search...",
+              hintText: "Hľadať...",
               hintStyle: TextStyle(color: Colors.white)),
         ),
       ),

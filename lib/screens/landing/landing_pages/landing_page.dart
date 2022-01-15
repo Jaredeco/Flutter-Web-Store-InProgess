@@ -56,8 +56,7 @@ class _LandingPageState extends State<LandingPage>
                       constraints: const BoxConstraints(maxWidth: 550),
                       child: const CustomText(
                         textAlign: TextAlign.center,
-                        text:
-                            "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
+                        text: landingText,
                         size: 16,
                         color: Color(0xFF7C8FB5),
                       ),
@@ -154,8 +153,7 @@ class _LandingPageState extends State<LandingPage>
                       child: const CustomText(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         textAlign: TextAlign.center,
-                        text:
-                            "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
+                        text: landingText,
                         size: 14,
                         color: Color(0xFF7C8FB5),
                       ),

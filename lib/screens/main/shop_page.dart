@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
+import 'package:webstore/constants/global.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
@@ -43,8 +44,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             child: Column(
               children: [
                 const GradientText(
-                  text: 'Objavte naše produkty...',
-                
+                  text: shopPageTitle,
                   style: TextStyle(fontSize: 60, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
@@ -54,8 +54,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                   constraints: const BoxConstraints(maxWidth: 550),
                   child: const CustomText(
                     textAlign: TextAlign.center,
-                    text:
-                        "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
+                    text: shopPageText,
                     size: 16,
                     color: Color(0xFF7C8FB5),
                   ),
@@ -134,8 +133,8 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const CustomText(
-                  textAlign: TextAlign.center,
-                    text: 'Objavte naše produkty...',
+                    textAlign: TextAlign.center,
+                    text: shopPageTitle,
                     size: 40,
                     color: Color(0xFF45E994),
                     weight: FontWeight.bold),
@@ -146,8 +145,7 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                   width: 500,
                   child: CustomText(
                     textAlign: TextAlign.center,
-                    text:
-                        "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.",
+                    text: shopPageText,
                     size: 16,
                     color: Color(0xFF7C8FB5),
                   ),

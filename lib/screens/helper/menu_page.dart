@@ -24,11 +24,11 @@ class MenuPage extends StatelessWidget {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    menuItem(context, Icons.home, "Home", "/"),
-                    menuItem(context, Icons.shop, "Shop", "/shop"),
-                    menuItem(context, Icons.shopping_bag, "Shopping Bag",
-                        "/shopping-bag"),
-                    menuItem(context, Icons.info, "About Us", "/"),
+                    menuItem(context, Icons.home, "Domov", "/"),
+                    menuItem(context, Icons.shop, "Obchod", "/shop"),
+                    menuItem(
+                        context, Icons.shopping_bag, "Košík", "/shopping-bag"),
+                    menuItem(context, Icons.info, "O Nás", "/"),
                   ]),
             ),
           )),
