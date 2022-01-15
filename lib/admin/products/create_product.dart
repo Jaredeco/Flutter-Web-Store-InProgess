@@ -100,13 +100,16 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                                   child: Container(
                                     width: 250,
                                     height: 210,
-                                    decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(15)),
-                                        image: DecorationImage(
-                                            image: NetworkImage(adminController
-                                                .pickedImages[i].path),
-                                            fit: BoxFit.cover)),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.network(
+                                          adminController.pickedImages[i].path,
+                                          fit: BoxFit.cover),
+                                    ),
+                                    decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(15)),
+                                    ),
                                   ),
                                 ),
                               ),

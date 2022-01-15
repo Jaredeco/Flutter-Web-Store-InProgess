@@ -70,6 +70,11 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                     Container(
                         height: MediaQuery.of(context).size.height * 0.5,
                         width: MediaQuery.of(context).size.width * 0.4,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.asset("assets/images/firma_sirka.jpg",
+                              fit: BoxFit.cover),
+                        ),
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -79,10 +84,6 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                             )
                           ],
                           borderRadius: BorderRadius.circular(30),
-                          image: const DecorationImage(
-                              image:
-                                  AssetImage("assets/images/firma_sirka.jpg"),
-                              fit: BoxFit.cover),
                         )),
                   ],
                 ),
@@ -141,6 +142,11 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                     Container(
                         height: MediaQuery.of(context).size.height * 0.4,
                         width: MediaQuery.of(context).size.width * 0.9,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: Image.network("assets/images/firma_sirka.jpg",
+                              fit: BoxFit.cover),
+                        ),
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
@@ -150,10 +156,6 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                             )
                           ],
                           borderRadius: BorderRadius.circular(30),
-                          image: const DecorationImage(
-                              image:
-                                  AssetImage("assets/images/firma_sirka.jpg"),
-                              fit: BoxFit.cover),
                         )),
                   ],
                 ),

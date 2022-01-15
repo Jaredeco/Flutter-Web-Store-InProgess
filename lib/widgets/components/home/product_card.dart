@@ -57,10 +57,6 @@ class _ProductCardState extends State<ProductCard> {
                               color: Colors.grey[50],
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
-                              // image: DecorationImage(
-                              //     image: NetworkImage(
-                              //         widget.product.imgsUrl![0]),
-                              //     fit: BoxFit.cover)
                             ),
                           ),
                           Container(

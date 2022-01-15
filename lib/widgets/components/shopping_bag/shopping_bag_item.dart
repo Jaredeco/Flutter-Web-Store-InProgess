@@ -41,13 +41,14 @@ class _BagItemState extends State<BagItem> {
                             child: Container(
                               height: 150,
                               width: 50,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        widget.product.imgsUrl![0]),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(5),
+                                child: Image.network(widget.product.imgsUrl![0],
                                     fit: BoxFit.cover),
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(5.0)),
+                              ),
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
                               ),
                             ),
                           ),

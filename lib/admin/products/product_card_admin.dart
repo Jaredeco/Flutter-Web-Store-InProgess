@@ -31,12 +31,15 @@ class _AdminProductCardState extends State<AdminProductCard> {
             Container(
               width: 300,
               height: 325,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(widget.product.imgsUrl![0],
+                    fit: BoxFit.cover),
+              ),
               decoration: BoxDecoration(
-                  color: Colors.grey[50],
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.product.imgsUrl![0]),
-                      fit: BoxFit.cover)),
+                color: Colors.grey[50],
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+              ),
             ),
             Container(
                 padding: const EdgeInsets.only(top: 10, bottom: 20),
