@@ -51,8 +51,13 @@ class MenuPage extends StatelessWidget {
           leading: icon == Icons.shopping_bag
               ? Badge(
                   badgeContent: GetX<BagController>(
-                    builder: (_) =>
-                        Text(bagController.products.length.toString()),
+                    builder: (_) => Text(
+                      bagController.products.length.toString(),
+                      style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: "Sora"),
+                    ),
                   ),
                   child: const Icon(
                     Icons.shopping_bag_outlined,
@@ -63,9 +68,10 @@ class MenuPage extends StatelessWidget {
                   icon,
                   color: Colors.black,
                 ),
-          title: CustomText(
-            text: title,
-            color: Colors.black,
+          title: Text(
+            title,
+            style: const TextStyle(
+                fontSize: 16, color: Colors.black, fontFamily: "Sora"),
           ),
           onTap: () async {
             await Future(drawerController.toggle! as dynamic).then((value) {

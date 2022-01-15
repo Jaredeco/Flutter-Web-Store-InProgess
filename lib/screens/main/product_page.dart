@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -38,10 +37,10 @@ class _ProductPageState extends State<ProductPage> {
         future: productController.getProduct(widget.productId),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Text("Something went wrong");
           }
           if (snapshot.hasData && !snapshot.data!.exists) {
-            return Text("Document does not exist");
+            return const Text("Product does not exist");
           }
           if (snapshot.connectionState == ConnectionState.done) {
             ProductModel product = ProductModel.fromDocSnapshot(snapshot.data!);

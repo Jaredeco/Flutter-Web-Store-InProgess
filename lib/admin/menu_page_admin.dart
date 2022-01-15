@@ -40,7 +40,13 @@ class AdminMenuPage extends StatelessWidget {
                               Icons.exit_to_app,
                               color: Colors.red,
                             ),
-                            title: const Text("Log Out"),
+                            title: const Text(
+                              "Log Out",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.red,
+                                  fontFamily: "Sora"),
+                            ),
                             onTap: () async {
                               adminController.changelogIn(false);
                               await Future(drawerController.toggle! as dynamic)
@@ -74,9 +80,10 @@ class AdminMenuPage extends StatelessWidget {
             icon,
             color: Colors.black,
           ),
-          title: CustomText(
-            text: title,
-            color: Colors.black,
+          title: Text(
+            title,
+            style: const TextStyle(
+                fontSize: 16, color: Colors.black, fontFamily: "Sora"),
           ),
           onTap: () async {
             await Future(drawerController.toggle! as dynamic).then((value) {

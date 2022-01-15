@@ -62,7 +62,8 @@ class _AdminProductPageState extends State<AdminProductPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            ImageGallery(imgsUrl: product.imgsUrl),
+                            Expanded(
+                                child: ImageGallery(imgsUrl: product.imgsUrl)),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
