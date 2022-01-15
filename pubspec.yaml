@@ -79,6 +79,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Sora/Sora-Regular.ttf
         - asset: assets/fonts/Sora/Sora-Bold.ttf
+          weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
