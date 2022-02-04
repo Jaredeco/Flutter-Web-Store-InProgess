@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "vego-9f996"
+  },
+  "targets": {
+    "vego-9f996": {
+      "hosting": {
+        "vegosk": [
+          "vegosk"
+        ]
+      }
+    }
   }
 }
