@@ -188,9 +188,6 @@ class _LandingPageState extends State<LandingPage>
                         SocialIcon(
                           icon: FontAwesomeIcons.instagram,
                         ),
-                        SocialIcon(
-                          icon: FontAwesomeIcons.facebook,
-                        ),
                       ],
                     ),
                     const SizedBox(height: 20),

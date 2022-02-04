@@ -7,7 +7,7 @@ import 'package:webstore/widgets/components/home/product_card.dart';
 
 class ProductController extends GetxController {
   static ProductController instance = Get.find();
-  static List<String> orderBys = ["Najnovšie", "Najdrahšie", "Najlacnejšie"];
+  static List<String> orderBys = ["Najnovšie", "Najlacnejšie", "Najdrahšie"];
   var products = <ProductModel>[].obs;
   var selectedImage = 0.obs;
   var amount = 1.obs;

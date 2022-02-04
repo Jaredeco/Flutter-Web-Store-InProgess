@@ -21,7 +21,7 @@ jobs:
         - name: Deploy Firebase Hosting
           uses: w9jds/firebase-action@master
           with:
-            args: deploy hosting:vego-9f996
+            args: deploy --only hosting:vego-9f996
           env:
             FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
             PROJECT_PATH: ./
