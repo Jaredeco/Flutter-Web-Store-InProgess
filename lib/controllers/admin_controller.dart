@@ -50,7 +50,7 @@ class AdminController extends GetxController {
     List<String> imagesUrls = [];
     await Future.forEach(images, (XFile _image) async {
       Reference storageReference = firebaseStorage
-          .refFromURL("gs://webstore-70cda.appspot.com")
+          .refFromURL("gs://vego-9f996.appspot.com")
           .child('products/${_image.name}');
       UploadTask uploadTask =
           storageReference.putData(await _image.readAsBytes());

@@ -43,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       onGenerateRoute: FlouroRouter.router.generator,
       debugShowCheckedModeBanner: false,
-      title: 'WebStore',
+      title: 'VEGO',
       theme: ThemeData(primarySwatch: primaryBlack, fontFamily: 'Sora'),
       home: const HomePage(),
     );

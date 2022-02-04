@@ -215,7 +215,9 @@ class _OrderPageState extends State<OrderPage> {
                                           resolved: false);
                                       orderController.createOrder(_order);
                                       bagController.emptyBag();
-                                      Navigator.of(context).pushNamed("/");
+                                      Navigator.of(context)
+                                          .pushNamedAndRemoveUntil('/shop',
+                                              (Route<dynamic> route) => false);
                                       orderController.loading(false);
                                     },
                                   ).show();
