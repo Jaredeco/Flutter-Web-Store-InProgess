@@ -195,7 +195,7 @@ class _ProductPageState extends State<ProductPage> {
                                       context,
                                       const CustomSnackBar.success(
                                         message:
-                                            "Product added to the shopping bag!",
+                                            "Produkt bol pridaný do košíka.",
                                       ),
                                     );
                                   } else {
@@ -203,7 +203,7 @@ class _ProductPageState extends State<ProductPage> {
                                       context,
                                       const CustomSnackBar.error(
                                         message:
-                                            "Product already added to your shopping bag!",
+                                            "Produkt už bol pridaný do košíka!",
                                       ),
                                     );
                                   }

@@ -24,7 +24,7 @@ class _ShoppingBagState extends State<ShoppingBag>
   @override
   void initState() {
     animationController =
-        AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
     super.initState();
   }
 
@@ -99,7 +99,7 @@ class _ShoppingBagState extends State<ShoppingBag>
                   builder: (_) => Expanded(
                     child: CustomText(
                       padding: const EdgeInsets.only(left: 40),
-                      text: "Total: ${bagController.totalAmount} €",
+                      text: "Suma: ${bagController.totalAmount} €",
                       color: Colors.black,
                     ),
                   ),
@@ -107,7 +107,7 @@ class _ShoppingBagState extends State<ShoppingBag>
                 Padding(
                   padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
                   child: CustomButton(
-                    text: "Checkout",
+                    text: "Pokladňa",
                     txtSize: 15,
                     onTap: () {
                       if (bagController.products.isNotEmpty) {
@@ -116,7 +116,7 @@ class _ShoppingBagState extends State<ShoppingBag>
                         showTopSnackBar(
                           context,
                           const CustomSnackBar.error(
-                            message: "Empty shopping bag... Please add items.",
+                            message: "Košík je prázdny!",
                           ),
                         );
                       }

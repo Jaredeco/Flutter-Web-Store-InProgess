@@ -4,6 +4,7 @@ import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/constants/global.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/widgets/components/base/footer.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
 import 'package:webstore/widgets/components/home/search_bar.dart';
 import 'package:webstore/widgets/components/home/sort_drop_down.dart';
@@ -96,33 +97,42 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             child: GetX<ProductController>(
                 builder: (ProductController controller) {
               if (controller != null && controller.products != null) {
-                return Wrap(
-                  alignment: WrapAlignment.center,
-                  children: controller.query.isEmpty
-                      ? controller.products
-                          .map((item) {
-                            animationController!.forward();
-                            return ProductCard(
-                              product: item,
-                              animationController: animationController,
-                              animation: Tween<double>(begin: 0.0, end: 1.0)
-                                  .animate(CurvedAnimation(
-                                      parent: animationController!,
-                                      curve: Interval(
-                                          (1 / controller.products.length) *
-                                              controller.products.indexOf(item),
-                                          1.0,
-                                          curve: Curves.fastOutSlowIn))),
-                            );
-                          })
-                          .toList()
-                          .cast<Widget>()
-                      : controller.searchProducts(animationController!),
-                );
+                return controller.products.isEmpty
+                    ? Container(
+                        height: MediaQuery.of(context).size.height,
+                      )
+                    : Wrap(
+                        alignment: WrapAlignment.center,
+                        children: controller.query.isEmpty
+                            ? controller.products
+                                .map((item) {
+                                  animationController!.forward();
+                                  return ProductCard(
+                                    product: item,
+                                    animationController: animationController,
+                                    animation: Tween<double>(
+                                            begin: 0.0, end: 1.0)
+                                        .animate(CurvedAnimation(
+                                            parent: animationController!,
+                                            curve: Interval(
+                                                (1 /
+                                                        controller
+                                                            .products.length) *
+                                                    controller.products
+                                                        .indexOf(item),
+                                                1.0,
+                                                curve: Curves.fastOutSlowIn))),
+                                  );
+                                })
+                                .toList()
+                                .cast<Widget>()
+                            : controller.searchProducts(animationController!),
+                      );
               } else {
                 return Container();
               }
-            }))
+            })),
+        const Footer(),
       ],
       smallWidgets: [
         Center(
@@ -208,7 +218,8 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
               } else {
                 return Container();
               }
-            }))
+            })),
+        const Footer(),
       ],
     );
   }

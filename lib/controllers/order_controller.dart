@@ -8,7 +8,7 @@ import 'package:webstore/models/product_model.dart';
 
 class OrderController extends GetxController {
   static OrderController instance = Get.find();
-  static List<String> selectCountries = ["Slovakia"];
+  static List<String> selectCountries = ["Slovensko"];
   var isLoading = false.obs;
   var orderedProducts = [].obs;
   var country = selectCountries[0].obs;

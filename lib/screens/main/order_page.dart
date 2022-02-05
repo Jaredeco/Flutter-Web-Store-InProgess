@@ -54,10 +54,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _firstNameTextController,
                       txtIcon: Icons.person,
-                      txtText: "First Name",
+                      txtText: "Krstné Meno",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -66,10 +66,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _surnameTextController,
                       txtIcon: Icons.person,
-                      txtText: "Last Name",
+                      txtText: "Priezvisko",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -79,10 +79,10 @@ class _OrderPageState extends State<OrderPage> {
                         maxLines: true,
                         txtController: _cityTextController,
                         txtIcon: Icons.location_city,
-                        txtText: "City",
+                        txtText: "Mesto",
                         validate: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Text is empty!';
+                            return 'Text je prázdny!';
                           }
                           return null;
                         },
@@ -92,10 +92,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _pscTextController,
                       txtIcon: Icons.location_city,
-                      txtText: "PSC",
+                      txtText: "PSČ",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -104,10 +104,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _streetTextController,
                       txtIcon: Icons.streetview,
-                      txtText: "Street",
+                      txtText: "Ulica",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -129,11 +129,11 @@ class _OrderPageState extends State<OrderPage> {
                       txtText: "E-Mail",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         } else if (!RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                             .hasMatch(text)) {
-                          return 'Email has wrong format!';
+                          return 'E-Mail ma zlý formát!';
                         }
                         return null;
                       },
@@ -142,13 +142,16 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _phoneTextController,
                       txtIcon: Icons.phone,
-                      txtText: "Phone Number",
+                      txtText: "Telefónne Číslo",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
+                    ),
+                    const SizedBox(
+                      height: 100,
                     ),
                   ]),
                 ),
@@ -166,7 +169,7 @@ class _OrderPageState extends State<OrderPage> {
                     builder: (_) => Expanded(
                       child: CustomText(
                         padding: const EdgeInsets.only(left: 40),
-                        text: "Total: ${bagController.totalAmount} €",
+                        text: "Suma: ${bagController.totalAmount} €",
                         color: Colors.black,
                       ),
                     ),
@@ -177,7 +180,7 @@ class _OrderPageState extends State<OrderPage> {
                       builder: (_) => orderController.isLoading.value
                           ? const CircularProgressIndicator()
                           : CustomButton(
-                              text: "Order",
+                              text: "Objednať",
                               txtSize: 15,
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
@@ -185,9 +188,9 @@ class _OrderPageState extends State<OrderPage> {
                                     context: context,
                                     dialogType: DialogType.INFO,
                                     animType: AnimType.BOTTOMSLIDE,
-                                    title: 'Order?',
-                                    desc: 'Order with obligation to pay.',
-                                    btnOkText: "Order",
+                                    title: 'Objednať?',
+                                    desc: 'Objednať s povinnosťou platby',
+                                    btnOkText: "Objednať",
                                     btnCancelOnPress: () {},
                                     btnOkOnPress: () {
                                       orderController.loading(true);
