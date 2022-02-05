@@ -1,6 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/landing/main_button.dart';
@@ -74,40 +74,28 @@ class _LandingPageState extends State<LandingPage>
                             Color(0xFF23BCBA),
                             Color(0xFF45E994),
                           ],
-                          isOnLight: false,
+                          isSocial: false,
                         ),
                         const SizedBox(
-                          width: 40,
+                          width: 45,
                         ),
                         MainButton(
-                          onTap: () {},
-                          text: "Watch Now",
+                          onTap: () async {
+                            await launch("https://www.instagram.com/vegoegmt/");
+                          },
+                          text: "Follow Us!",
                           colors: const [Colors.white, Colors.white],
-                          isOnLight: true,
+                          isSocial: true,
                         )
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 70,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SocialIcon(
-                          icon: FontAwesomeIcons.instagram,
-                        ),
-                        SocialIcon(
-                          icon: FontAwesomeIcons.facebook,
-                        ),
-                      ],
+                    ButtonDown(
+                      icon: Icons.keyboard_arrow_down,
+                      onTap: () async {},
                     ),
-                    const SizedBox(height: 100),
-                    const Center(
-                        child: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Color(0xFF45E994),
-                      size: 40,
-                    ))
                   ],
                 ),
               ),
@@ -168,35 +156,26 @@ class _LandingPageState extends State<LandingPage>
                         Color(0xFF23BCBA),
                         Color(0xFF45E994),
                       ],
-                      isOnLight: false,
+                      isSocial: false,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
                     MainButton(
-                      onTap: () {},
-                      text: "Watch Now",
+                      onTap: () async {
+                        await launch("https://www.instagram.com/vegoegmt/");
+                      },
+                      text: "Follow Us!",
                       colors: const [Colors.white, Colors.white],
-                      isOnLight: true,
+                      isSocial: true,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 70,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SocialIcon(
-                          icon: FontAwesomeIcons.instagram,
-                        ),
-                      ],
+                    ButtonDown(
+                      icon: Icons.keyboard_arrow_down,
+                      onTap: () async {},
                     ),
-                    const SizedBox(height: 20),
-                    const Center(
-                        child: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Color(0xFF45E994),
-                      size: 40,
-                    ))
                   ],
                 ),
               ),

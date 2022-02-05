@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class MainButton extends StatelessWidget {
   final Function()? onTap;
   final List<Color>? colors;
   final String? text;
-  final bool? isOnLight;
+  final bool? isSocial;
   const MainButton(
-      {Key? key, this.colors, this.text, this.isOnLight, this.onTap})
+      {Key? key, this.colors, this.text, this.isSocial, this.onTap})
       : super(key: key);
 
   @override
@@ -34,14 +35,17 @@ class MainButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              isOnLight!
-                  ? const Icon(Icons.play_circle_filled,
-                      color: Color(0xFFb0BFDE))
+              isSocial!
+                  ? const Padding(
+                      padding: EdgeInsets.only(right: 5.0),
+                      child: Icon(FontAwesomeIcons.instagram,
+                          color: Color(0xFFb0BFDE)),
+                    )
                   : Container(),
               CustomText(
                   text: text,
                   size: 16,
-                  color: isOnLight! ? const Color(0xFF7C8FB5) : Colors.white),
+                  color: isSocial! ? const Color(0xFF7C8FB5) : Colors.white),
             ],
           ),
         ),

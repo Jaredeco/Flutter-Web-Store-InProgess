@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class SocialIcon extends StatelessWidget {
+class ButtonDown extends StatelessWidget {
   final IconData? icon;
   final VoidCallback? onTap;
-  const SocialIcon({Key? key, this.icon, this.onTap}) : super(key: key);
+  const ButtonDown({Key? key, this.icon, this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,6 @@ class SocialIcon extends StatelessWidget {
       child: Container(
         width: 50,
         height: 50,
-        margin: const EdgeInsets.only(left: 20),
         decoration: const BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
@@ -24,7 +23,7 @@ class SocialIcon extends StatelessWidget {
               )
             ]),
         child: Center(
-          child: Icon(icon, color: const Color(0xFFD1DBEA)),
+          child: Icon(icon, color: const Color(0xFF45E994), size: 40,),
         ),
       ),
     );
