@@ -175,7 +175,7 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                                             .collection("Products")
                                             .add(_product.toJson());
                                         Navigator.of(context)
-                                            .pushNamed("/shop");
+                                            .pushNamed("/admin/products");
                                         adminController.loading(false);
                                       }
                                     } else {
