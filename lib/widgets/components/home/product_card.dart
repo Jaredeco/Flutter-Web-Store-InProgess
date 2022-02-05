@@ -60,33 +60,37 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           ),
                           Container(
+                              width: 300,
                               padding:
                                   const EdgeInsets.only(top: 15, bottom: 20),
-                              child: Column(children: [
-                                CustomText(
-                                  size: 20,
-                                  text: widget.product.title,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  width: 300,
-                                  child: Text(
-                                    widget.product.description!,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CustomText(
+                                      size: 20,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      text: widget.product.title,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                  ),
-                                ),
-                                CustomText(
-                                  size: 16,
-                                  weight: FontWeight.bold,
-                                  text: "${widget.product.price} €",
-                                ),
-                              ])),
+                                    Container(
+                                      padding: const EdgeInsets.all(20),
+                                      child: Text(
+                                        widget.product.description!,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.grey,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                      ),
+                                    ),
+                                    CustomText(
+                                      size: 16,
+                                      weight: FontWeight.bold,
+                                      text: "${widget.product.price} €",
+                                    ),
+                                  ])),
                         ],
                       ),
                     ),
