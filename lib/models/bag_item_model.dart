@@ -4,13 +4,13 @@ class BagItemModel {
   final String? id;
   final String? productId;
   final String? productQuantity;
-  final String? productOption;
+  // final String? productOption;
 
   BagItemModel({
     this.id,
     this.productId,
     this.productQuantity,
-    this.productOption
+    // this.productOption
   });
 
   factory BagItemModel.fromDocSnapshot(DocumentSnapshot snapshot) {
@@ -18,7 +18,7 @@ class BagItemModel {
         id: snapshot.id,
         productId: snapshot["productId"],
         productQuantity: snapshot["productQuantity"], 
-        productOption: snapshot["productOption"]
+        // productOption: snapshot["productOption"]
         );
   }
 }
