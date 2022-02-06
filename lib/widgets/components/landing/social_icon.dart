@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class ButtonDown extends StatelessWidget {
   final IconData? icon;
   final VoidCallback? onTap;
-  const ButtonDown({Key? key, this.icon, this.onTap}) : super(key: key);
+  final Color? color;
+  final double? size;
+  const ButtonDown({Key? key, this.icon, this.onTap, this.color, this.size})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +27,11 @@ class ButtonDown extends StatelessWidget {
               )
             ]),
         child: Center(
-          child: Icon(icon, color: const Color(0xFF45E994), size: 40,),
+          child: Icon(
+            icon,
+            color: color ?? const Color(0xFF45E994),
+            size: size ?? 40,
+          ),
         ),
       ),
     );
