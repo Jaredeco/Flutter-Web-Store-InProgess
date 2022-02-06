@@ -181,7 +181,6 @@ class _OrderPageState extends State<OrderPage> {
                           ? const CircularProgressIndicator()
                           : CustomButton(
                               text: "Objednať",
-                              txtSize: 15,
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
                                   AwesomeDialog(
@@ -226,7 +225,7 @@ class _OrderPageState extends State<OrderPage> {
                                   ).show();
                                 }
                               },
-                              bgColor: Colors.red,
+                              bgColor: Colors.black,
                             ),
                     ),
                   ),

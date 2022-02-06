@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage>
                       textAlign: TextAlign.center,
                       text: "Školská Firma",
                       color: Color(0xFF7C8FB5),
-                      size: 60,
+                      size: 65,
                     ),
                     const SizedBox(height: 20,),
                     const SizedBox(
@@ -129,7 +129,7 @@ class _LandingPageState extends State<LandingPage>
                       SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                       const CustomText(
                           text: 'VEGO',
-                          size: 70,
+                          size: 65,
                           color: Color(0xFF45E994),
                           weight: FontWeight.bold),
                       const CustomText(

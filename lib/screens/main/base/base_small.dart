@@ -29,6 +29,7 @@ class _BaseSmallState extends State<BaseSmall> {
     return widget.landing != null
         ? widget.widgets[0]
         : Scaffold(
+          backgroundColor: Colors.white,
             body: ZoomDrawer(
               isRtl: true,
               controller: _drawerController,
@@ -39,6 +40,7 @@ class _BaseSmallState extends State<BaseSmall> {
                       drawerController: _drawerController,
                     ),
               mainScreen: Scaffold(
+                backgroundColor: Colors.white,
                 body: ListView(
                   children: [
                     widget.admin != null

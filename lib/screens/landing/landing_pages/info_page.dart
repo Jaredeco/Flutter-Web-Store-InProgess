@@ -120,7 +120,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                           height: MediaQuery.of(context).size.height * 0.1),
                       const CustomText(
                           text: 'Kto Sme?',
-                          size: 70,
+                          size: 60,
                           color: Color(0xFF45E994),
                           weight: FontWeight.bold),
                       const CustomText(

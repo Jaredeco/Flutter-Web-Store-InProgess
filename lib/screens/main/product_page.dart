@@ -9,6 +9,7 @@ import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/widgets/components/home/sort_drop_down.dart';
 import 'package:webstore/widgets/components/product_page/image_gallery.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
@@ -44,6 +45,9 @@ class _ProductPageState extends State<ProductPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             ProductModel product = ProductModel.fromDocSnapshot(snapshot.data!);
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
+              productController.setProductOption(product.options![0]);
+            });
             return Column(
               children: [
                 Expanded(
@@ -82,6 +86,23 @@ class _ProductPageState extends State<ProductPage> {
                                     weight: FontWeight.bold,
                                     size: 20,
                                   ),
+                                  if (product.options!.isNotEmpty)
+                                    GetX<ProductController>(
+                                      builder: (controller) => SortDropDown(
+                                        width: 250,
+                                        cValue: product.options!.contains(
+                                                productController
+                                                    .productOption.value)
+                                            ? productController
+                                                .productOption.value
+                                            : product.options![0],
+                                        ddItems: product.options,
+                                        onChanged: (newValue) {
+                                          productController
+                                              .setProductOption(newValue!);
+                                        },
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),

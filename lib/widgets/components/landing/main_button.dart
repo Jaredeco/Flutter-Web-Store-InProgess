@@ -7,13 +7,15 @@ class MainButton extends StatelessWidget {
   final List<Color>? colors;
   final String? text;
   final bool? isSocial;
+  final IconData? icon;
   const MainButton(
-      {Key? key, this.colors, this.text, this.isSocial, this.onTap})
+      {Key? key, this.colors, this.text, this.isSocial, this.onTap, this.icon})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      borderRadius: BorderRadius.circular(15),
       onTap: onTap!,
       child: Container(
         width: 180,

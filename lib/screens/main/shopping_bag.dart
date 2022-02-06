@@ -108,7 +108,6 @@ class _ShoppingBagState extends State<ShoppingBag>
                   padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
                   child: CustomButton(
                     text: "Pokladňa",
-                    txtSize: 15,
                     onTap: () {
                       if (bagController.products.isNotEmpty) {
                         Navigator.of(context).pushNamed('/order');
@@ -121,7 +120,7 @@ class _ShoppingBagState extends State<ShoppingBag>
                         );
                       }
                     },
-                    bgColor: Colors.red,
+                    bgColor: Colors.black,
                   ),
                 ),
               ],
