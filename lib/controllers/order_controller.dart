@@ -1,10 +1,10 @@
-import 'package:universal_io/io.dart';
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:mailto/mailto.dart';
 import 'package:webstore/constants/firebase.dart';
 import 'package:webstore/models/order_model.dart';
 import 'package:webstore/models/product_model.dart';
+import 'package:http/http.dart' as http;
 
 class OrderController extends GetxController {
   static OrderController instance = Get.find();
@@ -15,32 +15,38 @@ class OrderController extends GetxController {
 
   void createOrder(OrderModel _order) async {
     await firebaseFirestore.collection("Orders").add(_order.toJson());
-    final mailto = Mailto(
-      to: [
-        'jano.redecha@gmail.com',
-      ],
-      // cc: [
-      //   'percentage%100@example.com',
-      //   'QuestionMark?address@example.com',
-      // ],
-      // bcc: [
-      //   'Mike&family@example.org',
-      // ],
-      subject: 'Let\'s drink a "café"! ☕️ 2+2=4 #coffeeAndMath',
-      body:
-          'Hello this if the first line!\n\nNew line with some special characters őúóüűáéèßáñ\nEmoji: 🤪💙👍',
-    );
+    await sendEmail(
+        name: "JR",
+        email: "jano.redecha@gmail.com",
+        subject: "Objednavka",
+        message: "prva mail");
+  }
 
-    final server = await HttpServer.bind(InternetAddress.loopbackIPv4, 3000);
-    String renderHtml(Mailto mailto) =>
-        '''<html><head><title>mailto example</title></head><body><a href="$mailto">Open mail client</a></body></html>''';
-    await for (HttpRequest request in server) {
-      request.response
-        ..statusCode = HttpStatus.ok
-        ..headers.contentType = ContentType.html
-        ..write(renderHtml(mailto));
-      await request.response.close();
-    }
+  Future sendEmail({
+    required String name,
+    required String email,
+    required String subject,
+    required String message,
+  }) async {
+    const serviceId = 'service_g3663yo';
+    const templateId = 'template_6fn2ocq';
+    const userId = 'user_4GFqs8Mw3pSzfAsasInwR';
+    final url = Uri.parse("https://api.emailjs.com/api/v1.0/email/send");
+    await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: json.encode({
+          'service_id': serviceId,
+          'template_id': templateId,
+          'user_id': userId,
+          'template_params': {
+            'user_name': name,
+            'user_email': email,
+            'user_subject': subject,
+            'user_message': message,
+          }
+        }));
   }
 
   void loading(bool isl) {

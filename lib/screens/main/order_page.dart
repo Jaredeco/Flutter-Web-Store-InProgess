@@ -191,7 +191,7 @@ class _OrderPageState extends State<OrderPage> {
                                     desc: 'Objednať s povinnosťou platby',
                                     btnOkText: "Objednať",
                                     btnCancelOnPress: () {},
-                                    btnOkOnPress: () {
+                                    btnOkOnPress: () async {
                                       orderController.loading(true);
                                       OrderModel _order = OrderModel(
                                           createdAt: Timestamp.now(),
