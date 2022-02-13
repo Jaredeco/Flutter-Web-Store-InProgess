@@ -75,8 +75,9 @@ class _BagItemSmallState extends State<BagItemSmall> {
                           widget.product, widget.option),
                       icon: const Icon(Icons.remove)),
                   GetX<BagController>(
-                      builder: (_) => Text(
-                          bagController.products[widget.product].toString())),
+                      builder: (_) => Text(bagController.products[bagController
+                              .getBagItem(widget.product, widget.option)]
+                          .toString())),
                   IconButton(
                       onPressed: () => bagController.addToBag(
                           widget.product, widget.option, 1),

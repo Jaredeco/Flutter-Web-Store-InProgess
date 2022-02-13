@@ -75,9 +75,9 @@ class _ShoppingBagState extends State<ShoppingBag>
                           }
                           return BagItemSmall(
                             product:
-                                bagController.products.keys.elementAt(index)[0],
+                                bagController.products.keys.elementAt(index).product,
                             option:
-                                bagController.products.keys.elementAt(index)[1],
+                                bagController.products.keys.elementAt(index).productOption,
                             animationController: animationController,
                             animation: Tween<double>(begin: 0.0, end: 1.0)
                                 .animate(CurvedAnimation(
