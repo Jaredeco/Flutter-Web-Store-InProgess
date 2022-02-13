@@ -86,6 +86,22 @@ class _ProductPageState extends State<ProductPage> {
                                     weight: FontWeight.bold,
                                     size: 20,
                                   ),
+                                  const CustomText(
+                                    textAlign: TextAlign.left,
+                                    text: "vratane DPH",
+                                    color: Colors.grey,
+                                    size: 10,
+                                    padding: EdgeInsets.only(bottom: 20),
+                                  ),
+                                  InkWell(
+                                    onTap: () =>
+                                        Navigator.of(context).pushNamed("/"),
+                                    child: SizedBox(
+                                        height: 90,
+                                        width: 150,
+                                        child: Image.asset(
+                                            "assets/images/logo_vego.png")),
+                                  ),
                                   if (product.options!.isNotEmpty)
                                     GetX<ProductController>(
                                       builder: (controller) => SortDropDown(
@@ -133,8 +149,13 @@ class _ProductPageState extends State<ProductPage> {
                               textAlign: TextAlign.left,
                               text: "${product.price} €",
                               weight: FontWeight.bold,
-                              size: 20,
-                              padding: const EdgeInsets.only(bottom: 20),
+                            ),
+                            const CustomText(
+                              textAlign: TextAlign.left,
+                              text: "vratane DPH",
+                              color: Colors.grey,
+                              size: 10,
+                              padding: EdgeInsets.only(bottom: 20),
                             ),
                             Row(
                                 mainAxisAlignment:
@@ -207,10 +228,14 @@ class _ProductPageState extends State<ProductPage> {
                               child: CustomButton(
                                 text: "Kúpiť",
                                 onTap: () {
-                                  if (!bagController.products.keys
-                                      .map((e) => e.id)
-                                      .contains(product.id)) {
-                                    bagController.addToBag(product,
+                                  if (!bagController.products.containsKey(
+                                      bagController.getBagItem(
+                                          product,
+                                          productController
+                                              .productOption.value))) {
+                                    bagController.addToBag(
+                                        product,
+                                        productController.productOption.value,
                                         productController.amount.value);
                                     showTopSnackBar(
                                       context,

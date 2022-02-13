@@ -2,16 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:webstore/constants/firebase.dart';
+import 'package:webstore/models/bag_item_model.dart';
 import 'package:webstore/models/product_model.dart';
+import 'package:collection/collection.dart';
 
 class BagController extends GetxController {
   static BagController instance = Get.find();
   var products = {}.obs;
   Rx<double> totalAmount = 0.0.obs;
 
-  void addToBag(ProductModel product, int amount) {
+  BagItemModel getBagItem(ProductModel product, String option) {
+    BagItemModel bagItem =
+        BagItemModel(product: product, productOption: option);
+    return products.keys.firstWhere(
+        (element) =>
+            element.product == bagItem.product &&
+            element.productOption == bagItem.productOption,
+        orElse: () => bagItem);
+  }
+
+  void addToBag(ProductModel product, String option, int amount) {
     products.update(
-      product,
+      getBagItem(product, option),
       (value) => ++value,
       ifAbsent: () => amount,
     );
@@ -20,17 +32,21 @@ class BagController extends GetxController {
     storeBagState();
   }
 
-  void removeFromBag(ProductModel product) {
-    if (products[product]! > 1) {
-      products.update(product, (value) => --value);
+  void removeFromBag(ProductModel product, String option) {
+    if (products[getBagItem(product, option)] > 1) {
+      products.update(getBagItem(product, option), (value) => --value);
       getTotal();
       update();
       storeBagState();
     }
   }
 
-  void deleteFromBag(ProductModel product) {
-    products.remove(product);
+  void deleteFromBag(ProductModel product, String option) {
+    BagItemModel bagItem =
+        BagItemModel(product: product, productOption: option);
+    products.removeWhere((key, value) =>
+        key.product == bagItem.product &&
+        key.productOption == bagItem.productOption);
     getTotal();
     update();
     storeBagState();
@@ -46,7 +62,7 @@ class BagController extends GetxController {
   void getTotal() {
     double _ta = 0.0;
     products.forEach((key, value) {
-      _ta += key.price * value;
+      _ta += key.product.price * value;
     });
     totalAmount.value = _ta;
   }
@@ -54,12 +70,15 @@ class BagController extends GetxController {
   void storeBagState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> _ids = [];
+    List<String> _options = [];
     List<String> _amnts = [];
     products.forEach((key, value) {
-      _ids.add(key.id.toString());
+      _ids.add(key.product.id.toString());
+      _options.add(key.productOption.toString());
       _amnts.add(value.toString());
     });
     await prefs.setStringList("ids", _ids);
+    await prefs.setStringList("options", _options);
     await prefs.setStringList("amnts", _amnts);
   }
 
@@ -67,6 +86,7 @@ class BagController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     List<String> _ids = prefs.getStringList("ids") ?? [];
+    List<String> _options = prefs.getStringList("options") ?? [];
     List<String> _amnts = prefs.getStringList("amnts") ?? [];
     List<ProductModel> _bagProducts = [];
     CollectionReference prodCol = firebaseFirestore.collection("Products");
@@ -75,11 +95,12 @@ class BagController extends GetxController {
           .add(ProductModel.fromDocSnapshot(await prodCol.doc(item).get()));
     }
 
-    Map<ProductModel, int> _loadedProducts = {};
-    await Future.forEach(
-        _bagProducts,
-        (ProductModel element) => _loadedProducts[element] =
-            int.parse(_amnts[_ids.indexOf(element.id!)]));
+    var _loadedProducts = {};
+    for (List pairs in IterableZip([_bagProducts, _options])) {
+      _loadedProducts[
+              BagItemModel(product: pairs[0], productOption: pairs[1])] =
+          int.parse(_amnts[_ids.indexOf(pairs[0].id!)]);
+    }
     products.value = _loadedProducts;
     getTotal();
   }
@@ -87,7 +108,7 @@ class BagController extends GetxController {
   Map<String, int> getProducts() {
     Map<String, int> _orderProducts = {};
     for (var k in products.keys) {
-      _orderProducts[k.id!] = products[k]!;
+      _orderProducts[k.product.id!] = products[k]!;
     }
     return _orderProducts;
   }

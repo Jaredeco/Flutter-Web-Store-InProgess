@@ -9,9 +9,11 @@ class BagItemSmall extends StatefulWidget {
   final ProductModel product;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final String option;
   const BagItemSmall(
       {Key? key,
       required this.product,
+      required this.option,
       this.animationController,
       this.animation})
       : super(key: key);
@@ -45,10 +47,9 @@ class _BagItemSmallState extends State<BagItemSmall> {
             child: Column(
           children: [
             CustomText(
-              size: 20,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              text: widget.product.title,
-            ),
+                size: 20,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                text: widget.product.title),
             CustomText(
               size: 20,
               padding: const EdgeInsets.only(left: 20, right: 20),
@@ -60,7 +61,8 @@ class _BagItemSmallState extends State<BagItemSmall> {
           child: Column(
             children: [
               IconButton(
-                  onPressed: () => bagController.deleteFromBag(widget.product),
+                  onPressed: () => bagController.deleteFromBag(
+                      widget.product, widget.option),
                   icon: const Icon(
                     Icons.delete,
                     color: Colors.red,
@@ -69,15 +71,15 @@ class _BagItemSmallState extends State<BagItemSmall> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                      onPressed: () =>
-                          bagController.removeFromBag(widget.product),
+                      onPressed: () => bagController.removeFromBag(
+                          widget.product, widget.option),
                       icon: const Icon(Icons.remove)),
                   GetX<BagController>(
                       builder: (_) => Text(
                           bagController.products[widget.product].toString())),
                   IconButton(
-                      onPressed: () =>
-                          bagController.addToBag(widget.product, 1),
+                      onPressed: () => bagController.addToBag(
+                          widget.product, widget.option, 1),
                       icon: const Icon(Icons.add)),
                 ],
               ),

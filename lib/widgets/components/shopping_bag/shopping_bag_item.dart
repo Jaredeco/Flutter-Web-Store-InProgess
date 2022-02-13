@@ -9,9 +9,11 @@ class BagItem extends StatefulWidget {
   final ProductModel product;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final String option;
   const BagItem(
       {Key? key,
       required this.product,
+      required this.option,
       this.animationController,
       this.animation})
       : super(key: key);
@@ -71,24 +73,26 @@ class _BagItemState extends State<BagItem> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 IconButton(
-                                    onPressed: () => bagController
-                                        .removeFromBag(widget.product),
+                                    onPressed: () =>
+                                        bagController.removeFromBag(
+                                            widget.product, widget.option),
                                     icon: const Icon(Icons.remove)),
                                 GetX<BagController>(
-                                    builder: (_) => Text(bagController
-                                        .products[widget.product]
+                                    builder: (_) => Text(bagController.products[
+                                            bagController.getBagItem(
+                                                widget.product, widget.option)]
                                         .toString())),
                                 IconButton(
                                     onPressed: () => bagController.addToBag(
-                                        widget.product, 1),
+                                        widget.product, widget.option, 1),
                                     icon: const Icon(Icons.add)),
                               ],
                             ),
                           ),
                           Expanded(
                             child: IconButton(
-                                onPressed: () =>
-                                    bagController.deleteFromBag(widget.product),
+                                onPressed: () => bagController.deleteFromBag(
+                                    widget.product, widget.option),
                                 icon: const Icon(
                                   Icons.delete,
                                   color: Colors.red,

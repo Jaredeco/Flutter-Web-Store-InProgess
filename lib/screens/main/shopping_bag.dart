@@ -56,8 +56,12 @@ class _ShoppingBagState extends State<ShoppingBag>
                           if (MediaQuery.of(context).size.width >=
                               largePageSize) {
                             return BagItem(
-                              product:
-                                  bagController.products.keys.elementAt(index),
+                              product: bagController.products.keys
+                                  .elementAt(index)
+                                  .product,
+                              option: bagController.products.keys
+                                  .elementAt(index)
+                                  .productOption,
                               animationController: animationController,
                               animation: Tween<double>(begin: 0.0, end: 1.0)
                                   .animate(CurvedAnimation(
@@ -71,7 +75,9 @@ class _ShoppingBagState extends State<ShoppingBag>
                           }
                           return BagItemSmall(
                             product:
-                                bagController.products.keys.elementAt(index),
+                                bagController.products.keys.elementAt(index)[0],
+                            option:
+                                bagController.products.keys.elementAt(index)[1],
                             animationController: animationController,
                             animation: Tween<double>(begin: 0.0, end: 1.0)
                                 .animate(CurvedAnimation(
