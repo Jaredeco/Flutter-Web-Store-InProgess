@@ -9,7 +9,8 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/constants/global.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  final PageController? pageController;
+  const LandingPage({Key? key, this.pageController}) : super(key: key);
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -52,7 +53,9 @@ class _LandingPageState extends State<LandingPage>
                       color: Color(0xFF7C8FB5),
                       size: 65,
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const SizedBox(
                       width: 600,
                       child: CustomText(
@@ -95,7 +98,12 @@ class _LandingPageState extends State<LandingPage>
                     ),
                     ButtonDown(
                       icon: Icons.keyboard_arrow_down,
-                      onTap: () async {},
+                      onTap: () {
+                        widget.pageController!.animateToPage(
+                            widget.pageController!.page!.toInt() + 1,
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.easeIn);
+                      },
                     ),
                   ],
                 ),
@@ -126,7 +134,8 @@ class _LandingPageState extends State<LandingPage>
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
                       const CustomText(
                           text: 'VEGO',
                           size: 65,
@@ -138,8 +147,10 @@ class _LandingPageState extends State<LandingPage>
                         color: Color(0xFF7C8FB5),
                         size: 30,
                       ),
-                      const SizedBox(height: 20,),
-                       SizedBox(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
                         child: const CustomText(
                           textAlign: TextAlign.center,
@@ -176,7 +187,12 @@ class _LandingPageState extends State<LandingPage>
                       ),
                       ButtonDown(
                         icon: Icons.keyboard_arrow_down,
-                        onTap: () async {},
+                        onTap: () {
+                          widget.pageController!.animateToPage(
+                              widget.pageController!.page!.toInt() + 1,
+                              duration: const Duration(milliseconds: 700),
+                              curve: Curves.easeIn);
+                        },
                       ),
                     ],
                   ),

@@ -54,8 +54,10 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             OrderModel order = OrderModel.fromDocSnapshot(snapshot.data!);
-            orderController.orderedProducts.bindStream(orderController
-                .loadOrderedProducts(order.bagProducts!.keys.toList()));
+            orderController.orderedProducts.bindStream(
+                orderController.loadOrderedProducts(List.generate(
+                    order.bagProducts!.length,
+                    (index) => order.bagProducts!.keys.toList()[index][0])));
             return Column(
               children: [
                 Expanded(

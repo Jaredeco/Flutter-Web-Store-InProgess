@@ -4,11 +4,15 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductModel product;
+  final String? option;
+  final int? amount;
   final AnimationController? animationController;
   final Animation<double>? animation;
   const ProductCard(
       {Key? key,
       required this.product,
+      this.option,
+      this.amount,
       this.animationController,
       this.animation})
       : super(key: key);
@@ -90,6 +94,34 @@ class _ProductCardState extends State<ProductCard> {
                                       weight: FontWeight.bold,
                                       text: "${widget.product.price} €",
                                     ),
+                                    if (widget.option != null)
+                                      Container(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Text(
+                                          widget.option!,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.grey,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                        ),
+                                      ),
+                                    if (widget.option != null)
+                                      Container(
+                                        padding: const EdgeInsets.all(20),
+                                        child: Text(
+                                          widget.amount!.toString(),
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.grey,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                        ),
+                                      ),
                                   ])),
                         ],
                       ),

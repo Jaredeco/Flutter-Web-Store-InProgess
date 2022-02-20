@@ -39,6 +39,7 @@ class Footer extends StatelessWidget {
                 color: Color(0xFFb0BFDE),
               ),
               CustomText(
+                isSelectable: true,
                 padding: EdgeInsets.only(left: 10),
                 text: "vego.egmt@gmail.com",
                 color: Color(0xFFb0BFDE),
@@ -67,6 +68,7 @@ class Footer extends StatelessWidget {
                 color: Color(0xFFb0BFDE),
               ),
               CustomText(
+                isSelectable: true,
                 padding: EdgeInsets.only(left: 10),
                 text: "2022 VEGO Š.F.",
                 color: Color(0xFFb0BFDE),

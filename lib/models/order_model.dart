@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderModel {
   final String? id;
   final Timestamp? createdAt;
-  final Map<String, int>? bagProducts;
+  final Map<List<dynamic>, int>? bagProducts;
   final String? firstName;
   final String? surname;
   final String? country;

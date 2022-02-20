@@ -45,13 +45,23 @@ class _BagItemSmallState extends State<BagItemSmall> {
         ),
         Expanded(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(
-                size: 20,
+                size: 16,
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 text: widget.product.title),
+            const SizedBox(height: 5),
             CustomText(
-              size: 20,
+              size: 12,
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              text: widget.option,
+              color: Colors.grey,
+            ),
+            const SizedBox(height: 5),
+            CustomText(
+              size: 16,
               padding: const EdgeInsets.only(left: 20, right: 20),
               text: "${widget.product.price} €",
             ),

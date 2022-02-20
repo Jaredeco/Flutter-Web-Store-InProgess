@@ -11,3 +11,7 @@ const String landingInfoText =
 const String shopPageTitle = "Objavte naše produkty...";
 const String shopPageText =
     "Naše vegánske produkty su vyrobené s citom pre prírodu a vašu peňaženku.";
+const String thankYouTitle =
+    "Ďakujeme za váš Nákup";
+const String thankYouText =
+    "Naše vegánske produkty su vyrobené s citom pre prírodu a vašu peňaženku.";

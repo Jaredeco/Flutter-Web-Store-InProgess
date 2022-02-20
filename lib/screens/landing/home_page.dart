@@ -7,9 +7,16 @@ class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _pages = [const LandingPage(), const LandingInfoPage()];
+    PageController _pageController = PageController();
+    final List<Widget> _pages = [
+      LandingPage(
+        pageController: _pageController,
+      ),
+      const LandingInfoPage()
+    ];
     return ParallaxArea(
       child: PageView.builder(
+        controller: _pageController,
         scrollDirection: Axis.vertical,
         itemCount: _pages.length,
         itemBuilder: (context, index) {

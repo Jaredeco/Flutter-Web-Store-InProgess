@@ -6,6 +6,7 @@ import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/models/order_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/screens/main/summary_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_drop_down.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
@@ -54,7 +55,7 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _firstNameTextController,
                       txtIcon: Icons.person,
-                      txtText: "Krstné Meno",
+                      txtText: "Meno",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
                           return 'Text je prázdny!';
@@ -180,49 +181,31 @@ class _OrderPageState extends State<OrderPage> {
                       builder: (_) => orderController.isLoading.value
                           ? const CircularProgressIndicator()
                           : CustomButton(
-                              text: "Objednať",
+                              text: "Zhrnutie",
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.INFO,
-                                    animType: AnimType.BOTTOMSLIDE,
-                                    title: 'Objednať?',
-                                    desc: 'Objednať s povinnosťou platby',
-                                    btnOkText: "Objednať",
-                                    btnCancelOnPress: () {},
-                                    btnOkOnPress: () async {
-                                      orderController.loading(true);
-                                      OrderModel _order = OrderModel(
-                                          createdAt: Timestamp.now(),
+                                  orderController.loading(true);
+                                  OrderModel _order = OrderModel(
+                                      createdAt: Timestamp.now(),
+                                      bagProducts: bagController.getProducts(),
+                                      firstName:
+                                          _firstNameTextController.text.trim(),
+                                      surname:
+                                          _surnameTextController.text.trim(),
+                                      city: _cityTextController.text.trim(),
+                                      street: _streetTextController.text.trim(),
+                                      psc: _pscTextController.text.trim(),
+                                      phone: _phoneTextController.text.trim(),
+                                      email: _emailTextController.text.trim(),
+                                      country: orderController.country.value,
+                                      total: bagController.totalAmount.value,
+                                      resolved: false);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SummaryPage(
+                                          order: _order,
                                           bagProducts:
-                                              bagController.getProducts(),
-                                          firstName: _firstNameTextController
-                                              .text
-                                              .trim(),
-                                          surname: _surnameTextController.text
-                                              .trim(),
-                                          city: _cityTextController.text.trim(),
-                                          street:
-                                              _streetTextController.text.trim(),
-                                          psc: _pscTextController.text.trim(),
-                                          phone:
-                                              _phoneTextController.text.trim(),
-                                          email:
-                                              _emailTextController.text.trim(),
-                                          country:
-                                              orderController.country.value,
-                                          total:
-                                              bagController.totalAmount.value,
-                                          resolved: false);
-                                      orderController.createOrder(_order);
-                                      bagController.emptyBag();
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil('/shop',
-                                              (Route<dynamic> route) => false);
-                                      orderController.loading(false);
-                                    },
-                                  ).show();
+                                              bagController.products.cast())));
+                                  orderController.loading(false);
                                 }
                               },
                               bgColor: Colors.black,

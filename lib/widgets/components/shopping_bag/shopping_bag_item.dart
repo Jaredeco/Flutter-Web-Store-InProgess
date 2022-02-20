@@ -55,10 +55,25 @@ class _BagItemState extends State<BagItem> {
                             ),
                           ),
                           Expanded(
-                              child: CustomText(
-                            size: 20,
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            text: widget.product.title,
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                size: 20,
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                text: widget.product.title,
+                              ),
+                              const SizedBox(height: 5),
+                              CustomText(
+                                size: 12,
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                text: widget.option,
+                                color: Colors.grey,
+                              ),
+                            ],
                           )),
                           Expanded(
                             child: CustomText(

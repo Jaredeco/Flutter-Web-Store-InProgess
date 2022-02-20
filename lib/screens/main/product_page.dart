@@ -45,9 +45,13 @@ class _ProductPageState extends State<ProductPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             ProductModel product = ProductModel.fromDocSnapshot(snapshot.data!);
-            SchedulerBinding.instance!.addPostFrameCallback((_) {
-              productController.setProductOption(product.options![0]);
-            });
+            if (product.options!.isNotEmpty) {
+              SchedulerBinding.instance!.addPostFrameCallback((_) {
+                productController.setProductOption(product.options![0]);
+              });
+            } else {
+              productController.setProductOption("Základná");
+            }
             return Column(
               children: [
                 Expanded(
@@ -88,20 +92,21 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                   const CustomText(
                                     textAlign: TextAlign.left,
-                                    text: "vratane DPH",
+                                    text: "vrátane DPH",
                                     color: Colors.grey,
                                     size: 10,
                                     padding: EdgeInsets.only(bottom: 20),
                                   ),
-                                  InkWell(
-                                    onTap: () =>
-                                        Navigator.of(context).pushNamed("/"),
-                                    child: SizedBox(
-                                        height: 90,
-                                        width: 150,
-                                        child: Image.asset(
-                                            "assets/images/logo_vego.png")),
-                                  ),
+                                  featureColumn(),
+                                  // InkWell(
+                                  //   onTap: () =>
+                                  //       Navigator.of(context).pushNamed("/"),
+                                  //   child: SizedBox(
+                                  //       height: 90,
+                                  //       width: 150,
+                                  //       child: Image.asset(
+                                  //           "assets/images/logo_vego.png")),
+                                  // ),
                                   if (product.options!.isNotEmpty)
                                     GetX<ProductController>(
                                       builder: (controller) => SortDropDown(
@@ -152,11 +157,12 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                             const CustomText(
                               textAlign: TextAlign.left,
-                              text: "vratane DPH",
+                              text: "vrátane DPH",
                               color: Colors.grey,
                               size: 10,
                               padding: EdgeInsets.only(bottom: 20),
                             ),
+                            featureColumn(),
                             Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -267,5 +273,34 @@ class _ProductPageState extends State<ProductPage> {
           }
           return Container();
         });
+  }
+
+  Widget featureRow(IconData icon, String txt) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          color: Colors.grey,
+          size: 15,
+        ),
+        const SizedBox(
+          width: 5,
+        ),
+        CustomText(
+          size: 15,
+          text: txt,
+          color: Colors.grey,
+        )
+      ],
+    );
+  }
+
+  Widget featureColumn() {
+    return Column(
+      children: [
+        featureRow(Icons.money, "DOBIERKA"),
+        featureRow(Icons.local_shipping, "BEZPLATNÁ DOPRAVA")
+      ],
+    );
   }
 }
