@@ -54,10 +54,11 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             OrderModel order = OrderModel.fromDocSnapshot(snapshot.data!);
+            print(order.bagProducts);
             orderController.orderedProducts.bindStream(
                 orderController.loadOrderedProducts(List.generate(
                     order.bagProducts!.length,
-                    (index) => order.bagProducts!.keys.toList()[index][0])));
+                    (index) => order.bagProducts!.keys.toList()[index])));
             return Column(
               children: [
                 Expanded(
@@ -103,7 +104,7 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                               children: controller.orderedProducts
                                   .map((item) => AdminProductCard(
                                         amountOrdered:
-                                            order.bagProducts![item.id],
+                                            order.bagProducts![item.id]![1],
                                         product: item,
                                       ))
                                   .toList()

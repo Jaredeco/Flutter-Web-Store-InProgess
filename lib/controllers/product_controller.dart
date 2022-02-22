@@ -13,7 +13,7 @@ class ProductController extends GetxController {
   var amount = 1.obs;
   var query = "".obs;
   var orderBy = orderBys[0].obs;
-  var productOption = "Základná".obs;
+  var productOption = "".obs;
 
   @override
   void onInit() {

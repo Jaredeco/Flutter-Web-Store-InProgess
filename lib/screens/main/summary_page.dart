@@ -63,7 +63,7 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                       children: const [
                         Padding(
                           padding: EdgeInsets.only(right: 5.0),
-                          child: Icon(Icons.arrow_back),
+                          child: Icon(Icons.edit),
                         ),
                         CustomText(text: "Upraviť Údaje", size: 16),
                       ],
@@ -100,14 +100,15 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        summaryItem("Meno", widget.order.firstName!),
-                        summaryItem("Priezvisko", widget.order.surname!),
-                        summaryItem("Mesto", widget.order.city!),
-                        summaryItem("PSČ", widget.order.psc!),
-                        summaryItem("Ulica", widget.order.street!),
-                        summaryItem("Krajina", widget.order.country!),
-                        summaryItem("E-Mail", widget.order.email!),
-                        summaryItem("Telefónne Číslo", widget.order.phone!),
+                        summaryItem("Meno", widget.order.firstName!, false),
+                        summaryItem("Priezvisko", widget.order.surname!, false),
+                        summaryItem("Mesto", widget.order.city!, false),
+                        summaryItem("PSČ", widget.order.psc!, false),
+                        summaryItem("Ulica", widget.order.street!, false),
+                        summaryItem("Krajina", widget.order.country!, false),
+                        summaryItem("E-Mail", widget.order.email!, false),
+                        summaryItem(
+                            "Telefónne Číslo", widget.order.phone!, false),
                       ],
                     ),
                     Padding(
@@ -152,6 +153,85 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                   ],
                 ),
               ),
+            ],
+            smallWidgets: [
+              InkWell(
+                borderRadius: BorderRadius.circular(15),
+                onTap: () => Navigator.of(context).pop(),
+                child: SizedBox(
+                  width: 100,
+                  height: 50,
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.only(right: 5.0),
+                          child: Icon(Icons.edit),
+                        ),
+                        CustomText(text: "Upraviť Údaje", size: 16),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const CustomText(
+                textAlign: TextAlign.center,
+                text: "Zhrnutie vašej objednavky",
+                size: 40,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  summaryItem("Meno", widget.order.firstName!, true),
+                  summaryItem("Priezvisko", widget.order.surname!, true),
+                  summaryItem("Mesto", widget.order.city!, true),
+                  summaryItem("PSČ", widget.order.psc!, true),
+                  summaryItem("Ulica", widget.order.street!, true),
+                  summaryItem("Krajina", widget.order.country!, true),
+                  summaryItem("E-Mail", widget.order.email!, true),
+                  summaryItem("Telefónne Číslo", widget.order.phone!, true),
+                ],
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.65,
+                    child: GetX<OrderController>(
+                        builder: (OrderController controller) {
+                      if (controller != null &&
+                          controller.orderedProducts != null) {
+                        return Wrap(
+                          alignment: WrapAlignment.center,
+                          children:
+                              List.generate(widget.bagProducts.length, (index) {
+                            animationController!.forward();
+                            return ProductCard(
+                              product: widget.bagProducts.keys
+                                  .toList()[index]
+                                  .product!,
+                              animationController: animationController,
+                              animation: Tween<double>(begin: 0.0, end: 1.0)
+                                  .animate(CurvedAnimation(
+                                      parent: animationController!,
+                                      curve: Interval(
+                                          (1 / widget.bagProducts.keys.length) *
+                                              index,
+                                          1.0,
+                                          curve: Curves.fastOutSlowIn))),
+                              amount: widget.bagProducts.values.toList()[index],
+                            );
+                          }),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    }),
+                  )),
             ],
           ),
         ),
@@ -210,10 +290,11 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
     );
   }
 
-  Widget summaryItem(String title, String data) {
+  Widget summaryItem(String title, String data, bool cen) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          cen ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         CustomText(
           textAlign: TextAlign.center,
@@ -227,6 +308,7 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
           textAlign: TextAlign.center,
           text: data,
           size: 13,
+          color: Colors.grey,
         ),
         const SizedBox(
           height: 15,

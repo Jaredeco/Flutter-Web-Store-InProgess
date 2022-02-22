@@ -45,13 +45,9 @@ class _ProductPageState extends State<ProductPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             ProductModel product = ProductModel.fromDocSnapshot(snapshot.data!);
-            if (product.options!.isNotEmpty) {
-              SchedulerBinding.instance!.addPostFrameCallback((_) {
-                productController.setProductOption(product.options![0]);
-              });
-            } else {
-              productController.setProductOption("Základná");
-            }
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
+              productController.setProductOption(product.options![0]);
+            });
             return Column(
               children: [
                 Expanded(
@@ -74,39 +70,17 @@ class _ProductPageState extends State<ProductPage> {
                                   CustomText(
                                     textAlign: TextAlign.left,
                                     text: product.title,
-                                    size: 30,
+                                    size: 40,
+                                    weight: FontWeight.bold,
+                                    color: const Color(0xFF45E994),
                                   ),
                                   CustomText(
                                     textAlign: TextAlign.left,
                                     text: product.description,
-                                    color: Colors.grey,
+                                    color: const Color(0xFF7C8FB5),
                                     size: 15,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 30),
+                                    padding: const EdgeInsets.only(top: 30),
                                   ),
-                                  CustomText(
-                                    textAlign: TextAlign.left,
-                                    text: "${product.price} €",
-                                    weight: FontWeight.bold,
-                                    size: 20,
-                                  ),
-                                  const CustomText(
-                                    textAlign: TextAlign.left,
-                                    text: "vrátane DPH",
-                                    color: Colors.grey,
-                                    size: 10,
-                                    padding: EdgeInsets.only(bottom: 20),
-                                  ),
-                                  featureColumn(),
-                                  // InkWell(
-                                  //   onTap: () =>
-                                  //       Navigator.of(context).pushNamed("/"),
-                                  //   child: SizedBox(
-                                  //       height: 90,
-                                  //       width: 150,
-                                  //       child: Image.asset(
-                                  //           "assets/images/logo_vego.png")),
-                                  // ),
                                   if (product.options!.isNotEmpty)
                                     GetX<ProductController>(
                                       builder: (controller) => SortDropDown(
@@ -124,6 +98,36 @@ class _ProductPageState extends State<ProductPage> {
                                         },
                                       ),
                                     ),
+                                  const SizedBox(
+                                    height: 30,
+                                  ),
+                                  CustomText(
+                                    textAlign: TextAlign.left,
+                                    text: "${product.price} €",
+                                    weight: FontWeight.bold,
+                                    size: 20,
+                                    color: const Color(0xFF45E994),
+                                  ),
+                                  const CustomText(
+                                    textAlign: TextAlign.left,
+                                    text: "vrátane DPH",
+                                    color: Color(0xFF7C8FB5),
+                                    size: 10,
+                                    padding: EdgeInsets.only(bottom: 20),
+                                  ),
+                                  featureColumn(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed("/shop"),
+                                    child: SizedBox(
+                                        height: 90,
+                                        width: 150,
+                                        child: Image.asset(
+                                            "assets/images/logo_vego.png")),
+                                  ),
                                 ],
                               ),
                             ),
@@ -139,30 +143,71 @@ class _ProductPageState extends State<ProductPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             CustomText(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: product.title,
-                              size: 30,
+                              size: 40,
+                              weight: FontWeight.bold,
+                              color: const Color(0xFF45E994),
                             ),
+                            if (product.options!.isNotEmpty)
+                              Center(
+                                child: GetX<ProductController>(
+                                  builder: (controller) => SortDropDown(
+                                    width: 250,
+                                    cValue: product.options!.contains(
+                                            productController
+                                                .productOption.value)
+                                        ? productController.productOption.value
+                                        : product.options![0],
+                                    ddItems: product.options,
+                                    onChanged: (newValue) {
+                                      productController
+                                          .setProductOption(newValue!);
+                                    },
+                                  ),
+                                ),
+                              ),
                             CustomText(
                               textAlign: TextAlign.left,
                               text: product.description,
-                              color: Colors.grey,
+                              color: const Color(0xFF7C8FB5),
                               size: 15,
-                              padding: const EdgeInsets.symmetric(vertical: 30),
+                              padding: const EdgeInsets.only(top: 30),
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                             CustomText(
                               textAlign: TextAlign.left,
                               text: "${product.price} €",
                               weight: FontWeight.bold,
+                              color: const Color(0xFF45E994),
                             ),
                             const CustomText(
                               textAlign: TextAlign.left,
                               text: "vrátane DPH",
-                              color: Colors.grey,
+                              color: Color(0xFF7C8FB5),
                               size: 10,
                               padding: EdgeInsets.only(bottom: 20),
                             ),
                             featureColumn(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: InkWell(
+                                onTap: () =>
+                                    Navigator.of(context).pushNamed("/shop"),
+                                child: SizedBox(
+                                    height: 90,
+                                    width: 150,
+                                    child: Image.asset(
+                                        "assets/images/logo_vego.png")),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
                             Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
@@ -280,7 +325,7 @@ class _ProductPageState extends State<ProductPage> {
       children: [
         Icon(
           icon,
-          color: Colors.grey,
+          color: const Color(0xFF7C8FB5),
           size: 15,
         ),
         const SizedBox(
@@ -289,7 +334,7 @@ class _ProductPageState extends State<ProductPage> {
         CustomText(
           size: 15,
           text: txt,
-          color: Colors.grey,
+          color: const Color(0xFF7C8FB5),
         )
       ],
     );

@@ -60,7 +60,6 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                         return null;
                       },
                     ),
-                    
                     Center(
                         child: CustomTextField(
                       txtController: _descriptionTextController,
@@ -94,12 +93,6 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                       maxLines: true,
                       txtText:
                           "Product options (Please separate every option with a comma(,).)",
-                      validate: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
-                        }
-                        return null;
-                      },
                     )),
                     const SizedBox(height: 20),
                     GetX<AdminController>(
@@ -229,7 +222,9 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
             title: _titleTextController.text.trim(),
             description: _descriptionTextController.text.trim(),
             price: double.parse(_priceTextController.text.trim()),
-            options: _optionsController.text.trim().split(","));
+            options: _optionsController.text.trim() == ""
+                ? ["Základná"]
+                : _optionsController.text.trim().split(","));
         await firebaseFirestore.collection("Products").add(_product.toJson());
         Navigator.of(context).pushNamed("/admin/products");
         adminController.loading(false);

@@ -4,7 +4,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/landing/main_button.dart';
-import 'package:webstore/widgets/components/landing/social_icon.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/constants/global.dart';
 
@@ -116,6 +115,7 @@ class _ThankYouPageState extends State<ThankYouPage>
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.1),
                       const CustomText(
+                          textAlign: TextAlign.center,
                           text: thankYouTitle,
                           size: 65,
                           color: Color(0xFF45E994),
