@@ -145,7 +145,7 @@ class _ProductPageState extends State<ProductPage> {
                             CustomText(
                               textAlign: TextAlign.center,
                               text: product.title,
-                              size: 40,
+                              size: 30,
                               weight: FontWeight.bold,
                               color: const Color(0xFF45E994),
                             ),
@@ -182,12 +182,13 @@ class _ProductPageState extends State<ProductPage> {
                               text: "${product.price} €",
                               weight: FontWeight.bold,
                               color: const Color(0xFF45E994),
+                              size: 25,
                             ),
                             const CustomText(
                               textAlign: TextAlign.left,
                               text: "vrátane DPH",
                               color: Color(0xFF7C8FB5),
-                              size: 10,
+                              size: 12,
                               padding: EdgeInsets.only(bottom: 20),
                             ),
                             featureColumn(),
