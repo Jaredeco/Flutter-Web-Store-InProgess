@@ -280,11 +280,15 @@ class _ProductPageState extends State<ProductPage> {
                               child: CustomButton(
                                 text: "Kúpiť",
                                 onTap: () {
-                                  if (!bagController.products.containsKey(
-                                      bagController.getBagItem(
-                                          product,
-                                          productController
-                                              .productOption.value))) {
+                                  if (bagController.products.keys.firstWhere(
+                                        (element) =>
+                                            element.product.id == product.id &&
+                                            element.productOption ==
+                                                productController
+                                                    .productOption.value,
+                                        orElse: () => null,
+                                      ) ==
+                                      null) {
                                     bagController.addToBag(
                                         product,
                                         productController.productOption.value,
