@@ -80,9 +80,8 @@ class Footer extends StatelessWidget {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: const TextSpan(
+            child: const SelectableText.rich(
+              TextSpan(
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Color(0xFFb0BFDE),
@@ -95,6 +94,7 @@ class Footer extends StatelessWidget {
                           color: Color(0xFF45E994), fontFamily: 'Sora')),
                 ],
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           const SizedBox(
@@ -102,9 +102,8 @@ class Footer extends StatelessWidget {
           ),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.9,
-            child: RichText(
-              textAlign: TextAlign.center,
-              text: const TextSpan(
+            child: const SelectableText.rich(
+              TextSpan(
                 style: TextStyle(
                     fontSize: 16.0,
                     color: Color(0xFFb0BFDE),
@@ -117,6 +116,7 @@ class Footer extends StatelessWidget {
                           color: Color(0xFF45E994), fontFamily: 'Sora')),
                 ],
               ),
+              textAlign: TextAlign.center,
             ),
           ),
           const SizedBox(
