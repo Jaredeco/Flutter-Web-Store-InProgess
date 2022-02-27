@@ -145,14 +145,14 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                 const CustomText(
                     textAlign: TextAlign.center,
                     text: shopPageTitle,
-                    size: 40,
+                    size: 45,
                     color: Color(0xFF45E994),
                     weight: FontWeight.bold),
                 const SizedBox(
                   height: 30,
                 ),
                 const SizedBox(
-                  width: 500,
+                  width: 450,
                   child: CustomText(
                     textAlign: TextAlign.center,
                     text: shopPageText,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -71,7 +72,6 @@ class _ProductPageState extends State<ProductPage> {
                                     textAlign: TextAlign.left,
                                     text: product.title,
                                     size: 40,
-                                    weight: FontWeight.bold,
                                     color: const Color(0xFF45E994),
                                   ),
                                   CustomText(
@@ -104,7 +104,6 @@ class _ProductPageState extends State<ProductPage> {
                                   CustomText(
                                     textAlign: TextAlign.left,
                                     text: "${product.price} €",
-                                    weight: FontWeight.bold,
                                     size: 20,
                                     color: const Color(0xFF45E994),
                                   ),
@@ -140,13 +139,12 @@ class _ProductPageState extends State<ProductPage> {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomText(
                               textAlign: TextAlign.center,
                               text: product.title,
-                              size: 30,
-                              weight: FontWeight.bold,
+                              size: 40,
                               color: const Color(0xFF45E994),
                             ),
                             if (product.options!.isNotEmpty)
@@ -168,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                               ),
                             CustomText(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: product.description,
                               color: const Color(0xFF7C8FB5),
                               size: 15,
@@ -178,14 +176,13 @@ class _ProductPageState extends State<ProductPage> {
                               height: 30,
                             ),
                             CustomText(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: "${product.price} €",
-                              weight: FontWeight.bold,
                               color: const Color(0xFF45E994),
                               size: 25,
                             ),
                             const CustomText(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: "vrátane DPH",
                               color: Color(0xFF7C8FB5),
                               size: 12,
@@ -216,15 +213,23 @@ class _ProductPageState extends State<ProductPage> {
                                   IconButton(
                                       onPressed: () =>
                                           productController.decAmount(),
-                                      icon: const Icon(Icons.remove)),
+                                      icon: const Icon(
+                                        Icons.remove,
+                                        color: Color(0xFF7C8FB5),
+                                      )),
                                   const SizedBox(width: 50),
                                   GetX<ProductController>(
-                                      builder: (_) => Text(productController
-                                          .amount.value
-                                          .toString())),
+                                      builder: (_) => CustomText(
+                                            text: productController.amount.value
+                                                .toString(),
+                                            color: const Color(0xFF45E994),
+                                          )),
                                   const SizedBox(width: 50),
                                   IconButton(
-                                      icon: const Icon(Icons.add),
+                                      icon: const Icon(
+                                        Icons.add,
+                                        color: Color(0xFF7C8FB5),
+                                      ),
                                       onPressed: () =>
                                           productController.incAmount()),
                                 ]),
@@ -246,7 +251,7 @@ class _ProductPageState extends State<ProductPage> {
                             child: CustomText(
                               padding: const EdgeInsets.only(left: 40),
                               text: "Suma: ${bagController.totalAmount} €",
-                              color: Colors.black,
+                              color: const Color(0xFF7C8FB5),
                             ),
                           ),
                         ),
@@ -262,17 +267,23 @@ class _ProductPageState extends State<ProductPage> {
                                     IconButton(
                                         onPressed: () =>
                                             productController.decAmount(),
-                                        icon: const Icon(Icons.remove)),
+                                        icon: const Icon(
+                                          Icons.remove,
+                                          color: Color(0xFF7C8FB5),
+                                        )),
                                     const SizedBox(width: 50),
                                     GetX<ProductController>(
-                                        builder: (_) => Text(productController
-                                            .amount.value
-                                            .toString())),
+                                        builder: (_) => CustomText(
+                                            text: productController.amount.value
+                                                .toString(),
+                                            color: const Color(0xFF45E994))),
                                     const SizedBox(width: 50),
                                     IconButton(
-                                        icon: const Icon(Icons.add),
-                                        onPressed: () =>
-                                            productController.incAmount()),
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () =>
+                                          productController.incAmount(),
+                                      color: Color(0xFF7C8FB5),
+                                    ),
                                   ]),
                             Padding(
                               padding:
@@ -325,31 +336,36 @@ class _ProductPageState extends State<ProductPage> {
         });
   }
 
-  Widget featureRow(IconData icon, String txt) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          color: const Color(0xFF7C8FB5),
-          size: 15,
-        ),
-        const SizedBox(
-          width: 5,
-        ),
-        CustomText(
-          size: 15,
-          text: txt,
-          color: const Color(0xFF7C8FB5),
-        )
-      ],
+  Widget featureRow(IconData icon, String txt, Color color) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 3.0),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: color,
+            size: 15,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          CustomText(
+            size: 15,
+            text: txt,
+            color: color,
+          )
+        ],
+      ),
     );
   }
 
   Widget featureColumn() {
     return Column(
       children: [
-        featureRow(Icons.money, "DOBIERKA"),
-        featureRow(Icons.local_shipping, "BEZPLATNÁ DOPRAVA")
+        featureRow(Icons.check, "SKLADOM", const Color(0xFF45E994)),
+        featureRow(Icons.money, "DOBIERKA", const Color(0xFF7C8FB5)),
+        featureRow(
+            Icons.local_shipping, "BEZPLATNÁ DOPRAVA", const Color(0xFF7C8FB5))
       ],
     );
   }

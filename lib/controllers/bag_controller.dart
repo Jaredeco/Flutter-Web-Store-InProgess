@@ -107,9 +107,22 @@ class BagController extends GetxController {
 
   Map<String, List<dynamic>> getProducts() {
     Map<String, List<dynamic>> _orderProducts = {};
-    for (var k in products.keys) {
-      _orderProducts[k.product.id!] =
-          [k.productOption, products[getBagItem(k.product, k.productOption)]!];
+    for (var k in products.keys.toList()) {
+      _orderProducts.update(
+        'ids',
+        (value) => value += [k.product.id!],
+        ifAbsent: () => [k.product.id!],
+      );
+      _orderProducts.update(
+        'options',
+        (value) => value += [k.productOption],
+        ifAbsent: () => [k.productOption],
+      );
+      _orderProducts.update(
+        'amounts',
+        (value) => value += [products[getBagItem(k.product, k.productOption)]!],
+        ifAbsent: () => [products[getBagItem(k.product, k.productOption)]!],
+      );
     }
     return _orderProducts;
   }

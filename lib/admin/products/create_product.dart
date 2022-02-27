@@ -78,7 +78,7 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                       maxLines: true,
                       txtController: _priceTextController,
                       txtIcon: Icons.money,
-                      txtText: "Product Price",
+                      txtText: "Product Price(Please use . for decimal prices)",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
                           return 'Text is empty!';
@@ -92,7 +92,7 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                       txtIcon: Icons.arrow_drop_down_circle_outlined,
                       maxLines: true,
                       txtText:
-                          "Product options (Please separate every option with a comma(,).)",
+                          "Product options(Please separate every option with a comma(,).)",
                     )),
                     const SizedBox(height: 20),
                     GetX<AdminController>(

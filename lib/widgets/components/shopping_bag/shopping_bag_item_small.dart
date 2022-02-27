@@ -45,26 +45,28 @@ class _BagItemSmallState extends State<BagItemSmall> {
         ),
         Expanded(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(
-                size: 16,
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                text: widget.product.title),
+              size: 20,
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              text: widget.product.title,
+              color: const Color(0xFF45E994),
+            ),
             const SizedBox(height: 5),
             CustomText(
               size: 12,
               padding: const EdgeInsets.only(left: 20, right: 20),
               text: widget.option,
-              color: Colors.grey,
+              color: const Color(0xFF7C8FB5),
             ),
             const SizedBox(height: 5),
             CustomText(
-              size: 16,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              text: "${widget.product.price} €",
-            ),
+                size: 16,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                text: "${widget.product.price} €",
+                color: const Color(0xFF45E994)),
           ],
         )),
         Expanded(
@@ -83,15 +85,23 @@ class _BagItemSmallState extends State<BagItemSmall> {
                   IconButton(
                       onPressed: () => bagController.removeFromBag(
                           widget.product, widget.option),
-                      icon: const Icon(Icons.remove)),
+                      icon: const Icon(
+                        Icons.remove,
+                        color: Color(0xFF7C8FB5),
+                      )),
                   GetX<BagController>(
-                      builder: (_) => Text(bagController.products[bagController
-                              .getBagItem(widget.product, widget.option)]
-                          .toString())),
+                      builder: (_) => CustomText(
+                          text: bagController.products[bagController.getBagItem(
+                                  widget.product, widget.option)]
+                              .toString(),
+                          color: const Color(0xFF45E994))),
                   IconButton(
                       onPressed: () => bagController.addToBag(
                           widget.product, widget.option, 1),
-                      icon: const Icon(Icons.add)),
+                      icon: const Icon(
+                        Icons.add,
+                        color: Color(0xFF7C8FB5),
+                      )),
                 ],
               ),
             ],

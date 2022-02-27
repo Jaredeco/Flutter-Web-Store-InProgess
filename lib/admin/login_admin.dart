@@ -57,6 +57,7 @@ class _AdminState extends State<Admin> {
               Padding(
                 padding: const EdgeInsets.fromLTRB(25, 25, 40, 25),
                 child: CustomButton(
+                  bgColor: Colors.black,
                     text: "Log In",
                     onTap: () {
                       if (_admin.text == adminController.adminLogin &&

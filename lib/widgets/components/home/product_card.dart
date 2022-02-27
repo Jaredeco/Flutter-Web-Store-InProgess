@@ -71,18 +71,19 @@ class _ProductCardState extends State<ProductCard> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     CustomText(
-                                      size: 20,
+                                      size: 25,
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 20),
                                       text: widget.product.title,
+                                      color: const Color(0xFF45E994),
                                     ),
                                     Container(
-                                      padding: const EdgeInsets.all(20),
+                                      padding: const EdgeInsets.all(10),
                                       child: Text(
                                         widget.product.description!,
                                         style: const TextStyle(
                                           fontSize: 13,
-                                          color: Colors.grey,
+                                          color: Color(0xFF7C8FB5),
                                         ),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
@@ -91,35 +92,37 @@ class _ProductCardState extends State<ProductCard> {
                                     ),
                                     CustomText(
                                       size: 16,
-                                      weight: FontWeight.bold,
                                       text: "${widget.product.price} €",
+                                      color: const Color(0xFF45E994),
                                     ),
                                     if (widget.option != null)
                                       Container(
-                                        padding: const EdgeInsets.all(20),
+                                        padding: const EdgeInsets.all(10),
                                         child: Text(
                                           widget.option!,
                                           style: const TextStyle(
                                             fontSize: 13,
-                                            color: Colors.grey,
+                                            color: Color(0xFF7C8FB5),
                                           ),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           softWrap: false,
                                         ),
                                       ),
-                                    if (widget.option != null)
+                                    if (widget.amount != null)
                                       Container(
-                                        padding: const EdgeInsets.all(20),
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 0, 10, 10),
                                         child: Text(
-                                          widget.amount!.toString(),
+                                          "Počet: ${widget.amount!.toString()}",
                                           style: const TextStyle(
                                             fontSize: 13,
-                                            color: Colors.grey,
+                                            color: Color(0xFF7C8FB5),
                                           ),
                                           overflow: TextOverflow.ellipsis,
                                           maxLines: 1,
                                           softWrap: false,
+                                          textAlign: TextAlign.center,
                                         ),
                                       ),
                                   ])),

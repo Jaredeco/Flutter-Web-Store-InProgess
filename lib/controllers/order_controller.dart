@@ -75,14 +75,4 @@ class OrderController extends GetxController {
     country.value = val;
     update();
   }
-
-  // double getTotalOrdered(Map<String, int> bagProducts) {
-  //   CollectionReference prcol = firebaseFirestore.collection("Products");
-  //   double totalPrice = 0;
-  //   bagProducts.forEach((key, value) async {
-  //     double pp = (await prcol.doc(key).get())["price"];
-  //     totalPrice += pp * value;
-  //   });
-  //   return totalPrice;
-  // }
 }

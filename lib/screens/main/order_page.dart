@@ -171,7 +171,7 @@ class _OrderPageState extends State<OrderPage> {
                       child: CustomText(
                         padding: const EdgeInsets.only(left: 40),
                         text: "Suma: ${bagController.totalAmount} €",
-                        color: Colors.black,
+                        color: const Color(0xFF7C8FB5),
                       ),
                     ),
                   ),
@@ -208,7 +208,6 @@ class _OrderPageState extends State<OrderPage> {
                                   orderController.loading(false);
                                 }
                               },
-                              bgColor: Colors.black,
                             ),
                     ),
                   ),

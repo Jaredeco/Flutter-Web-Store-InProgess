@@ -63,33 +63,30 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                       children: const [
                         Padding(
                           padding: EdgeInsets.only(right: 5.0),
-                          child: Icon(Icons.edit),
+                          child: Icon(
+                            Icons.edit,
+                            color: Color(0xFF45E994),
+                          ),
                         ),
-                        CustomText(text: "Upraviť Údaje", size: 16),
+                        CustomText(
+                          text: "Upraviť Údaje",
+                          size: 16,
+                          color: Color(0xFF45E994),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               const CustomText(
+                color: Color(0xFF7C8FB5),
                 textAlign: TextAlign.center,
-                text: "Zhrnutie vašej objednavky",
+                text: "Zhrnutie vašej objednávky",
                 size: 40,
               ),
               const SizedBox(
                 height: 30,
               ),
-              // ConstrainedBox(
-              //   constraints: const BoxConstraints(maxWidth: 550),
-              //   child: const CustomText(
-              //     textAlign: TextAlign.center,
-              //     text: "Toto je zhrnutie vasej objednavky.",
-              //     size: 16,
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Row(
@@ -142,6 +139,9 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                                                 curve: Curves.fastOutSlowIn))),
                                     amount: widget.bagProducts.values
                                         .toList()[index],
+                                    option: widget.bagProducts.keys
+                                        .toList()[index]
+                                        .productOption!,
                                   );
                                 }),
                               );
@@ -167,17 +167,25 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                       children: const [
                         Padding(
                           padding: EdgeInsets.only(right: 5.0),
-                          child: Icon(Icons.edit),
+                          child: Icon(
+                            Icons.edit,
+                            color: Color(0xFF45E994),
+                          ),
                         ),
-                        CustomText(text: "Upraviť Údaje", size: 16),
+                        CustomText(
+                          text: "Upraviť Údaje",
+                          size: 16,
+                          color: Color(0xFF45E994),
+                        ),
                       ],
                     ),
                   ),
                 ),
               ),
               const CustomText(
+                color: Color(0xFF7C8FB5),
                 textAlign: TextAlign.center,
-                text: "Zhrnutie vašej objednavky",
+                text: "Zhrnutie vašej objednávky",
                 size: 40,
               ),
               const SizedBox(
@@ -224,6 +232,9 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                                           1.0,
                                           curve: Curves.fastOutSlowIn))),
                               amount: widget.bagProducts.values.toList()[index],
+                              option: widget.bagProducts.keys
+                                  .toList()[index]
+                                  .productOption!,
                             );
                           }),
                         );
@@ -247,7 +258,7 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                     child: CustomText(
                       padding: const EdgeInsets.only(left: 40),
                       text: "Suma: ${bagController.totalAmount} €",
-                      color: Colors.black,
+                      color: const Color(0xFF7C8FB5),
                     ),
                   ),
                 ),
@@ -259,6 +270,7 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                         : CustomButton(
                             text: "Objednať",
                             onTap: () {
+                              print(widget.order.bagProducts);
                               AwesomeDialog(
                                 context: context,
                                 dialogType: DialogType.INFO,
@@ -278,7 +290,6 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
                                 },
                               ).show();
                             },
-                            bgColor: Colors.black,
                           ),
                   ),
                 ),
@@ -300,6 +311,7 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
           textAlign: TextAlign.center,
           text: title,
           size: 20,
+          color: const Color(0xFF45E994),
         ),
         const SizedBox(
           height: 3,
@@ -308,7 +320,7 @@ class _OrderPageState extends State<SummaryPage> with TickerProviderStateMixin {
           textAlign: TextAlign.center,
           text: data,
           size: 13,
-          color: Colors.grey,
+          color: const Color(0xFF7C8FB5),
         ),
         const SizedBox(
           height: 15,

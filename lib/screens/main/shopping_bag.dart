@@ -42,54 +42,57 @@ class _ShoppingBagState extends State<ShoppingBag>
           child: ResponsiveUi(
             largeWidgets: [
               GetX<BagController>(
-                builder: (BagController controller) => bagController
-                        .products.isEmpty
-                    ? const Center(
-                        child: Icon(
-                        Icons.remove_shopping_cart,
-                        size: 100,
-                      ))
-                    : Column(
-                        children: List<Widget>.generate(
-                            bagController.products.length, (index) {
-                          animationController!.forward();
-                          if (MediaQuery.of(context).size.width >=
-                              largePageSize) {
-                            return BagItem(
-                              product: bagController.products.keys
-                                  .elementAt(index)
-                                  .product,
-                              option: bagController.products.keys
-                                  .elementAt(index)
-                                  .productOption,
-                              animationController: animationController,
-                              animation: Tween<double>(begin: 0.0, end: 1.0)
-                                  .animate(CurvedAnimation(
-                                      parent: animationController!,
-                                      curve: Interval(
-                                          (1 / controller.products.length) *
-                                              index,
-                                          1.0,
-                                          curve: Curves.easeOutExpo))),
-                            );
-                          }
-                          return BagItemSmall(
-                            product:
-                                bagController.products.keys.elementAt(index).product,
-                            option:
-                                bagController.products.keys.elementAt(index).productOption,
-                            animationController: animationController,
-                            animation: Tween<double>(begin: 0.0, end: 1.0)
-                                .animate(CurvedAnimation(
-                                    parent: animationController!,
-                                    curve: Interval(
-                                        (1 / controller.products.length) *
-                                            index,
-                                        1.0,
-                                        curve: Curves.fastOutSlowIn))),
-                          );
-                        }),
-                      ),
+                builder: (BagController controller) =>
+                    bagController.products.isEmpty
+                        ? const Center(
+                            child: Icon(
+                            Icons.remove_shopping_cart,
+                            size: 100,
+                            color: Color(0xFF7C8FB5),
+                          ))
+                        : Column(
+                            children: List<Widget>.generate(
+                                bagController.products.length, (index) {
+                              animationController!.forward();
+                              if (MediaQuery.of(context).size.width >=
+                                  largePageSize) {
+                                return BagItem(
+                                  product: bagController.products.keys
+                                      .elementAt(index)
+                                      .product,
+                                  option: bagController.products.keys
+                                      .elementAt(index)
+                                      .productOption,
+                                  animationController: animationController,
+                                  animation: Tween<double>(begin: 0.0, end: 1.0)
+                                      .animate(CurvedAnimation(
+                                          parent: animationController!,
+                                          curve: Interval(
+                                              (1 / controller.products.length) *
+                                                  index,
+                                              1.0,
+                                              curve: Curves.easeOutExpo))),
+                                );
+                              }
+                              return BagItemSmall(
+                                product: bagController.products.keys
+                                    .elementAt(index)
+                                    .product,
+                                option: bagController.products.keys
+                                    .elementAt(index)
+                                    .productOption,
+                                animationController: animationController,
+                                animation: Tween<double>(begin: 0.0, end: 1.0)
+                                    .animate(CurvedAnimation(
+                                        parent: animationController!,
+                                        curve: Interval(
+                                            (1 / controller.products.length) *
+                                                index,
+                                            1.0,
+                                            curve: Curves.fastOutSlowIn))),
+                              );
+                            }),
+                          ),
               ),
             ],
           ),
@@ -106,7 +109,7 @@ class _ShoppingBagState extends State<ShoppingBag>
                     child: CustomText(
                       padding: const EdgeInsets.only(left: 40),
                       text: "Suma: ${bagController.totalAmount} €",
-                      color: Colors.black,
+                      color: const Color(0xFF7C8FB5),
                     ),
                   ),
                 ),
@@ -126,7 +129,6 @@ class _ShoppingBagState extends State<ShoppingBag>
                         );
                       }
                     },
-                    bgColor: Colors.black,
                   ),
                 ),
               ],

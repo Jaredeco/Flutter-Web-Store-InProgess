@@ -35,7 +35,7 @@ class FlouroRouter {
 
   static final Handler _orderHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
-          OrderPage());
+          const OrderPage());
   static final Handler _adminHandler = Handler(
       handlerFunc: (BuildContext? context, Map<String, dynamic> params) =>
           const Admin());

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/bag_controller.dart';
 import 'package:badges/badges.dart';
+import 'package:webstore/screens/landing/home_page.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 
 class NavBar extends StatelessWidget {
@@ -40,15 +41,25 @@ class NavBar extends StatelessWidget {
                         builder: (_) =>
                             Text(bagController.products.length.toString()),
                       ),
-                      child: const Icon(Icons.shopping_bag_outlined),
+                      child: const Icon(
+                        Icons.shopping_bag_outlined,
+                        color: Color(0xFF7C8FB5),
+                      ),
                     ),
                   ),
                   const SizedBox(
                     width: 25,
                   ),
                   IconButton(
-                      onPressed: () => Navigator.of(context).pushNamed("/"),
-                      icon: const Icon(Icons.info_outline)),
+                      onPressed: () =>
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const HomePage(
+                                    scrollInfo: true,
+                                  ))),
+                      icon: const Icon(
+                        Icons.info_outline_rounded,
+                        color: Color(0xFF7C8FB5),
+                      )),
                   const SizedBox(
                     width: 25,
                   ),
@@ -56,7 +67,10 @@ class NavBar extends StatelessWidget {
                       onPressed: () {
                         drawerController.toggle!();
                       },
-                      icon: const Icon(Icons.menu)),
+                      icon: const Icon(
+                        Icons.menu,
+                        color: Color(0xFF45E994),
+                      )),
                   const SizedBox(
                     width: 35,
                   ),
@@ -73,7 +87,7 @@ class NavBar extends StatelessWidget {
                       builder: (_) =>
                           Text(bagController.products.length.toString()),
                     ),
-                    child: const Icon(Icons.menu),
+                    child: const Icon(Icons.menu, color: Color(0xFF45E994)),
                   ),
                 ),
               ),
