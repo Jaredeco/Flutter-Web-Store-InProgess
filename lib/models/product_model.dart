@@ -6,17 +6,20 @@ class ProductModel {
   final String? title;
   final List<String>? imgsUrl;
   final double? price;
-  final String? description;
+  final String? descriptionTop;
+  final String? descriptionBottom;
   final List<String>? options;
 
-  ProductModel(
-      {this.id,
-      this.createAt,
-      this.title,
-      this.imgsUrl,
-      this.price,
-      this.description,
-      this.options});
+  ProductModel({
+    this.id,
+    this.createAt,
+    this.title,
+    this.imgsUrl,
+    this.price,
+    this.descriptionTop,
+    this.descriptionBottom,
+    this.options,
+  });
 
   factory ProductModel.fromDocSnapshot(DocumentSnapshot snapshot) {
     return ProductModel(
@@ -25,7 +28,8 @@ class ProductModel {
         imgsUrl: snapshot["imgsUrl"].cast<String>(),
         title: snapshot["title"],
         price: snapshot["price"],
-        description: snapshot["description"],
+        descriptionTop: snapshot["descriptionTop"],
+        descriptionBottom: snapshot["descriptionBottom"],
         options: snapshot["options"].cast<String>());
   }
   Map<String, dynamic> toJson() => {
@@ -33,7 +37,8 @@ class ProductModel {
         'imgsUrl': imgsUrl,
         'title': title,
         'price': price,
-        'description': description,
+        'descriptionTop': descriptionTop,
+        'descriptionBottom': descriptionBottom,
         'options': options,
       };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/controllers/product_controller.dart';
+import 'package:webstore/widgets/components/product_page/full_screen.dart';
 
 class ImageGallery extends StatefulWidget {
   final List<String>? imgsUrl;
@@ -31,8 +32,8 @@ class _ImageGalleryState extends State<ImageGallery>
   @override
   Widget build(BuildContext context) {
     double width = 770;
-    double point = 0;
-    double mv = 0.4;
+    double cp = 0;
+    double mv = 300;
 
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
@@ -40,88 +41,147 @@ class _ImageGalleryState extends State<ImageGallery>
             curve: Interval((1 / widget.imgsUrl!.length + 1) * 0, 1.0,
                 curve: Curves.fastOutSlowIn)));
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AnimatedBuilder(
-            animation: animationController!,
-            builder: (BuildContext context, Widget? child) {
-              return FadeTransition(
-                  opacity: animation,
-                  child: Transform(
-                      transform: Matrix4.translationValues(
-                          0.0, 30 * (1.0 - animation.value), 0.0),
-                      child: GetX<ProductController>(builder: (_) {
-                        animationController!.forward();
-                        return Container(
-                            height: 400,
-                            width: width,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[50],
-                              image: DecorationImage(
-                                  image: NetworkImage(widget.imgsUrl![
-                                          productController.selectedImage.value]
-                                      .toString()),
-                                  fit: BoxFit.cover),
-                            ));
-                      })));
-            }),
-        SizedBox(
-          width: width,
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                controller: sc,
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children:
-                      List<Widget>.generate(widget.imgsUrl!.length, (index) {
-                    animationController!.forward();
-                    return imgCell(
-                        index,
-                        width,
-                        Tween<double>(begin: 0.0, end: 1.0).animate(
-                            CurvedAnimation(
-                                parent: animationController!,
-                                curve: Interval(
-                                    (1 / widget.imgsUrl!.length) * index, 1.0,
-                                    curve: Curves.fastOutSlowIn))));
-                  }),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AnimatedBuilder(
+              animation: animationController!,
+              builder: (BuildContext context, Widget? child) {
+                return FadeTransition(
+                    opacity: animation,
+                    child: Transform(
+                        transform: Matrix4.translationValues(
+                            0.0, 30 * (1.0 - animation.value), 0.0),
+                        child: GetX<ProductController>(builder: (_) {
+                          animationController!.forward();
+                          return InkWell(
+                              onTap: (() =>
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => FullScreenImage(
+                                            imgsUrl: widget.imgsUrl,
+                                          )))),
+                              child: Stack(
+                                children: [
+                                  Container(
+                                      height: 400,
+                                      width: width,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[50],
+                                        image: DecorationImage(
+                                            image: NetworkImage(widget.imgsUrl![
+                                                    productController
+                                                        .selectedImage.value]
+                                                .toString()),
+                                            fit: BoxFit.cover),
+                                      )),
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 16.0),
+                                      child: MaterialButton(
+                                        splashColor: Colors.white,
+                                        elevation: 0,
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      FullScreenImage(
+                                                        imgsUrl: widget.imgsUrl,
+                                                      )));
+                                        },
+                                        color: const Color(0xFF45E994),
+                                        textColor: Colors.white,
+                                        child: const Icon(
+                                          Icons.fullscreen_rounded,
+                                          size: 24,
+                                        ),
+                                        padding: const EdgeInsets.all(16),
+                                        shape: const CircleBorder(),
+                                      ))
+                                ],
+                              ));
+                        })));
+              }),
+          SizedBox(
+            width: width,
+            child: Stack(
+              children: [
+                SingleChildScrollView(
+                  controller: sc,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children:
+                        List<Widget>.generate(widget.imgsUrl!.length, (index) {
+                      animationController!.forward();
+                      return imgCell(
+                          index,
+                          width,
+                          Tween<double>(begin: 0.0, end: 1.0).animate(
+                              CurvedAnimation(
+                                  parent: animationController!,
+                                  curve: Interval(
+                                      (1 / widget.imgsUrl!.length) * index, 1.0,
+                                      curve: Curves.fastOutSlowIn))));
+                    }),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    IconButton(
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      MaterialButton(
+                        splashColor: Colors.white,
+                        elevation: 0,
                         onPressed: () {
-                          if (point - mv >= 0) {
-                            point -= mv;
-                            sc.animateTo(sc.position.maxScrollExtent * point,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.fastOutSlowIn);
+                          if (cp >= mv) {
+                            cp -= mv;
+                          } else {
+                            cp -= cp;
                           }
+                          sc.animateTo(cp,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.fastOutSlowIn);
                         },
-                        icon: const Icon(Icons.arrow_back_ios_new_rounded)),
-                    IconButton(
+                        color: const Color(0xFF45E994),
+                        textColor: Colors.white,
+                        child: const Icon(
+                          Icons.arrow_back_ios_rounded,
+                          size: 24,
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        shape: const CircleBorder(),
+                      ),
+                      MaterialButton(
+                        splashColor: Colors.white,
+                        elevation: 0,
                         onPressed: () {
-                          if (point + mv <= 1) {
-                            point += mv;
-                            sc.animateTo(sc.position.maxScrollExtent * point,
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.fastOutSlowIn);
+                          if ((sc.position.maxScrollExtent - cp) >= mv) {
+                            cp += mv;
+                          } else {
+                            cp += sc.position.maxScrollExtent - cp;
                           }
+                          sc.animateTo(cp,
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.fastOutSlowIn);
                         },
-                        icon: const Icon(Icons.arrow_forward_ios_rounded)),
-                  ],
-                ),
-              )
-            ],
-          ),
-        )
-      ],
+                        color: const Color(0xFF45E994),
+                        textColor: Colors.white,
+                        child: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 24,
+                        ),
+                        padding: const EdgeInsets.all(16),
+                        shape: const CircleBorder(),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -134,7 +194,7 @@ class _ImageGalleryState extends State<ImageGallery>
               child: Transform(
                   transform: Matrix4.translationValues(
                       0.0, 30 * (1.0 - animation.value), 0.0),
-                  child: GestureDetector(
+                  child: InkWell(
                       onTap: () {
                         productController.changeImg(idx);
                       },

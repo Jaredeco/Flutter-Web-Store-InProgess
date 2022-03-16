@@ -54,7 +54,7 @@ class _AdminProductCardState extends State<AdminProductCard> {
                     padding: const EdgeInsets.all(20),
                     width: 300,
                     child: Text(
-                      widget.product.description!,
+                      widget.product.descriptionTop!,
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.grey,
