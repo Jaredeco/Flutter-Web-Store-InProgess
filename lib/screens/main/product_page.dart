@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -76,7 +75,7 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                   CustomText(
                                     textAlign: TextAlign.left,
-                                    text: product.description,
+                                    text: product.descriptionTop,
                                     color: const Color(0xFF7C8FB5),
                                     size: 15,
                                     padding: const EdgeInsets.only(top: 30),
@@ -167,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                               ),
                             CustomText(
                               textAlign: TextAlign.center,
-                              text: product.description,
+                              text: product.descriptionTop,
                               color: const Color(0xFF7C8FB5),
                               size: 15,
                               padding: const EdgeInsets.only(top: 30),

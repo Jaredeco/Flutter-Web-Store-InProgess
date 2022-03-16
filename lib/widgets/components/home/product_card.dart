@@ -80,7 +80,7 @@ class _ProductCardState extends State<ProductCard> {
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       child: Text(
-                                        widget.product.description!,
+                                        widget.product.descriptionTop!,
                                         style: const TextStyle(
                                           fontSize: 13,
                                           color: Color(0xFF7C8FB5),

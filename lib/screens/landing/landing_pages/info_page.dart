@@ -146,7 +146,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                         height: 40,
                       ),
                       Container(
-                          height: MediaQuery.of(context).size.height * 0.4,
+                          height: MediaQuery.of(context).size.height * 0.5,
                           width: MediaQuery.of(context).size.width * 0.9,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),

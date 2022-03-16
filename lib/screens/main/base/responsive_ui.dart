@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'base_large.dart';
 import 'base_small.dart';
 
-const int largePageSize = 1400;
+const int largePageSize = 1200;
 
 class ResponsiveUi extends StatelessWidget {
   final List<Widget>? smallWidgets;

@@ -31,7 +31,9 @@ class _AdminProductPageState extends State<AdminProductPage> {
 
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _priceTextController = TextEditingController();
-  final TextEditingController _descriptionTextController =
+  final TextEditingController _descriptionTopController =
+      TextEditingController();
+  final TextEditingController _descriptionBottomController =
       TextEditingController();
   final TextEditingController _optionsController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -49,7 +51,8 @@ class _AdminProductPageState extends State<AdminProductPage> {
           if (snapshot.connectionState == ConnectionState.done) {
             ProductModel product = ProductModel.fromDocSnapshot(snapshot.data!);
             _titleTextController.text = product.title!;
-            _descriptionTextController.text = product.description!;
+            _descriptionTopController.text = product.descriptionTop!;
+            _descriptionBottomController.text = product.descriptionBottom!;
             _priceTextController.text = product.price!.toString();
             _optionsController.text = product.options!.join(",");
             return Form(
@@ -94,11 +97,29 @@ class _AdminProductPageState extends State<AdminProductPage> {
                                   CustomTextField(
                                     width:
                                         MediaQuery.of(context).size.width * 0.3,
-                                    txtController: _descriptionTextController,
+                                    txtController: _descriptionTopController,
                                     txtIcon: Icons.description,
                                     kbdType: TextInputType.multiline,
                                     maxLines: false,
-                                    txtText: "Product Description",
+                                    txtText: "Product Description Top",
+                                    validate: (text) {
+                                      if (text == null || text.isEmpty) {
+                                        return 'Text is empty!';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 50,
+                                  ),
+                                  CustomTextField(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    txtController: _descriptionBottomController,
+                                    txtIcon: Icons.description,
+                                    kbdType: TextInputType.multiline,
+                                    maxLines: false,
+                                    txtText: "Product Description Bottom",
                                     validate: (text) {
                                       if (text == null || text.isEmpty) {
                                         return 'Text is empty!';
@@ -179,7 +200,25 @@ class _AdminProductPageState extends State<AdminProductPage> {
                         Center(
                             child: CustomTextField(
                           width: MediaQuery.of(context).size.width * 0.8,
-                          txtController: _descriptionTextController,
+                          txtController: _descriptionTopController,
+                          txtIcon: Icons.description,
+                          kbdType: TextInputType.multiline,
+                          maxLines: false,
+                          txtText: "Product Description",
+                          validate: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Text is empty!';
+                            }
+                            return null;
+                          },
+                        )),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Center(
+                            child: CustomTextField(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          txtController: _descriptionBottomController,
                           txtIcon: Icons.description,
                           kbdType: TextInputType.multiline,
                           maxLines: false,
@@ -345,7 +384,8 @@ class _AdminProductPageState extends State<AdminProductPage> {
           adminController.loading(true);
           Map<String, dynamic> _update = {
             "title": _titleTextController.text.trim(),
-            "description": _descriptionTextController.text.trim(),
+            "descriptionTop": _descriptionTopController.text.trim(),
+            "descriptionBottom": _descriptionBottomController.text.trim(),
             "price": double.parse(_priceTextController.text.trim()),
             "options": _optionsController.text.split(","),
           };
