@@ -4,6 +4,7 @@ import 'package:webstore/constants/controllers.dart';
 import 'package:webstore/constants/global.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/widgets/components/base/footer.dart';
 import 'package:webstore/widgets/components/home/product_card.dart';
 import 'package:webstore/widgets/components/home/search_bar.dart';
 import 'package:webstore/widgets/components/home/sort_drop_down.dart';
@@ -96,33 +97,42 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             child: GetX<ProductController>(
                 builder: (ProductController controller) {
               if (controller != null && controller.products != null) {
-                return Wrap(
-                  alignment: WrapAlignment.center,
-                  children: controller.query.isEmpty
-                      ? controller.products
-                          .map((item) {
-                            animationController!.forward();
-                            return ProductCard(
-                              product: item,
-                              animationController: animationController,
-                              animation: Tween<double>(begin: 0.0, end: 1.0)
-                                  .animate(CurvedAnimation(
-                                      parent: animationController!,
-                                      curve: Interval(
-                                          (1 / controller.products.length) *
-                                              controller.products.indexOf(item),
-                                          1.0,
-                                          curve: Curves.fastOutSlowIn))),
-                            );
-                          })
-                          .toList()
-                          .cast<Widget>()
-                      : controller.searchProducts(animationController!),
-                );
+                return controller.products.isEmpty
+                    ? Container(
+                        height: MediaQuery.of(context).size.height,
+                      )
+                    : Wrap(
+                        alignment: WrapAlignment.center,
+                        children: controller.query.isEmpty
+                            ? controller.products
+                                .map((item) {
+                                  animationController!.forward();
+                                  return ProductCard(
+                                    product: item,
+                                    animationController: animationController,
+                                    animation: Tween<double>(
+                                            begin: 0.0, end: 1.0)
+                                        .animate(CurvedAnimation(
+                                            parent: animationController!,
+                                            curve: Interval(
+                                                (1 /
+                                                        controller
+                                                            .products.length) *
+                                                    controller.products
+                                                        .indexOf(item),
+                                                1.0,
+                                                curve: Curves.fastOutSlowIn))),
+                                  );
+                                })
+                                .toList()
+                                .cast<Widget>()
+                            : controller.searchProducts(animationController!),
+                      );
               } else {
                 return Container();
               }
-            }))
+            })),
+        const Footer(),
       ],
       smallWidgets: [
         Center(
@@ -135,14 +145,14 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
                 const CustomText(
                     textAlign: TextAlign.center,
                     text: shopPageTitle,
-                    size: 40,
+                    size: 45,
                     color: Color(0xFF45E994),
                     weight: FontWeight.bold),
                 const SizedBox(
                   height: 30,
                 ),
                 const SizedBox(
-                  width: 500,
+                  width: 450,
                   child: CustomText(
                     textAlign: TextAlign.center,
                     text: shopPageText,
@@ -182,80 +192,43 @@ class _ShopPageState extends State<ShopPage> with TickerProviderStateMixin {
             child: GetX<ProductController>(
                 builder: (ProductController controller) {
               if (controller != null && controller.products != null) {
-                return Wrap(
-                  alignment: WrapAlignment.center,
-                  children: controller.query.isEmpty
-                      ? controller.products
-                          .map((item) {
-                            animationController!.forward();
-                            return ProductCard(
-                              product: item,
-                              animationController: animationController,
-                              animation: Tween<double>(begin: 0.0, end: 1.0)
-                                  .animate(CurvedAnimation(
-                                      parent: animationController!,
-                                      curve: Interval(
-                                          (1 / controller.products.length) *
-                                              controller.products.indexOf(item),
-                                          1.0,
-                                          curve: Curves.fastOutSlowIn))),
-                            );
-                          })
-                          .toList()
-                          .cast<Widget>()
-                      : controller.searchProducts(animationController!),
-                );
+                return controller.products.isEmpty
+                    ? Container(
+                        height: MediaQuery.of(context).size.height,
+                      )
+                    : Wrap(
+                        alignment: WrapAlignment.center,
+                        children: controller.query.isEmpty
+                            ? controller.products
+                                .map((item) {
+                                  animationController!.forward();
+                                  return ProductCard(
+                                    product: item,
+                                    animationController: animationController,
+                                    animation: Tween<double>(
+                                            begin: 0.0, end: 1.0)
+                                        .animate(CurvedAnimation(
+                                            parent: animationController!,
+                                            curve: Interval(
+                                                (1 /
+                                                        controller
+                                                            .products.length) *
+                                                    controller.products
+                                                        .indexOf(item),
+                                                1.0,
+                                                curve: Curves.fastOutSlowIn))),
+                                  );
+                                })
+                                .toList()
+                                .cast<Widget>()
+                            : controller.searchProducts(animationController!),
+                      );
               } else {
                 return Container();
               }
-            }))
+            })),
+        const Footer(),
       ],
     );
   }
 }
-
-
-
-
-
-
-
-        // CustomTextField(
-            //   onChanged: (text) {
-            //     productController.search(text);
-            //   },
-            //   txtController: _searchTextController,
-            //   txtIcon: Icons.search,
-            //   txtText: "Search...",
-            //   maxLines: true,
-            //   width: MediaQuery.of(context).size.width * 0.5,
-            // ),
-
-
-
-
-
-
-
-
-
-
-
-// double spaceBetween = 0.0;
-//   final _duration = const Duration(milliseconds: 500);
-
-//   _onStartScroll(ScrollMetrics metrics) {}
-
-//   _onUpdateScroll(ScrollMetrics metrics) {
-//     if (spaceBetween == 30.0) return;
-//     setState(() {
-//       spaceBetween = 20.0;
-//     });
-//   }
-
-//   _onEndScroll(ScrollMetrics metrics) async {
-//     await Future.delayed(_duration);
-//     setState(() {
-//       spaceBetween = 10.0;
-//     });
-//   }

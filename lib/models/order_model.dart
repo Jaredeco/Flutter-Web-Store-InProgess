@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderModel {
   final String? id;
   final Timestamp? createdAt;
-  final Map<String, int>? bagProducts;
+  final Map<String, List<dynamic>>? bagProducts;
   final String? firstName;
   final String? surname;
   final String? country;
@@ -34,7 +34,7 @@ class OrderModel {
     return OrderModel(
         id: snapshot.id,
         createdAt: snapshot["createdAt"],
-        bagProducts: snapshot["bagProducts"].cast<String, int>(),
+        bagProducts: snapshot["bagProducts"].cast<String, List<dynamic>>(),
         firstName: snapshot["firstName"],
         surname: snapshot["surname"],
         country: snapshot["country"],

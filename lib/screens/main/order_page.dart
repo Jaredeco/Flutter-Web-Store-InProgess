@@ -6,6 +6,7 @@ import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/models/order_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/screens/main/summary_page.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_drop_down.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
@@ -54,10 +55,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _firstNameTextController,
                       txtIcon: Icons.person,
-                      txtText: "First Name",
+                      txtText: "Meno",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -66,10 +67,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _surnameTextController,
                       txtIcon: Icons.person,
-                      txtText: "Last Name",
+                      txtText: "Priezvisko",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -79,10 +80,10 @@ class _OrderPageState extends State<OrderPage> {
                         maxLines: true,
                         txtController: _cityTextController,
                         txtIcon: Icons.location_city,
-                        txtText: "City",
+                        txtText: "Mesto",
                         validate: (text) {
                           if (text == null || text.isEmpty) {
-                            return 'Text is empty!';
+                            return 'Text je prázdny!';
                           }
                           return null;
                         },
@@ -92,10 +93,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _pscTextController,
                       txtIcon: Icons.location_city,
-                      txtText: "PSC",
+                      txtText: "PSČ",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -104,10 +105,10 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _streetTextController,
                       txtIcon: Icons.streetview,
-                      txtText: "Street",
+                      txtText: "Ulica",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
@@ -129,11 +130,11 @@ class _OrderPageState extends State<OrderPage> {
                       txtText: "E-Mail",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         } else if (!RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                             .hasMatch(text)) {
-                          return 'Email has wrong format!';
+                          return 'E-Mail ma zlý formát!';
                         }
                         return null;
                       },
@@ -142,13 +143,16 @@ class _OrderPageState extends State<OrderPage> {
                       maxLines: true,
                       txtController: _phoneTextController,
                       txtIcon: Icons.phone,
-                      txtText: "Phone Number",
+                      txtText: "Telefónne Číslo",
                       validate: (text) {
                         if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
+                          return 'Text je prázdny!';
                         }
                         return null;
                       },
+                    ),
+                    const SizedBox(
+                      height: 100,
                     ),
                   ]),
                 ),
@@ -166,8 +170,8 @@ class _OrderPageState extends State<OrderPage> {
                     builder: (_) => Expanded(
                       child: CustomText(
                         padding: const EdgeInsets.only(left: 40),
-                        text: "Total: ${bagController.totalAmount} €",
-                        color: Colors.black,
+                        text: "Suma: ${bagController.totalAmount} €",
+                        color: const Color(0xFF7C8FB5),
                       ),
                     ),
                   ),
@@ -177,53 +181,33 @@ class _OrderPageState extends State<OrderPage> {
                       builder: (_) => orderController.isLoading.value
                           ? const CircularProgressIndicator()
                           : CustomButton(
-                              text: "Order",
-                              txtSize: 15,
+                              text: "Zhrnutie",
                               onTap: () {
                                 if (_formKey.currentState!.validate()) {
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.INFO,
-                                    animType: AnimType.BOTTOMSLIDE,
-                                    title: 'Order?',
-                                    desc: 'Order with obligation to pay.',
-                                    btnOkText: "Order",
-                                    btnCancelOnPress: () {},
-                                    btnOkOnPress: () {
-                                      orderController.loading(true);
-                                      OrderModel _order = OrderModel(
-                                          createdAt: Timestamp.now(),
+                                  orderController.loading(true);
+                                  OrderModel _order = OrderModel(
+                                      createdAt: Timestamp.now(),
+                                      bagProducts: bagController.getProducts(),
+                                      firstName:
+                                          _firstNameTextController.text.trim(),
+                                      surname:
+                                          _surnameTextController.text.trim(),
+                                      city: _cityTextController.text.trim(),
+                                      street: _streetTextController.text.trim(),
+                                      psc: _pscTextController.text.trim(),
+                                      phone: _phoneTextController.text.trim(),
+                                      email: _emailTextController.text.trim(),
+                                      country: orderController.country.value,
+                                      total: bagController.totalAmount.value,
+                                      resolved: false);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => SummaryPage(
+                                          order: _order,
                                           bagProducts:
-                                              bagController.getProducts(),
-                                          firstName: _firstNameTextController
-                                              .text
-                                              .trim(),
-                                          surname: _surnameTextController.text
-                                              .trim(),
-                                          city: _cityTextController.text.trim(),
-                                          street:
-                                              _streetTextController.text.trim(),
-                                          psc: _pscTextController.text.trim(),
-                                          phone:
-                                              _phoneTextController.text.trim(),
-                                          email:
-                                              _emailTextController.text.trim(),
-                                          country:
-                                              orderController.country.value,
-                                          total:
-                                              bagController.totalAmount.value,
-                                          resolved: false);
-                                      orderController.createOrder(_order);
-                                      bagController.emptyBag();
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil('/shop',
-                                              (Route<dynamic> route) => false);
-                                      orderController.loading(false);
-                                    },
-                                  ).show();
+                                              bagController.products.cast())));
+                                  orderController.loading(false);
                                 }
                               },
-                              bgColor: Colors.red,
                             ),
                     ),
                   ),

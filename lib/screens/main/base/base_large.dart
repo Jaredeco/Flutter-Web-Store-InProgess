@@ -31,6 +31,7 @@ class _BaseLargeState extends State<BaseLarge> {
     return widget.landing != null
         ? widget.widgets[0]
         : Scaffold(
+            backgroundColor: Colors.white,
             body: ZoomDrawer(
               isRtl: true,
               controller: _drawerController,

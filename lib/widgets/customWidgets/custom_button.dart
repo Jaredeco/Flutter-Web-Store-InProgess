@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'custom_text.dart';
-import 'package:get/get.dart';
 
 class CustomButton extends StatelessWidget {
   final String? text;
@@ -25,12 +23,27 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: PhysicalModel(
-        color: bgColor ?? Colors.black,
-        elevation: 5,
-        borderRadius: BorderRadius.circular(10),
+      child: Container(
+        decoration: BoxDecoration(
+            gradient: bgColor == null
+                ? const LinearGradient(colors: [
+                    Color(0xFF23BCBA),
+                    Color(0xFF45E994),
+                  ], begin: Alignment.bottomRight, end: Alignment.topLeft)
+                : LinearGradient(
+                    colors: [bgColor!, bgColor!],
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft),
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF6078ea).withOpacity(0.3),
+                offset: const Offset(0, 8),
+                blurRadius: 8,
+              )
+            ]),
         child: SizedBox(
-          width: 200,
+            width: 200,
             child: Container(
               margin: const EdgeInsets.all(10),
               alignment: Alignment.center,

@@ -5,10 +5,12 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 class AdminProductCard extends StatefulWidget {
   final ProductModel product;
   final int? amountOrdered;
+  final String? option;
   const AdminProductCard({
     Key? key,
     required this.product,
     this.amountOrdered,
+    this.option,
   }) : super(key: key);
 
   @override
@@ -48,22 +50,26 @@ class _AdminProductCardState extends State<AdminProductCard> {
                     size: 20,
                     text: widget.product.title,
                   ),
-                  widget.amountOrdered != null
-                      ? CustomText(text: "Amount: ${widget.amountOrdered}")
-                      : Container(
-                          padding: const EdgeInsets.all(20),
-                          width: 300,
-                          child: Text(
-                            widget.product.description!,
-                            style: const TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            softWrap: false,
-                          ),
-                        ),
+                  Container(
+                    padding: const EdgeInsets.all(20),
+                    width: 300,
+                    child: Text(
+                      widget.product.descriptionTop!,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.grey,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ),
+                  if (widget.option != null) CustomText(text: widget.option),
+                  if (widget.amountOrdered != null)
+                    CustomText(text: "Amount: ${widget.amountOrdered}"),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   CustomText(
                     size: 16,
                     weight: FontWeight.bold,

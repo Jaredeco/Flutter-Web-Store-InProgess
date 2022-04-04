@@ -9,7 +9,6 @@ import 'package:webstore/constants/firebase.dart';
 import 'package:webstore/controllers/order_controller.dart';
 import 'package:webstore/models/order_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
-import 'package:webstore/widgets/components/home/product_card.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
@@ -54,8 +53,10 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             OrderModel order = OrderModel.fromDocSnapshot(snapshot.data!);
-            orderController.orderedProducts.bindStream(orderController
-                .loadOrderedProducts(order.bagProducts!.keys.toList()));
+            orderController.orderedProducts.bindStream(
+                orderController.loadOrderedProducts(List.generate(
+                    order.bagProducts!['ids']!.length,
+                    (index) => order.bagProducts!['ids']![index])));
             return Column(
               children: [
                 Expanded(
@@ -97,16 +98,20 @@ class _AdminOrderPageState extends State<AdminOrderPage> {
                           if (controller != null &&
                               controller.orderedProducts != null) {
                             return Wrap(
-                              alignment: WrapAlignment.center,
-                              children: controller.orderedProducts
-                                  .map((item) => AdminProductCard(
-                                        amountOrdered:
-                                            order.bagProducts![item.id],
-                                        product: item,
-                                      ))
-                                  .toList()
-                                  .cast<Widget>(),
-                            );
+                                alignment: WrapAlignment.center,
+                                children: List.generate(
+                                    order.bagProducts!['ids']!.length,
+                                    (index) => AdminProductCard(
+                                          product: controller.orderedProducts
+                                              .firstWhere((element) =>
+                                                  element.id ==
+                                                  order.bagProducts!['ids']![
+                                                      index]),
+                                          option: order
+                                              .bagProducts!['options']![index],
+                                          amountOrdered: order
+                                              .bagProducts!['amounts']![index],
+                                        )).cast<Widget>());
                           } else {
                             return Container();
                           }

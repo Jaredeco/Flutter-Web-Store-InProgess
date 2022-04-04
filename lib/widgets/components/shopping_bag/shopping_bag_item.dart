@@ -9,9 +9,11 @@ class BagItem extends StatefulWidget {
   final ProductModel product;
   final AnimationController? animationController;
   final Animation<double>? animation;
+  final String option;
   const BagItem(
       {Key? key,
       required this.product,
+      required this.option,
       this.animationController,
       this.animation})
       : super(key: key);
@@ -53,10 +55,26 @@ class _BagItemState extends State<BagItem> {
                             ),
                           ),
                           Expanded(
-                              child: CustomText(
-                            size: 20,
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            text: widget.product.title,
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                size: 25,
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                text: widget.product.title,
+                                color: const Color(0xFF45E994),
+                              ),
+                              const SizedBox(height: 5),
+                              CustomText(
+                                size: 12,
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                text: widget.option,
+                                color: const Color(0xFF7C8FB5),
+                              ),
+                            ],
                           )),
                           Expanded(
                             child: CustomText(
@@ -64,6 +82,7 @@ class _BagItemState extends State<BagItem> {
                               padding:
                                   const EdgeInsets.only(left: 20, right: 20),
                               text: "${widget.product.price} €",
+                              color: const Color(0xFF45E994),
                             ),
                           ),
                           Expanded(
@@ -71,24 +90,34 @@ class _BagItemState extends State<BagItem> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 IconButton(
-                                    onPressed: () => bagController
-                                        .removeFromBag(widget.product),
-                                    icon: const Icon(Icons.remove)),
+                                    onPressed: () =>
+                                        bagController.removeFromBag(
+                                            widget.product, widget.option),
+                                    icon: const Icon(Icons.remove,
+                                        color: Color(0xFF7C8FB5))),
                                 GetX<BagController>(
-                                    builder: (_) => Text(bagController
-                                        .products[widget.product]
-                                        .toString())),
+                                    builder: (_) => CustomText(
+                                          text: bagController.products[
+                                                  bagController.getBagItem(
+                                                      widget.product,
+                                                      widget.option)]
+                                              .toString(),
+                                          color: const Color(0xFF45E994),
+                                        )),
                                 IconButton(
                                     onPressed: () => bagController.addToBag(
-                                        widget.product, 1),
-                                    icon: const Icon(Icons.add)),
+                                        widget.product, widget.option, 1),
+                                    icon: const Icon(
+                                      Icons.add,
+                                      color: Color(0xFF7C8FB5),
+                                    )),
                               ],
                             ),
                           ),
                           Expanded(
                             child: IconButton(
-                                onPressed: () =>
-                                    bagController.deleteFromBag(widget.product),
+                                onPressed: () => bagController.deleteFromBag(
+                                    widget.product, widget.option),
                                 icon: const Icon(
                                   Icons.delete,
                                   color: Colors.red,

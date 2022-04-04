@@ -52,8 +52,11 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                           color: Color(0xFF7C8FB5),
                           size: 60,
                         ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxWidth: 550),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
                           child: const CustomText(
                             textAlign: TextAlign.center,
                             text: landingInfoText,
@@ -70,7 +73,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                         height: MediaQuery.of(context).size.height * 0.5,
                         width: MediaQuery.of(context).size.width * 0.4,
                         child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(10),
                           child: Image.asset("assets/images/firma_sirka.jpg",
                               fit: BoxFit.cover),
                         ),
@@ -82,7 +85,7 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                               blurRadius: 8,
                             )
                           ],
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(10),
                         )),
                   ],
                 ),
@@ -108,54 +111,60 @@ class _LandingInfoPageState extends State<LandingInfoPage>
                         spawnMinSpeed: minParSpeed,
                         spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                    const CustomText(
-                        text: 'Kto Sme?',
-                        size: 60,
-                        color: Color(0xFF45E994),
-                        weight: FontWeight.bold),
-                    const CustomText(
-                      textAlign: TextAlign.center,
-                      text: "Školská Firma",
-                      color: Color(0xFF7C8FB5),
-                      size: 30,
-                    ),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 550),
-                      child: const CustomText(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
+                      const CustomText(
+                          text: 'Kto Sme?',
+                          size: 60,
+                          color: Color(0xFF45E994),
+                          weight: FontWeight.bold),
+                      const CustomText(
                         textAlign: TextAlign.center,
-                        text: landingInfoText,
-                        size: 14,
+                        text: "Školská Firma",
                         color: Color(0xFF7C8FB5),
+                        size: 30,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(30),
-                          child: Image.asset("assets/images/firma_sirka.jpg",
-                              fit: BoxFit.cover),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: const CustomText(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          textAlign: TextAlign.center,
+                          text: landingInfoText,
+                          size: 16,
+                          color: Color(0xFF7C8FB5),
                         ),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xFF6078ea).withOpacity(0.3),
-                              offset: const Offset(0, 8),
-                              blurRadius: 8,
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(30),
-                        )),
-                  ],
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Container(
+                          height: MediaQuery.of(context).size.height * 0.5,
+                          width: MediaQuery.of(context).size.width * 0.9,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset("assets/images/firma_sirka.jpg",
+                                fit: BoxFit.cover),
+                          ),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(0xFF6078ea).withOpacity(0.3),
+                                offset: const Offset(0, 8),
+                                blurRadius: 8,
+                              )
+                            ],
+                            borderRadius: BorderRadius.circular(10),
+                          )),
+                    ],
+                  ),
                 ),
               ),
             ],

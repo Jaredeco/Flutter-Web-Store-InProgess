@@ -1,20 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:webstore/models/product_model.dart';
 
 class BagItemModel {
-  final String? id;
-  final String? productId;
-  final String? productQuantity;
+  final ProductModel? product;
+  final String? productOption;
 
-  BagItemModel({
-    this.id,
-    this.productId,
-    this.productQuantity,
-  });
-
-  factory BagItemModel.fromDocSnapshot(DocumentSnapshot snapshot) {
-    return BagItemModel(
-        id: snapshot.id,
-        productId: snapshot["productId"],
-        productQuantity: snapshot["productQuantity"]);
-  }
+  BagItemModel({this.product, this.productOption});
 }

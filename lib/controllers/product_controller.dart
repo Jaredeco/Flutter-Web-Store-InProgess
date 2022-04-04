@@ -13,6 +13,7 @@ class ProductController extends GetxController {
   var amount = 1.obs;
   var query = "".obs;
   var orderBy = orderBys[0].obs;
+  var productOption = "".obs;
 
   @override
   void onInit() {
@@ -101,6 +102,11 @@ class ProductController extends GetxController {
 
   void setOrderBy(String newValue) {
     orderBy.value = newValue;
+    update();
+  }
+
+  void setProductOption(String option) {
+    productOption.value = option;
     update();
   }
 }

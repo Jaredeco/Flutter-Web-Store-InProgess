@@ -1,6 +1,6 @@
 import 'package:animated_background/animated_background.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webstore/widgets/components/landing/gradient_text.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
 import 'package:webstore/widgets/components/landing/main_button.dart';
@@ -9,7 +9,8 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 import 'package:webstore/constants/global.dart';
 
 class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+  final PageController? pageController;
+  const LandingPage({Key? key, this.pageController}) : super(key: key);
 
   @override
   State<LandingPage> createState() => _LandingPageState();
@@ -50,11 +51,14 @@ class _LandingPageState extends State<LandingPage>
                       textAlign: TextAlign.center,
                       text: "Školská Firma",
                       color: Color(0xFF7C8FB5),
-                      size: 60,
+                      size: 65,
                     ),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 550),
-                      child: const CustomText(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      width: 600,
+                      child: CustomText(
                         textAlign: TextAlign.center,
                         text: landingText,
                         size: 16,
@@ -69,45 +73,38 @@ class _LandingPageState extends State<LandingPage>
                       children: [
                         MainButton(
                           onTap: () => Navigator.of(context).pushNamed("/shop"),
-                          text: "Explore Products",
+                          text: "Objaviť Produkty",
                           colors: const [
                             Color(0xFF23BCBA),
                             Color(0xFF45E994),
                           ],
-                          isOnLight: false,
+                          isSocial: false,
                         ),
                         const SizedBox(
-                          width: 40,
+                          width: 45,
                         ),
                         MainButton(
-                          onTap: () {},
-                          text: "Watch Now",
+                          onTap: () async {
+                            await launch("https://www.instagram.com/vegoegmt/");
+                          },
+                          text: "Sledujte Nás!",
                           colors: const [Colors.white, Colors.white],
-                          isOnLight: true,
+                          isSocial: true,
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.1,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SocialIcon(
-                          icon: FontAwesomeIcons.instagram,
-                        ),
-                        SocialIcon(
-                          icon: FontAwesomeIcons.facebook,
-                        ),
-                      ],
+                    ButtonDown(
+                      icon: Icons.keyboard_arrow_down,
+                      onTap: () {
+                        widget.pageController!.animateToPage(
+                            widget.pageController!.page!.toInt() + 1,
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.easeIn);
+                      },
                     ),
-                    const SizedBox(height: 100),
-                    const Center(
-                        child: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Color(0xFF45E994),
-                      size: 40,
-                    ))
                   ],
                 ),
               ),
@@ -132,72 +129,73 @@ class _LandingPageState extends State<LandingPage>
                         spawnMinSpeed: minParSpeed,
                         spawnMaxSpeed: maxParSpeed)),
                 vsync: this,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                    const CustomText(
-                        text: 'VEGO',
-                        size: 60,
-                        color: Color(0xFF45E994),
-                        weight: FontWeight.bold),
-                    const CustomText(
-                      textAlign: TextAlign.center,
-                      text: "Školská Firma",
-                      color: Color(0xFF7C8FB5),
-                      size: 30,
-                    ),
-                    ConstrainedBox(
-                      constraints: const BoxConstraints(maxWidth: 550),
-                      child: const CustomText(
-                        padding: EdgeInsets.symmetric(horizontal: 10),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.1),
+                      const CustomText(
+                          text: 'VEGO',
+                          size: 65,
+                          color: Color(0xFF45E994),
+                          weight: FontWeight.bold),
+                      const CustomText(
                         textAlign: TextAlign.center,
-                        text: landingText,
-                        size: 14,
+                        text: "Školská Firma",
                         color: Color(0xFF7C8FB5),
+                        size: 30,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    MainButton(
-                      onTap: () => Navigator.of(context).pushNamed("/shop"),
-                      text: "Explore Products",
-                      colors: const [
-                        Color(0xFF23BCBA),
-                        Color(0xFF45E994),
-                      ],
-                      isOnLight: false,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    MainButton(
-                      onTap: () {},
-                      text: "Watch Now",
-                      colors: const [Colors.white, Colors.white],
-                      isOnLight: true,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        SocialIcon(
-                          icon: FontAwesomeIcons.instagram,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: const CustomText(
+                          textAlign: TextAlign.center,
+                          text: landingText,
+                          size: 16,
+                          color: Color(0xFF7C8FB5),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    const Center(
-                        child: Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Color(0xFF45E994),
-                      size: 40,
-                    ))
-                  ],
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      MainButton(
+                        onTap: () => Navigator.of(context).pushNamed("/shop"),
+                        text: "Objaviť Produkty",
+                        colors: const [
+                          Color(0xFF23BCBA),
+                          Color(0xFF45E994),
+                        ],
+                        isSocial: false,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      MainButton(
+                        onTap: () async {
+                          await launch("https://www.instagram.com/vegoegmt/");
+                        },
+                        text: "Sledujte Nás!",
+                        colors: const [Colors.white, Colors.white],
+                        isSocial: true,
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                      ),
+                      ButtonDown(
+                        icon: Icons.keyboard_arrow_down,
+                        onTap: () {
+                          widget.pageController!.animateToPage(
+                              widget.pageController!.page!.toInt() + 1,
+                              duration: const Duration(milliseconds: 700),
+                              curve: Curves.easeIn);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

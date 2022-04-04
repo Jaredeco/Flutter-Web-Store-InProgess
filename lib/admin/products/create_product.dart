@@ -31,10 +31,14 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
 
   final TextEditingController _titleTextController = TextEditingController();
   final TextEditingController _priceTextController = TextEditingController();
-  final TextEditingController _descriptionTextController =
+  final TextEditingController _descriptionTopController =
       TextEditingController();
+  final TextEditingController _descriptionBottomController =
+      TextEditingController();
+  final TextEditingController _optionsController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -59,21 +63,9 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                         return null;
                       },
                     ),
-                    CustomTextField(
-                      maxLines: true,
-                      txtController: _priceTextController,
-                      txtIcon: Icons.money,
-                      txtText: "Product Price",
-                      validate: (text) {
-                        if (text == null || text.isEmpty) {
-                          return 'Text is empty!';
-                        }
-                        return null;
-                      },
-                    ),
                     Center(
                         child: CustomTextField(
-                      txtController: _descriptionTextController,
+                      txtController: _descriptionTopController,
                       txtIcon: Icons.description,
                       kbdType: TextInputType.multiline,
                       maxLines: false,
@@ -84,6 +76,43 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                         }
                         return null;
                       },
+                    )),
+                    Center(
+                        child: CustomTextField(
+                      txtController: _descriptionBottomController,
+                      txtIcon: Icons.description,
+                      kbdType: TextInputType.multiline,
+                      maxLines: false,
+                      txtText: "Product Description",
+                      validate: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Text is empty!';
+                        }
+                        return null;
+                      },
+                    )),
+                    Center(
+                      child: CustomTextField(
+                        maxLines: true,
+                        txtController: _priceTextController,
+                        txtIcon: Icons.money,
+                        txtText:
+                            "Product Price(Please use . for decimal prices)",
+                        validate: (text) {
+                          if (text == null || text.isEmpty) {
+                            return 'Text is empty!';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Center(
+                        child: CustomTextField(
+                      txtController: _optionsController,
+                      txtIcon: Icons.arrow_drop_down_circle_outlined,
+                      maxLines: true,
+                      txtText:
+                          "Product options(Please separate every option with a comma(,).)",
                     )),
                     const SizedBox(height: 20),
                     GetX<AdminController>(
@@ -152,40 +181,8 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                               ? const CircularProgressIndicator()
                               : CustomButton(
                                   text: "Create",
-                                  onTap: () async {
-                                    if (adminController
-                                        .pickedImages.isNotEmpty) {
-                                      if (_formKey.currentState!.validate()) {
-                                        adminController.loading(true);
-                                        List<String> _imgUrls =
-                                            await adminController.uploadImages(
-                                                adminController.pickedImages);
-                                        ProductModel _product = ProductModel(
-                                            createAt: Timestamp.now(),
-                                            imgsUrl: _imgUrls,
-                                            title: _titleTextController.text
-                                                .trim(),
-                                            description:
-                                                _descriptionTextController.text
-                                                    .trim(),
-                                            price: double.parse(
-                                                _priceTextController.text
-                                                    .trim()));
-                                        await firebaseFirestore
-                                            .collection("Products")
-                                            .add(_product.toJson());
-                                        Navigator.of(context)
-                                            .pushNamed("/admin/products");
-                                        adminController.loading(false);
-                                      }
-                                    } else {
-                                      showTopSnackBar(
-                                        context,
-                                        const CustomSnackBar.error(
-                                          message: "No images attached!",
-                                        ),
-                                      );
-                                    }
+                                  onTap: () {
+                                    createProduct();
                                   }),
                         ),
                       ),
@@ -219,38 +216,8 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
                             ? const CircularProgressIndicator()
                             : CustomButton(
                                 text: "Create",
-                                onTap: () async {
-                                  if (adminController.pickedImages.isNotEmpty) {
-                                    if (_formKey.currentState!.validate()) {
-                                      adminController.loading(true);
-                                      List<String> _imgUrls =
-                                          await adminController.uploadImages(
-                                              adminController.pickedImages);
-                                      ProductModel _product = ProductModel(
-                                          createAt: Timestamp.now(),
-                                          imgsUrl: _imgUrls,
-                                          title:
-                                              _titleTextController.text.trim(),
-                                          description:
-                                              _descriptionTextController.text
-                                                  .trim(),
-                                          price: double.parse(
-                                              _priceTextController.text
-                                                  .trim()));
-                                      await firebaseFirestore
-                                          .collection("Products")
-                                          .add(_product.toJson());
-                                      Navigator.of(context).pushNamed("/shop");
-                                      adminController.loading(false);
-                                    }
-                                  } else {
-                                    showTopSnackBar(
-                                      context,
-                                      const CustomSnackBar.error(
-                                        message: "No images attached!",
-                                      ),
-                                    );
-                                  }
+                                onTap: () {
+                                  createProduct();
                                 }),
                       ),
                     ),
@@ -261,5 +228,35 @@ class _AdminCreateProductState extends State<AdminCreateProduct> {
         ],
       ),
     );
+  }
+
+  void createProduct() async {
+    if (adminController.pickedImages.isNotEmpty) {
+      if (_formKey.currentState!.validate()) {
+        adminController.loading(true);
+        List<String> _imgUrls =
+            await adminController.uploadImages(adminController.pickedImages);
+        ProductModel _product = ProductModel(
+            createAt: Timestamp.now(),
+            imgsUrl: _imgUrls,
+            title: _titleTextController.text.trim(),
+            descriptionTop: _descriptionTopController.text.trim(),
+            descriptionBottom: _descriptionBottomController.text.trim(),
+            price: double.parse(_priceTextController.text.trim()),
+            options: _optionsController.text.trim() == ""
+                ? ["Základná"]
+                : _optionsController.text.trim().split(","));
+        await firebaseFirestore.collection("Products").add(_product.toJson());
+        Navigator.of(context).pushNamed("/admin/products");
+        adminController.loading(false);
+      }
+    } else {
+      showTopSnackBar(
+        context,
+        const CustomSnackBar.error(
+          message: "No images attached!",
+        ),
+      );
+    }
   }
 }

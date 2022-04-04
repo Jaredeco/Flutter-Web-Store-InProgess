@@ -9,6 +9,7 @@ import 'package:webstore/controllers/bag_controller.dart';
 import 'package:webstore/controllers/product_controller.dart';
 import 'package:webstore/models/product_model.dart';
 import 'package:webstore/screens/main/base/responsive_ui.dart';
+import 'package:webstore/widgets/components/home/sort_drop_down.dart';
 import 'package:webstore/widgets/components/product_page/image_gallery.dart';
 import 'package:webstore/widgets/customWidgets/custom_button.dart';
 import 'package:webstore/widgets/customWidgets/custom_text.dart';
@@ -44,6 +45,9 @@ class _ProductPageState extends State<ProductPage> {
           }
           if (snapshot.connectionState == ConnectionState.done) {
             ProductModel product = ProductModel.fromDocSnapshot(snapshot.data!);
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
+              productController.setProductOption(product.options![0]);
+            });
             return Column(
               children: [
                 Expanded(
@@ -66,21 +70,61 @@ class _ProductPageState extends State<ProductPage> {
                                   CustomText(
                                     textAlign: TextAlign.left,
                                     text: product.title,
-                                    size: 30,
+                                    size: 40,
+                                    color: const Color(0xFF45E994),
                                   ),
                                   CustomText(
                                     textAlign: TextAlign.left,
-                                    text: product.description,
-                                    color: Colors.grey,
+                                    text: product.descriptionTop,
+                                    color: const Color(0xFF7C8FB5),
                                     size: 15,
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 30),
+                                    padding: const EdgeInsets.only(top: 30),
+                                  ),
+                                  if (product.options!.isNotEmpty)
+                                    GetX<ProductController>(
+                                      builder: (controller) => SortDropDown(
+                                        width: 250,
+                                        cValue: product.options!.contains(
+                                                productController
+                                                    .productOption.value)
+                                            ? productController
+                                                .productOption.value
+                                            : product.options![0],
+                                        ddItems: product.options,
+                                        onChanged: (newValue) {
+                                          productController
+                                              .setProductOption(newValue!);
+                                        },
+                                      ),
+                                    ),
+                                  const SizedBox(
+                                    height: 30,
                                   ),
                                   CustomText(
                                     textAlign: TextAlign.left,
                                     text: "${product.price} €",
-                                    weight: FontWeight.bold,
                                     size: 20,
+                                    color: const Color(0xFF45E994),
+                                  ),
+                                  const CustomText(
+                                    textAlign: TextAlign.left,
+                                    text: "vrátane DPH",
+                                    color: Color(0xFF7C8FB5),
+                                    size: 10,
+                                    padding: EdgeInsets.only(bottom: 20),
+                                  ),
+                                  featureColumn(),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  InkWell(
+                                    onTap: () => Navigator.of(context)
+                                        .pushNamed("/shop"),
+                                    child: SizedBox(
+                                        height: 90,
+                                        width: 150,
+                                        child: Image.asset(
+                                            "assets/images/logo_vego.png")),
                                   ),
                                 ],
                               ),
@@ -94,26 +138,72 @@ class _ProductPageState extends State<ProductPage> {
                       Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CustomText(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: product.title,
-                              size: 30,
+                              size: 40,
+                              color: const Color(0xFF45E994),
                             ),
+                            if (product.options!.isNotEmpty)
+                              Center(
+                                child: GetX<ProductController>(
+                                  builder: (controller) => SortDropDown(
+                                    width: 250,
+                                    cValue: product.options!.contains(
+                                            productController
+                                                .productOption.value)
+                                        ? productController.productOption.value
+                                        : product.options![0],
+                                    ddItems: product.options,
+                                    onChanged: (newValue) {
+                                      productController
+                                          .setProductOption(newValue!);
+                                    },
+                                  ),
+                                ),
+                              ),
                             CustomText(
-                              textAlign: TextAlign.left,
-                              text: product.description,
-                              color: Colors.grey,
+                              textAlign: TextAlign.center,
+                              text: product.descriptionTop,
+                              color: const Color(0xFF7C8FB5),
                               size: 15,
-                              padding: const EdgeInsets.symmetric(vertical: 30),
+                              padding: const EdgeInsets.only(top: 30),
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                             CustomText(
-                              textAlign: TextAlign.left,
+                              textAlign: TextAlign.center,
                               text: "${product.price} €",
-                              weight: FontWeight.bold,
-                              size: 20,
-                              padding: const EdgeInsets.only(bottom: 20),
+                              color: const Color(0xFF45E994),
+                              size: 25,
+                            ),
+                            const CustomText(
+                              textAlign: TextAlign.center,
+                              text: "vrátane DPH",
+                              color: Color(0xFF7C8FB5),
+                              size: 12,
+                              padding: EdgeInsets.only(bottom: 20),
+                            ),
+                            featureColumn(),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: InkWell(
+                                onTap: () =>
+                                    Navigator.of(context).pushNamed("/shop"),
+                                child: SizedBox(
+                                    height: 90,
+                                    width: 150,
+                                    child: Image.asset(
+                                        "assets/images/logo_vego.png")),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
                             ),
                             Row(
                                 mainAxisAlignment:
@@ -122,15 +212,23 @@ class _ProductPageState extends State<ProductPage> {
                                   IconButton(
                                       onPressed: () =>
                                           productController.decAmount(),
-                                      icon: const Icon(Icons.remove)),
+                                      icon: const Icon(
+                                        Icons.remove,
+                                        color: Color(0xFF7C8FB5),
+                                      )),
                                   const SizedBox(width: 50),
                                   GetX<ProductController>(
-                                      builder: (_) => Text(productController
-                                          .amount.value
-                                          .toString())),
+                                      builder: (_) => CustomText(
+                                            text: productController.amount.value
+                                                .toString(),
+                                            color: const Color(0xFF45E994),
+                                          )),
                                   const SizedBox(width: 50),
                                   IconButton(
-                                      icon: const Icon(Icons.add),
+                                      icon: const Icon(
+                                        Icons.add,
+                                        color: Color(0xFF7C8FB5),
+                                      ),
                                       onPressed: () =>
                                           productController.incAmount()),
                                 ]),
@@ -152,7 +250,7 @@ class _ProductPageState extends State<ProductPage> {
                             child: CustomText(
                               padding: const EdgeInsets.only(left: 40),
                               text: "Suma: ${bagController.totalAmount} €",
-                              color: Colors.black,
+                              color: const Color(0xFF7C8FB5),
                             ),
                           ),
                         ),
@@ -168,17 +266,23 @@ class _ProductPageState extends State<ProductPage> {
                                     IconButton(
                                         onPressed: () =>
                                             productController.decAmount(),
-                                        icon: const Icon(Icons.remove)),
+                                        icon: const Icon(
+                                          Icons.remove,
+                                          color: Color(0xFF7C8FB5),
+                                        )),
                                     const SizedBox(width: 50),
                                     GetX<ProductController>(
-                                        builder: (_) => Text(productController
-                                            .amount.value
-                                            .toString())),
+                                        builder: (_) => CustomText(
+                                            text: productController.amount.value
+                                                .toString(),
+                                            color: const Color(0xFF45E994))),
                                     const SizedBox(width: 50),
                                     IconButton(
-                                        icon: const Icon(Icons.add),
-                                        onPressed: () =>
-                                            productController.incAmount()),
+                                      icon: const Icon(Icons.add),
+                                      onPressed: () =>
+                                          productController.incAmount(),
+                                      color: Color(0xFF7C8FB5),
+                                    ),
                                   ]),
                             Padding(
                               padding:
@@ -186,16 +290,24 @@ class _ProductPageState extends State<ProductPage> {
                               child: CustomButton(
                                 text: "Kúpiť",
                                 onTap: () {
-                                  if (!bagController.products.keys
-                                      .map((e) => e.id)
-                                      .contains(product.id)) {
-                                    bagController.addToBag(product,
+                                  if (bagController.products.keys.firstWhere(
+                                        (element) =>
+                                            element.product.id == product.id &&
+                                            element.productOption ==
+                                                productController
+                                                    .productOption.value,
+                                        orElse: () => null,
+                                      ) ==
+                                      null) {
+                                    bagController.addToBag(
+                                        product,
+                                        productController.productOption.value,
                                         productController.amount.value);
                                     showTopSnackBar(
                                       context,
                                       const CustomSnackBar.success(
                                         message:
-                                            "Product added to the shopping bag!",
+                                            "Produkt bol pridaný do košíka.",
                                       ),
                                     );
                                   } else {
@@ -203,7 +315,7 @@ class _ProductPageState extends State<ProductPage> {
                                       context,
                                       const CustomSnackBar.error(
                                         message:
-                                            "Product already added to your shopping bag!",
+                                            "Produkt už bol pridaný do košíka!",
                                       ),
                                     );
                                   }
@@ -221,5 +333,39 @@ class _ProductPageState extends State<ProductPage> {
           }
           return Container();
         });
+  }
+
+  Widget featureRow(IconData icon, String txt, Color color) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 3.0),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: color,
+            size: 15,
+          ),
+          const SizedBox(
+            width: 5,
+          ),
+          CustomText(
+            size: 15,
+            text: txt,
+            color: color,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget featureColumn() {
+    return Column(
+      children: [
+        featureRow(Icons.check, "SKLADOM", const Color(0xFF45E994)),
+        featureRow(Icons.money, "DOBIERKA", const Color(0xFF7C8FB5)),
+        featureRow(
+            Icons.local_shipping, "BEZPLATNÁ DOPRAVA", const Color(0xFF7C8FB5))
+      ],
+    );
   }
 }

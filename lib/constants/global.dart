@@ -3,11 +3,15 @@ const double maxParSpeed = 100;
 const int smallParCount = 30;
 
 const String landingText =
-    "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.";
+    "Školská firma so zameraním na vegánske produkty a sídlom v Martine.";
 const String ladingMainButtonText = "";
 const String landingSecondButtonText = "";
 const String landingInfoText =
-    "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.";
+    "Školská firma so zameraním na vegánske produkty a sídlom v Martine.";
 const String shopPageTitle = "Objavte naše produkty...";
 const String shopPageText =
-    "Introducing the comma three devkit. The comma three is 4th generation custom hardware designed to live in your car. It has dual cam 360° vision, plus a narrow cam to spot objects far off in the distance.";
+    "Naše vegánske produkty su vyrobené s citom pre prírodu a vašu peňaženku.";
+const String thankYouTitle =
+    "Ďakujeme za váš Nákup";
+const String thankYouText =
+    "Naše vegánske produkty su vyrobené s citom pre prírodu a vašu peňaženku.";

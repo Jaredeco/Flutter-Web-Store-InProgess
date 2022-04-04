@@ -4,11 +4,15 @@ import 'package:webstore/widgets/customWidgets/custom_text.dart';
 
 class ProductCard extends StatefulWidget {
   final ProductModel product;
+  final String? option;
+  final int? amount;
   final AnimationController? animationController;
   final Animation<double>? animation;
   const ProductCard(
       {Key? key,
       required this.product,
+      this.option,
+      this.amount,
       this.animationController,
       this.animation})
       : super(key: key);
@@ -60,33 +64,68 @@ class _ProductCardState extends State<ProductCard> {
                             ),
                           ),
                           Container(
+                              width: 300,
                               padding:
                                   const EdgeInsets.only(top: 15, bottom: 20),
-                              child: Column(children: [
-                                CustomText(
-                                  size: 20,
-                                  text: widget.product.title,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(20),
-                                  width: 300,
-                                  child: Text(
-                                    widget.product.description!,
-                                    style: const TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey,
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    CustomText(
+                                      size: 25,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      text: widget.product.title,
+                                      color: const Color(0xFF45E994),
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                    softWrap: false,
-                                  ),
-                                ),
-                                CustomText(
-                                  size: 16,
-                                  weight: FontWeight.bold,
-                                  text: "${widget.product.price} €",
-                                ),
-                              ])),
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(
+                                        widget.product.descriptionTop!,
+                                        style: const TextStyle(
+                                          fontSize: 13,
+                                          color: Color(0xFF7C8FB5),
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
+                                        softWrap: false,
+                                      ),
+                                    ),
+                                    CustomText(
+                                      size: 16,
+                                      text: "${widget.product.price} €",
+                                      color: const Color(0xFF45E994),
+                                    ),
+                                    if (widget.option != null)
+                                      Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(
+                                          widget.option!,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Color(0xFF7C8FB5),
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                        ),
+                                      ),
+                                    if (widget.amount != null)
+                                      Container(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 0, 10, 10),
+                                        child: Text(
+                                          "Počet: ${widget.amount!.toString()}",
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Color(0xFF7C8FB5),
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                  ])),
                         ],
                       ),
                     ),
