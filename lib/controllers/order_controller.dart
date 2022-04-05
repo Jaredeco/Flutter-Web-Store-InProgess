@@ -16,10 +16,11 @@ class OrderController extends GetxController {
   void createOrder(OrderModel _order) async {
     await firebaseFirestore.collection("Orders").add(_order.toJson());
     await sendEmail(
-        name: "JR",
-        email: "jano.redecha@gmail.com",
-        subject: "Objednavka",
-        message: "prva mail");
+        name: _order.surname!,
+        email: _order.email!,
+        subject: "Objednávka z VEGO",
+        message:
+            "Objednávka bola prijatá. Akonáhle to bude možné vašu objednávku vám odošleme domov.");
   }
 
   Future sendEmail({
